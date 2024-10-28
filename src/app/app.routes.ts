@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authActGuard } from './guards/auth-act.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginComponent),
+    canActivate: [authActGuard],
   },
   {
     path: 'registro',

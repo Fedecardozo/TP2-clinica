@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { UtilsService } from './services/utils.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,11 @@ import { UtilsService } from './services/utils.service';
 export class AppComponent {
   title = 'clinica';
   util: UtilsService = inject(UtilsService);
+  user: AuthService = inject(AuthService);
+  router: Router = inject(Router);
+
+  async cerrarSesion() {
+    await this.user.cerrarSesion();
+    this.router.navigateByUrl('home');
+  }
 }
