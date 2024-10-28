@@ -1,6 +1,6 @@
 <div class="container d-flex justify-content-end align-items-center padre">
   <div class="form-signin sub-container">
-    <form>
+    <form [formGroup]="fg">
       <div class="d-flex justify-content-center w-100">
         <img class="mb-4" src="logo.png" alt="logo" />
       </div>
@@ -11,14 +11,59 @@
           type="email"
           class="form-control"
           placeholder="name@example.com"
+          formControlName="correo"
         />
         <label for="floatingInput">Correo</label>
       </div>
+      <div class="cont-p">
+        @if(this.fg.controls['correo'].errors !== null &&
+        this.fg.controls["correo"].touched) { @if
+        (this.fg.controls['correo'].errors!['required']) {
+        <p>El campo esta vacio</p>
+        } @else if (this.fg.controls['correo'].errors!['email']) {
+        <p>No es un correo valido</p>
+        } }
+      </div>
       <div class="form-floating">
-        <input type="password" class="form-control" placeholder="Password" />
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Password"
+          formControlName="clave"
+        />
         <label for="floatingPassword">Contraseña</label>
       </div>
+      <div class="cont-p">
+        @if(this.fg.controls['clave'].errors !== null &&
+        this.fg.controls["clave"].touched) { @if
+        (this.fg.controls['clave'].errors!['required']) {
+        <p>El campo esta vacio</p>
+        } }
+      </div>
 
+      <div class="d-flex justify-content-around mb-3">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="this.accesoRapido('admin@g.com', '123456')"
+        >
+          Admin
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="this.accesoRapido('espe@g.com', '123456')"
+        >
+          Especialista
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="this.accesoRapido('paciente@g.com', '123456')"
+        >
+          Paciente
+        </button>
+      </div>
       <button class="w-100 btn btn-lg btn-primary" type="submit">
         Iniciar Sesión
       </button>
