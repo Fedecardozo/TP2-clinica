@@ -6,3 +6,14 @@ body {
   background-position: center; /* Centra la imagen */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
+
+.padre {
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.sub-container {
+  background-color: #f8f9fa; /* Color de fondo suave */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+}
