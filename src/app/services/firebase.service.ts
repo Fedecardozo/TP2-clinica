@@ -21,9 +21,11 @@ export class FirebaseService {
     usuario: Usuario | Paciente | Especialista,
     collection: 'usuarios' | 'pacientes' | 'especialistas'
   ) {
-    const colUsuarios = this.firestore.collection(collection);
+    const colUsuarios = this.firestore.collection('usuarios');
+    const colOtro = this.firestore.collection(collection);
     const doc = colUsuarios.doc();
     usuario.id = doc.ref.id;
+    colOtro.doc(doc.ref.id).set({ ...usuario });
     return await doc.set({ ...usuario });
   }
 

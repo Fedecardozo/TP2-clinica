@@ -145,7 +145,7 @@
               }@else if (this.fg.controls['edad'].errors!['min'] ){
               <p class="invalido">Tiene que ser mayor a 18 años</p>
               }@else if ((this.fg.controls['edad'].errors!['max']) ) {
-              <p class="invalido">Tiene que ser menor a 45 años</p>
+              <p class="invalido">Ya es muy mayor de edad</p>
               } }
             </div>
           </div>
@@ -170,7 +170,11 @@
         </div>
 
         <br />
-        <button class="w-100 btn btn-primary btn-lg" type="submit">
+        <button
+          class="w-100 btn btn-primary btn-lg"
+          type="submit"
+          (click)="cargar()"
+        >
           Cargar paciente
         </button>
       </form>
