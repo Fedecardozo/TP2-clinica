@@ -13,13 +13,16 @@ export class AuthService {
   private auth: Auth = inject(Auth);
   private unSuscribe?: Unsubscribe;
   correo: string | null | undefined = undefined;
-  splash: boolean = false;
+  rol: string = '';
 
   constructor() {
     this.unSuscribe = this.auth.onAuthStateChanged((auth) => {
       if (auth?.email) {
-        console.log(auth.email);
         this.correo = this.auth.currentUser?.email;
+        if (this.correo === 'admin@g.com') {
+          this.rol = 'admin';
+          console.log(this.rol);
+        }
       } else {
         this.correo = null;
       }

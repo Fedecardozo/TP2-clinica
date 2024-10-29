@@ -7,12 +7,30 @@ import {
   ref,
   uploadString,
 } from '@angular/fire/storage';
+import { Usuario } from '../models/usuario';
+import { Paciente } from '../models/paciente';
+import { Especialista } from '../models/especialista';
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseService {
   constructor(private firestore: AngularFirestore) {}
   storage: AngularFireStorage = inject(AngularFireStorage);
+
+  async addUsuario(
+    usuario: Usuario | Paciente | Especialista,
+    collection: 'usuarios' | 'pacientes' | 'especialistas'
+  ) {
+    const colUsuarios = this.firestore.collection(collection);
+    const doc = colUsuarios.doc();
+    usuario.id = doc.ref.id;
+    return await doc.set({ ...usuario });
+  }
+
+  getCollection(collection: 'usuarios' | 'pacientes' | 'especialistas') {
+    const col = this.firestore.collection(collection);
+    return col;
+  }
 
   //IMAGENES
   async uploadImage(path: string, data_url: string) {
