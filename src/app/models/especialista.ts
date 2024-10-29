@@ -27,4 +27,8 @@ export class Especialista {
     this.password = password;
     this.foto_perfil = foto_perfil;
   }
+
+  static get_especialidades() {
+    return ['Cardiologo', 'Dentista', 'Cirujano', 'Pediatra'];
+  }
 }
