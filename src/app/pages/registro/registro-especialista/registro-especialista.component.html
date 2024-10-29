@@ -1,176 +1,179 @@
-<div class="contenedor">
-  <div class="form-signin sub-container">
-    <form [formGroup]="fg">
-      <div class="d-flex justify-content-center w-100">
-        <img src="especialista.png" alt="logo" width="150" height="150" />
+<div class="container d-flex align-items-center padre">
+  <div class="row g-5 d-flex justify-content-end">
+    <!-- FORM -->
+    <div class="col-md-6 col-lg-6 sub-container">
+      <div class="text-center">
+        <img
+          src="especialista.png"
+          alt="especialista"
+          width="150"
+          height="150"
+        />
       </div>
-      <h1 class="h3 mb-3 fw-normal">Cargar especialista</h1>
-
-      <div class="d-flex justify-content-around w-100">
-        <div class="w-75">
-          <!-- Nombre -->
-          <div class="form-floating">
+      <h4 class="mb-3">Datos del especialista</h4>
+      <form class="needs-validation" novalidate [formGroup]="fg">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Nombre</label>
             <input
               type="text"
               class="form-control"
-              placeholder="nombre"
+              id="firstName"
+              placeholder=""
               formControlName="nombre"
+              required
             />
-            <label for="floatingInput">Nombre</label>
+            <div class="div-p">
+              @if(this.fg.controls['nombre'].errors !== null &&
+              this.fg.controls["nombre"].touched) { @if
+              (this.fg.controls['nombre'].errors!['required']) {
+              <p class="invalido">Debes ingresar un nombre</p>
+              } }
+            </div>
           </div>
-          <div class="cont-p">
-            @if(this.fg.controls['nombre'].errors !== null &&
-            this.fg.controls["nombre"].touched) { @if
-            (this.fg.controls['nombre'].errors!['required']) {
-            <p>Debes ingresar un nombre</p>
-            } }
-          </div>
-        </div>
-        <div class="w-75">
-          <!-- Apeliido -->
-          <div class="form-floating">
+
+          <div class="col-sm-6">
+            <label for="apellido" class="form-label">Apellido</label>
             <input
               type="text"
               class="form-control"
-              placeholder="apellido"
+              id="apellido"
+              placeholder=""
               formControlName="apellido"
+              required
             />
-            <label for="floatingInput">Apellido</label>
+            <div class="div-p">
+              @if(this.fg.controls['apellido'].errors !== null &&
+              this.fg.controls["apellido"].touched) { @if
+              (this.fg.controls['apellido'].errors!['required']) {
+              <p class="invalido">Debes ingresar un apellido</p>
+              } }
+            </div>
           </div>
-          <div class="cont-p">
-            @if(this.fg.controls['apellido'].errors !== null &&
-            this.fg.controls["apellido"].touched) { @if
-            (this.fg.controls['apellido'].errors!['required']) {
-            <p>Debes ingresar un apellido</p>
-            } }
-          </div>
-        </div>
-      </div>
 
-      <div class="d-flex justify-content-around w-100">
-        <div class="w-75">
-          <!-- Edad -->
-          <div class="form-floating">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="edad"
-              formControlName="edad"
-            />
-            <label for="floatingInput">Edad</label>
-          </div>
-          <div class="cont-p">
-            @if(this.fg.controls['edad'].errors !== null &&
-            this.fg.controls["edad"].touched) { @if
-            (this.fg.controls['edad'].errors!['required']) {
-            <p>Debes ingresar una edad</p>
-            }@else if (this.fg.controls['edad'].errors!['min'] ){
-            <p>Tiene que ser mayor a 18 años</p>
-            }@else if ((this.fg.controls['edad'].errors!['max']) ) {
-            <p>Tiene que ser menor a 65 años</p>
-            } }
-          </div>
-        </div>
-        <div class="w-75">
-          <!-- Dni -->
-          <div class="form-floating">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="dni"
-              formControlName="dni"
-            />
-            <label for="floatingInput">DNI</label>
-          </div>
-          <div class="cont-p">
-            @if(this.fg.controls['dni'].errors !== null &&
-            this.fg.controls["dni"].touched) { @if
-            (this.fg.controls['dni'].errors!['required']) {
-            <p>Debes ingresar un número de DNI</p>
-            }@else if (this.fg.controls['dni'].errors!['min'] ){
-            <p>Faltan números en el DNI</p>
-            }@else if ((this.fg.controls['dni'].errors!['max']) ) {
-            <p>Sobran números en el DNI</p>
-            } }
-          </div>
-        </div>
-      </div>
-
-      <div class="d-flex justify-content-around w-100">
-        <div class="w-75">
-          <!-- correo -->
-          <div class="form-floating">
+          <div class="col-sm-6">
+            <label for="correo" class="form-label">Correo</label>
             <input
               type="email"
               class="form-control"
-              placeholder="correo"
+              id="correo"
+              placeholder=""
               formControlName="correo"
+              required
             />
-            <label for="floatingInput">correo</label>
+            <div class="div-p">
+              @if(this.fg.controls['correo'].errors !== null &&
+              this.fg.controls["correo"].touched) { @if
+              (this.fg.controls['correo'].errors!['required']) {
+              <p class="invalido">Debes ingresar un correo</p>
+              } @else if (this.fg.controls['correo'].errors!['email']) {
+              <p class="invalido">No es un correo valido</p>
+              } }
+            </div>
           </div>
-          <div class="cont-p">
-            @if(this.fg.controls['correo'].errors !== null &&
-            this.fg.controls["correo"].touched) { @if
-            (this.fg.controls['correo'].errors!['required']) {
-            <p>Debes ingresar un correo</p>
-            } @else if (this.fg.controls['correo'].errors!['email']) {
-            <p>No es un correo valido</p>
-            } }
-          </div>
-        </div>
-        <div class="w-75">
-          <!-- password -->
-          <div class="form-floating">
+
+          <div class="col-sm-6">
+            <label for="clave" class="form-label">Contraseña</label>
             <input
               type="password"
               class="form-control"
-              placeholder="Password"
+              id="clave"
+              placeholder=""
               formControlName="clave"
+              required
             />
-            <label for="floatingPassword">Contraseña</label>
+            <div class="div-p">
+              @if(this.fg.controls['clave'].errors !== null &&
+              this.fg.controls["clave"].touched) { @if
+              (this.fg.controls['clave'].errors!['required']) {
+              <p class="invalido">Debes ingresar un contraseña</p>
+              }@else if (this.fg.controls['clave'].errors!['minlength']) {
+              <p class="invalido">Debe contener como minimo 6 caracteres</p>
+              } }
+            </div>
           </div>
-          <div class="cont-p">
-            @if(this.fg.controls['clave'].errors !== null &&
-            this.fg.controls["clave"].touched) { @if
-            (this.fg.controls['clave'].errors!['required']) {
-            <p>Debes ingresar un contraseña</p>
-            }@else if (this.fg.controls['clave'].errors!['minlength']) {
-            <p>Debe contener como minimo 6 caracteres</p>
-            } }
+
+          <div class="col-md-4">
+            <label for="especialidad" class="form-label">Especialidad</label>
+            <select
+              class="form-select"
+              id="especialidad"
+              formControlName="especialidad"
+            >
+              @for (item of this.list_especialidades; track $index) {
+              <option value="{{ item }}">{{ item }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="col-4">
+            <label for="dni" class="form-label">DNI</label>
+            <input
+              type="number"
+              class="form-control"
+              id="dni"
+              formControlName="dni"
+              required
+            />
+            <div class="div-p">
+              @if(this.fg.controls['dni'].errors !== null &&
+              this.fg.controls["dni"].touched) { @if
+              (this.fg.controls['dni'].errors!['required']) {
+              <p class="invalido">Debes ingresar un número de DNI</p>
+              }@else if (this.fg.controls['dni'].errors!['min'] ){
+              <p class="invalido">Faltan números en el DNI</p>
+              }@else if ((this.fg.controls['dni'].errors!['max']) ) {
+              <p class="invalido">Sobran números en el DNI</p>
+              } }
+            </div>
+          </div>
+
+          <div class="col-4">
+            <label for="edad" class="form-label">Edad</label>
+            <input
+              type="number"
+              class="form-control"
+              id="edad"
+              formControlName="edad"
+              required
+            />
+            <div class="div-p">
+              @if(this.fg.controls['edad'].errors !== null &&
+              this.fg.controls["edad"].touched) { @if
+              (this.fg.controls['edad'].errors!['required']) {
+              <p class="invalido">Debes ingresar una edad</p>
+              }@else if (this.fg.controls['edad'].errors!['min'] ){
+              <p class="invalido">Tiene que ser mayor a 18 años</p>
+              }@else if ((this.fg.controls['edad'].errors!['max']) ) {
+              <p class="invalido">Tiene que ser menor a 45 años</p>
+              } }
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="formFile" class="form-label">Imagen de perfil</label>
+
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              (change)="onFileChange($event)"
+              accept="image/*"
+              formControlName="imagen"
+            />
+            <div class="div-p">
+              @if(this.errorImg !== '') {
+              <p class="invalido">{{ this.errorImg }}</p>
+              }
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- foto perfil -->
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Foto de perfil</label>
-
-        <input
-          class="form-control"
-          type="file"
-          (change)="onFileChange($event)"
-          accept="image/*"
-        />
-        <div class="div-p">
-          @if(this.errorImg !== '') {
-          <p class="invalido">{{ this.errorImg }}</p>
-          }
-        </div>
-      </div>
-      <br />
-      <!-- especialidad -->
-      <div class="form-floating">
-        <select class="form-select" aria-label="Floating label select example">
-          @for (item of this.list_especialidades; track $index) {
-          <option [value]="item">{{ item }}</option>
-          }
-        </select>
-        <label for="floatingSelect">Seleccionar especialidad</label>
-      </div>
-      <br />
-      <button class="w-100 btn btn-lg btn-primary" type="submit">
-        Cargar Paciente
-      </button>
-    </form>
+        <br />
+        <button class="w-100 btn btn-primary btn-lg" type="submit">
+          Cargar paciente
+        </button>
+      </form>
+    </div>
   </div>
 </div>

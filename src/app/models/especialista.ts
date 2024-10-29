@@ -29,6 +29,6 @@ export class Especialista {
   }
 
   static get_especialidades() {
-    return ['Cardiologo', 'Dentista', 'Cirujano', 'Pediatra'];
+    return ['Cardiologo', 'Dentista', 'Cirujano', 'Pediatra', 'Otro'];
   }
 }

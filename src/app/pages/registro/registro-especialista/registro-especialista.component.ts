@@ -43,7 +43,7 @@ export class RegistroEspecialistaComponent {
           Validators.max(99999999),
         ],
       ],
-      especialidad: [''],
+      especialidad: [this.list_especialidades[0]],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
     });
   }
