@@ -8,9 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { FirebaseService } from '../../../services/firebase.service';
-import { Especialista } from '../../../models/especialista';
 
 @Component({
   selector: 'app-registro-paciente',
@@ -22,12 +20,9 @@ import { Especialista } from '../../../models/especialista';
 export class RegistroPacienteComponent {
   public fb: FormBuilder = inject(FormBuilder);
   public fg: FormGroup;
-  private userService: AuthService = inject(AuthService);
-  private router = inject(Router);
   errorImg: string = '';
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
-  list_especialidades: string[] = Especialista.get_especialidades();
 
   constructor() {
     this.fg = this.fb.group({
@@ -45,6 +40,7 @@ export class RegistroPacienteComponent {
       ],
       obraSocial: [''],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
+      imagen: [''],
     });
   }
 
