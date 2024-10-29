@@ -44,6 +44,7 @@ export class AuthService {
   }
 
   cerrarSesion() {
+    this.rol = '';
     return this.auth.signOut();
   }
 }
