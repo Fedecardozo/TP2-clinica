@@ -14,9 +14,10 @@ export class Paciente extends Usuario {
     mail: string,
     password: string,
     foto_url_1: string,
-    foto_url_2: string
+    foto_url_2: string,
+    habilitado: boolean = false
   ) {
-    super(nombre, apellido, edad, dni, mail, password);
+    super(nombre, apellido, edad, dni, mail, password, habilitado, 'paciente');
     this.obra_social = obra_social;
     this.foto_url_1 = foto_url_1;
     this.foto_url_2 = foto_url_2;

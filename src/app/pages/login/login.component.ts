@@ -43,7 +43,7 @@ export class LoginComponent {
           this.fg.controls['clave'].value
         )
         .then(() => {
-          if (this.userService.rol === 'admin') {
+          if (this.userService.usuario?.rol === 'admin') {
             this.router.navigateByUrl('/usuarios');
           }
         })

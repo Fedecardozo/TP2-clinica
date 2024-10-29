@@ -12,9 +12,19 @@ export class Especialista extends Usuario {
     especialidad: string[],
     mail: string,
     password: string,
-    foto_perfil: string
+    foto_perfil: string,
+    habilitado: boolean = false
   ) {
-    super(nombre, apellido, edad, dni, mail, password);
+    super(
+      nombre,
+      apellido,
+      edad,
+      dni,
+      mail,
+      password,
+      habilitado,
+      'especialista'
+    );
 
     this.especialidad = especialidad;
     this.foto_perfil = foto_perfil;

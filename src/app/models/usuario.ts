@@ -7,6 +7,7 @@ export class Usuario {
   password: string;
   id: string;
   habilitado: boolean;
+  rol: string;
   constructor(
     nombre: string,
     apellido: string,
@@ -14,7 +15,8 @@ export class Usuario {
     dni: string,
     mail: string,
     password: string,
-    habilitado: boolean = false
+    habilitado: boolean = false,
+    rol: string
   ) {
     this.id = '';
     this.habilitado = habilitado;
@@ -24,5 +26,6 @@ export class Usuario {
     this.dni = dni;
     this.mail = mail;
     this.password = password;
+    this.rol = rol;
   }
 }

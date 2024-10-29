@@ -4,5 +4,5 @@ import { AuthService } from '../services/auth.service';
 
 export const adminActGuard: CanActivateFn = (route, state) => {
   const user = inject(AuthService);
-  return user.rol === 'admin';
+  return user.usuario?.rol === 'admin';
 };
