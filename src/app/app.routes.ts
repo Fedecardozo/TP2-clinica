@@ -3,12 +3,16 @@ import { authActGuard } from './guards/auth-act.guard';
 import { actAdminGuard } from './guards/act-admin.guard';
 
 export const routes: Routes = [
+  //solo entran los que no iniciaron sesion HOME
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
+    canActivate: [authActGuard],
   },
+
+  //Admins
   {
     path: 'admin',
     children: [
@@ -40,6 +44,7 @@ export const routes: Routes = [
     canActivate: [actAdminGuard],
   },
 
+  //solo entran los que no iniciaron sesion LOGIN
   {
     path: 'login',
     loadComponent: () =>
