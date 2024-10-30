@@ -20,7 +20,7 @@ export class FirebaseService {
     const doc = colUsuarios.doc();
     usuario.id = doc.ref.id;
 
-    return await doc.set({ usuario });
+    return await doc.set({ ...usuario });
   }
 
   getCollection(collection: 'usuarios' = 'usuarios') {

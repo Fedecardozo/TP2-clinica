@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../services/firebase.service';
 import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
+import { Rol } from '../../../models/rol';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -26,7 +27,7 @@ export class RegistroEspecialistaComponent {
   errorImg: string = '';
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
-  list_especialidades = ['cardiologo', 'dentista', 'pediatra'];
+  list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra'];
 
   constructor() {
     this.fg = this.fb.group({
@@ -73,38 +74,45 @@ export class RegistroEspecialistaComponent {
     }
   }
 
+  generarUsuario(url: string): Usuario {
+    const user = new Usuario();
+    user.nombre = this.fg.controls['nombre'].value;
+    user.apellido = this.fg.controls['apellido'].value;
+    user.edad = this.fg.controls['edad'].value;
+    user.dni = this.fg.controls['dni'].value;
+    user.especialidad = this.fg.controls['especialidad'].value;
+    user.mail = this.fg.controls['correo'].value;
+    user.password = this.fg.controls['clave'].value;
+    user.foto_url = url;
+    user.rol = Rol.especialista;
+    return user;
+  }
   async cargar() {
     if (this.fg.valid && this.validarImagen()) {
       this.util.mostrarSpinner('Guardando especialista...');
       const url = await this.guardarImagen();
-      const espe = new Usuario();
-      this.fg.controls['nombre'].value,
-        this.fg.controls['apellido'].value,
-        this.fg.controls['edad'].value,
-        this.fg.controls['dni'].value,
-        this.fg.controls['especialidad'].value,
-        this.fg.controls['correo'].value,
-        this.fg.controls['clave'].value,
-        url;
-      // this.fire
-      //   .addUsuario(, ')
-      //   .then(() => {
-      //     Alert.exito('Se cargo con exito!');
-      //     this.fg.reset();
-      //     this.errorImg = '';
-      //     this.fg.controls['especialidad'].setValue(
-      //       this.list_especialidades[0]
-      //     );
-      //   })
-      //   .catch((res) => {
-      //     Alert.error(
-      //       'No se pudo cargar a la base de datos!',
-      //       'Intentelo más tarde.'
-      //     );
-      //   })
-      //   .finally(() => {
-      //     this.util.ocultarSpinner();
-      //   });
+      const user = this.generarUsuario(url);
+
+      this.fire
+        .addUsuario(user)
+        .then(() => {
+          Alert.exito('Se cargo con exito!');
+          this.fg.reset();
+          this.errorImg = '';
+          this.fg.controls['especialidad'].setValue(
+            this.list_especialidades[0]
+          );
+        })
+        .catch((res) => {
+          console.log(res);
+          Alert.error(
+            'No se pudo cargar a la base de datos!',
+            'Intentelo más tarde.'
+          );
+        })
+        .finally(() => {
+          this.util.ocultarSpinner();
+        });
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
     }

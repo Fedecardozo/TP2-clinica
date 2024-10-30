@@ -57,18 +57,7 @@ export class AuthService {
         const aux = next as Usuario[];
         for (let index = 0; index < aux.length; index++) {
           const user = aux[index];
-          this.usuarios.push(
-            new Usuario(
-              user.nombre,
-              user.apellido,
-              user.edad,
-              user.dni,
-              user.mail,
-              user.password,
-              user.habilitado,
-              user.rol
-            )
-          );
+          this.usuarios.push(new Usuario());
         }
       });
   }
