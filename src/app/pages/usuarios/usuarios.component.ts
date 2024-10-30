@@ -4,14 +4,14 @@ import { Usuario } from '../../models/usuario';
 import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Alert } from '../../models/alert';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Rol } from '../../models/rol';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, RouterLink],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
 })
@@ -57,7 +57,9 @@ export class UsuariosComponent {
   guardarCambios() {
     Alert.question('¿Esta seguro de guardar los cambios?').then((res) => {
       if (res.isConfirmed) {
-        // this.fire.addUsuario(this.especialistas,'especialistas');
+        this.especialistas.forEach((item) => {
+          this.fire.updateUsuario(item);
+        });
       }
     });
   }

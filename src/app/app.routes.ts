@@ -7,7 +7,15 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
+    // children: [
+    // ],
   },
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./home/admin/admin.component').then((m) => m.AdminComponent),
+  },
+
   {
     path: 'login',
     loadComponent: () =>

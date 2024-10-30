@@ -23,6 +23,13 @@ export class FirebaseService {
     return await doc.set({ ...usuario });
   }
 
+  async updateUsuario(usuario: Usuario) {
+    const colUsuarios = this.firestore.collection('usuarios');
+    const doc = colUsuarios.doc(usuario.id);
+
+    return await doc.update({ ...usuario });
+  }
+
   getCollection(collection: 'usuarios' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;
