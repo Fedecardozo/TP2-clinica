@@ -44,6 +44,7 @@ export class LoginComponent {
         )
         .then(() => {
           this.userService.getRol(this.fg.controls['correo'].value);
+          console.log(this.userService.rol);
           if (this.userService.rol === 'admin') {
             this.router.navigateByUrl('/admin');
           }

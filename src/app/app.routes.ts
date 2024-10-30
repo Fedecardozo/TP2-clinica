@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authActGuard } from './guards/auth-act.guard';
+import { actAdminGuard } from './guards/act-admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -10,8 +11,33 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () =>
-      import('./home/admin/admin.component').then((m) => m.AdminComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./home/admin/admin.component').then((m) => m.AdminComponent),
+      },
+      {
+        path: 'registro',
+        loadComponent: () =>
+          import(
+            './pages/registro/registro-administrador/registro-administrador.component'
+          ).then((m) => m.RegistroAdministradorComponent),
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () =>
+          import('./pages/usuarios/usuarios.component').then(
+            (m) => m.UsuariosComponent
+          ),
+      },
+    ],
+    canActivate: [actAdminGuard],
   },
 
   {
@@ -19,25 +45,5 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginComponent),
     canActivate: [authActGuard],
-  },
-  {
-    path: 'registro',
-    children: [
-      {
-        path: 'admin',
-        loadComponent: () =>
-          import(
-            './pages/registro/registro-administrador/registro-administrador.component'
-          ).then((m) => m.RegistroAdministradorComponent),
-      },
-    ],
-  },
-
-  {
-    path: 'usuarios',
-    loadComponent: () =>
-      import('./pages/usuarios/usuarios.component').then(
-        (m) => m.UsuariosComponent
-      ),
   },
 ];
