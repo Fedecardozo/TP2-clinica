@@ -63,6 +63,7 @@ export class UsuariosComponent {
       }
     });
   }
+
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }

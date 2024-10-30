@@ -1,0 +1,21 @@
+.invalido {
+  margin: 0;
+}
+
+.div-p {
+  height: 24px;
+  color: red;
+}
+
+@media (max-height: 850px) {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-height: 800px) {
+  img {
+    display: 50px;
+  }
+}

@@ -7,8 +7,6 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
-    // children: [
-    // ],
   },
   {
     path: 'admin',
@@ -24,11 +22,17 @@ export const routes: Routes = [
   },
   {
     path: 'registro',
-    loadComponent: () =>
-      import('./pages/registro/registro.component').then(
-        (m) => m.RegistroComponent
-      ),
+    children: [
+      {
+        path: 'admin',
+        loadComponent: () =>
+          import(
+            './pages/registro/registro-administrador/registro-administrador.component'
+          ).then((m) => m.RegistroAdministradorComponent),
+      },
+    ],
   },
+
   {
     path: 'usuarios',
     loadComponent: () =>
