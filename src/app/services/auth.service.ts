@@ -7,6 +7,7 @@ import {
 } from '@angular/fire/auth';
 import { FirebaseService } from './firebase.service';
 import { Usuario } from '../models/usuario';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +19,17 @@ export class AuthService {
   correo: string | null | undefined = undefined;
   usuarios: Usuario[] = [];
   rol = '';
+  subFire?: Subscription;
 
   constructor() {
-    this.getUser();
     this.unSuscribe = this.auth.onAuthStateChanged((auth) => {
       if (auth?.email) {
         this.correo = this.auth.currentUser?.email;
-        this.rol = this.getRol(this.correo || '');
+        this.getUser();
+        setTimeout(() => {
+          console.log(this.correo);
+          console.log(this.rol);
+        }, 2000);
       } else {
         this.correo = null;
       }
@@ -50,15 +55,12 @@ export class AuthService {
   }
 
   private getUser() {
-    this.fire
+    this.subFire = this.fire
       .getCollection('usuarios')
       .valueChanges()
       .subscribe((next) => {
-        const aux = next as Usuario[];
-        for (let index = 0; index < aux.length; index++) {
-          const user = aux[index];
-          this.usuarios.push(new Usuario());
-        }
+        this.usuarios = next as Usuario[];
+        this.getRol(this.correo || '');
       });
   }
 
@@ -66,9 +68,8 @@ export class AuthService {
     for (let index = 0; index < this.usuarios.length; index++) {
       const element = this.usuarios[index];
       if (element.mail === correo) {
-        return element.rol;
+        this.rol = element.rol;
       }
     }
-    return '';
   }
 }

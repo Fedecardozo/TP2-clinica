@@ -12,6 +12,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
+import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-registro-administrador',
   standalone: true,
@@ -26,6 +27,7 @@ export class RegistroAdministradorComponent {
   errorImg: string = '';
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
+  private auth: AuthService = inject(AuthService);
 
   constructor() {
     this.fg = this.fb.group({
@@ -83,6 +85,7 @@ export class RegistroAdministradorComponent {
     user.rol = Rol.admin;
     return user;
   }
+
   async cargar() {
     if (this.fg.valid && this.validarImagen()) {
       this.util.mostrarSpinner('Guardando administrador...');
@@ -92,6 +95,7 @@ export class RegistroAdministradorComponent {
       this.fire
         .addUsuario(user)
         .then(() => {
+          this.auth.registrarse(user.mail, user.password);
           Alert.exito('Se cargo con exito!');
           this.fg.reset();
           this.errorImg = '';
