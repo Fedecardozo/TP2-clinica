@@ -38,4 +38,8 @@ export class Usuario {
     this.obra_social = '';
     this.foto_url_2 = '';
   }
+
+  static getAtributosEspecialista() {
+    return ['Nombre', 'Apellido', 'Edad', 'DNI', 'correo', 'Estado'];
+  }
 }

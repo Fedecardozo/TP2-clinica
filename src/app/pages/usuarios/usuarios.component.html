@@ -2,13 +2,13 @@
   <table class="table table-hover">
     <thead>
       <tr class="table-primary">
-        <!-- @for (item of this.th; track $index) {
+        @for (item of this.th; track $index) {
         <th scope="col">{{ item | titlecase }}</th>
-        } -->
+        }
       </tr>
     </thead>
     <tbody>
-      <!-- @for (item of this.especialistas; track $index) {
+      @for (item of this.especialistas; track $index) {
       <tr (click)="seleccion(item)">
         <td>{{ item.nombre }}</td>
         <td>{{ item.apellido }}</td>
@@ -17,7 +17,7 @@
         <td>{{ item.mail }}</td>
         <td>{{ item.habilitado ? "Habilitado" : "Inhabilitado" }}</td>
       </tr>
-      } -->
+      }
     </tbody>
   </table>
 </div>
