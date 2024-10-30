@@ -31,6 +31,7 @@ export class AuthService {
           console.log(this.rol);
         }, 2000);
       } else {
+        this.rol = '';
         this.correo = null;
       }
     });
