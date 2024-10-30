@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent {
   public fg: FormGroup;
   private userService: AuthService = inject(AuthService);
   private router = inject(Router);
+  private util = inject(UtilsService);
 
   constructor() {
     this.fg = this.fb.group({
@@ -36,6 +38,7 @@ export class LoginComponent {
   }
 
   acceder() {
+    this.util.mostrarSpinner('Iniciando sesión...');
     if (this.fg.valid) {
       this.userService
         .login(
@@ -46,6 +49,7 @@ export class LoginComponent {
           this.userService.getRol(this.fg.controls['correo'].value);
           console.log(this.userService.rol);
           if (this.userService.rol === 'admin') {
+            this.util.ocultarSpinner();
             this.router.navigateByUrl('/admin');
           }
         })
@@ -58,6 +62,7 @@ export class LoginComponent {
         })
         .finally(() => {
           this.fg.reset();
+          this.util.ocultarSpinner();
         });
     }
   }
