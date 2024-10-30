@@ -11,6 +11,19 @@ export class Alert {
     });
   }
 
+  static question(titulo: string = '', texto: string = '') {
+    return Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      backdrop: true, // Esta opción asegura que el fondo sea oscuro
+      allowOutsideClick: false, // Impide cerrar al hacer clic fuera del modal
+    });
+  }
+
   static error(titulo: string = '', texto: string = '') {
     return Swal.fire({
       title: titulo,

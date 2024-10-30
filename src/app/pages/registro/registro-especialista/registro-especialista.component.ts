@@ -8,9 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { FirebaseService } from '../../../services/firebase.service';
-import { Especialista } from '../../../models/especialista';
 import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
 
@@ -24,13 +22,11 @@ import { Usuario } from '../../../models/usuario';
 export class RegistroEspecialistaComponent {
   public fb: FormBuilder = inject(FormBuilder);
   public fg: FormGroup;
-  private userService: AuthService = inject(AuthService);
   public util: UtilsService = inject(UtilsService);
-  private router = inject(Router);
   errorImg: string = '';
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
-  list_especialidades: string[] = Especialista.get_especialidades();
+  list_especialidades = ['cardiologo', 'dentista', 'pediatra'];
 
   constructor() {
     this.fg = this.fb.group({
@@ -81,37 +77,34 @@ export class RegistroEspecialistaComponent {
     if (this.fg.valid && this.validarImagen()) {
       this.util.mostrarSpinner('Guardando especialista...');
       const url = await this.guardarImagen();
-      this.fire
-        .addUsuario(
-          new Especialista(
-            this.fg.controls['nombre'].value,
-            this.fg.controls['apellido'].value,
-            this.fg.controls['edad'].value,
-            this.fg.controls['dni'].value,
-            this.fg.controls['especialidad'].value,
-            this.fg.controls['correo'].value,
-            this.fg.controls['clave'].value,
-            url
-          ),
-          'especialistas'
-        )
-        .then(() => {
-          Alert.exito('Se cargo con exito!');
-          this.fg.reset();
-          this.errorImg = '';
-          this.fg.controls['especialidad'].setValue(
-            this.list_especialidades[0]
-          );
-        })
-        .catch((res) => {
-          Alert.error(
-            'No se pudo cargar a la base de datos!',
-            'Intentelo más tarde.'
-          );
-        })
-        .finally(() => {
-          this.util.ocultarSpinner();
-        });
+      const espe = new Usuario();
+      this.fg.controls['nombre'].value,
+        this.fg.controls['apellido'].value,
+        this.fg.controls['edad'].value,
+        this.fg.controls['dni'].value,
+        this.fg.controls['especialidad'].value,
+        this.fg.controls['correo'].value,
+        this.fg.controls['clave'].value,
+        url;
+      // this.fire
+      //   .addUsuario(, ')
+      //   .then(() => {
+      //     Alert.exito('Se cargo con exito!');
+      //     this.fg.reset();
+      //     this.errorImg = '';
+      //     this.fg.controls['especialidad'].setValue(
+      //       this.list_especialidades[0]
+      //     );
+      //   })
+      //   .catch((res) => {
+      //     Alert.error(
+      //       'No se pudo cargar a la base de datos!',
+      //       'Intentelo más tarde.'
+      //     );
+      //   })
+      //   .finally(() => {
+      //     this.util.ocultarSpinner();
+      //   });
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
     }

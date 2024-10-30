@@ -8,8 +8,6 @@ import {
   uploadString,
 } from '@angular/fire/storage';
 import { Usuario } from '../models/usuario';
-import { Paciente } from '../models/paciente';
-import { Especialista } from '../models/especialista';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,19 +15,15 @@ export class FirebaseService {
   constructor(private firestore: AngularFirestore) {}
   storage: AngularFireStorage = inject(AngularFireStorage);
 
-  async addUsuario(
-    usuario: Usuario | Paciente | Especialista,
-    collection: 'usuarios' | 'pacientes' | 'especialistas'
-  ) {
+  async addUsuario(usuario: Usuario) {
     const colUsuarios = this.firestore.collection('usuarios');
-    const colOtro = this.firestore.collection(collection);
     const doc = colUsuarios.doc();
     usuario.id = doc.ref.id;
-    colOtro.doc(doc.ref.id).set({ ...usuario });
-    return await doc.set({ ...usuario });
+
+    return await doc.set({ usuario });
   }
 
-  getCollection(collection: 'usuarios' | 'pacientes' | 'especialistas') {
+  getCollection(collection: 'usuarios' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;
   }

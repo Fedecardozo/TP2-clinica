@@ -43,9 +43,9 @@ export class LoginComponent {
           this.fg.controls['clave'].value
         )
         .then(() => {
-          if (this.userService.usuario?.rol === 'admin') {
-            this.router.navigateByUrl('/usuarios');
-          }
+          // if (this.userService.usuario?.rol === 'admin') {
+          //   this.router.navigateByUrl('/usuarios');
+          // }
         })
         .catch(() => {
           //Muestro un alert de que no esta registrado

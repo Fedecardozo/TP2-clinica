@@ -16,13 +16,15 @@ export class AuthService {
   private fire = inject(FirebaseService);
   private unSuscribe?: Unsubscribe;
   correo: string | null | undefined = undefined;
-  usuario?: Usuario;
+  usuarios: Usuario[] = [];
+  rol = '';
 
   constructor() {
+    this.getUser();
     this.unSuscribe = this.auth.onAuthStateChanged((auth) => {
       if (auth?.email) {
         this.correo = this.auth.currentUser?.email;
-        this.getUser();
+        this.rol = this.getRol(this.correo || '');
       } else {
         this.correo = null;
       }
@@ -55,8 +57,8 @@ export class AuthService {
         const aux = next as Usuario[];
         for (let index = 0; index < aux.length; index++) {
           const user = aux[index];
-          if (user.mail === this.correo) {
-            this.usuario = new Usuario(
+          this.usuarios.push(
+            new Usuario(
               user.nombre,
               user.apellido,
               user.edad,
@@ -65,10 +67,19 @@ export class AuthService {
               user.password,
               user.habilitado,
               user.rol
-            );
-            break;
-          }
+            )
+          );
         }
       });
+  }
+
+  getRol(correo: string) {
+    for (let index = 0; index < this.usuarios.length; index++) {
+      const element = this.usuarios[index];
+      if (element.mail === correo) {
+        return element.rol;
+      }
+    }
+    return '';
   }
 }
