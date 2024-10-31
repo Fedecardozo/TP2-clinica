@@ -8,6 +8,8 @@ import {
 import { FirebaseService } from './firebase.service';
 import { Usuario } from '../models/usuario';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,8 @@ import { Subscription } from 'rxjs';
 export class AuthService {
   private auth: Auth = inject(Auth);
   private fire = inject(FirebaseService);
+  private util = inject(UtilsService);
+  private router = inject(Router);
   private unSuscribe?: Unsubscribe;
   correo: string | null | undefined = undefined;
   usuarios: Usuario[] = [];
@@ -61,7 +65,7 @@ export class AuthService {
       .valueChanges()
       .subscribe((next) => {
         this.usuarios = next as Usuario[];
-        this.getRol(this.correo || '');
+        this.rol = this.getRol(this.correo || '');
       });
   }
 
@@ -69,8 +73,22 @@ export class AuthService {
     for (let index = 0; index < this.usuarios.length; index++) {
       const element = this.usuarios[index];
       if (element.mail === correo) {
-        this.rol = element.rol;
+        return element.rol;
       }
+    }
+    return '';
+  }
+
+  rutearSegunRol(rol: string) {
+    switch (rol) {
+      case 'admin':
+        this.util.ocultarSpinner();
+        this.router.navigateByUrl('/admin');
+        break;
+
+      default:
+        this.util.ocultarSpinner();
+        break;
     }
   }
 }

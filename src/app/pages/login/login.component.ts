@@ -10,6 +10,9 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UtilsService } from '../../services/utils.service';
+import { Subscription } from 'rxjs';
+import { FirebaseService } from '../../services/firebase.service';
+import { Usuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +27,10 @@ export class LoginComponent {
   private userService: AuthService = inject(AuthService);
   private router = inject(Router);
   private util = inject(UtilsService);
+  private fire = inject(FirebaseService);
+  private subFire?: Subscription;
+  private usuarios: Usuario[] = [];
+  usuario = new Usuario();
 
   constructor() {
     this.fg = this.fb.group({
@@ -32,38 +39,87 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.subFire = this.fire
+      .getCollection('usuarios')
+      .valueChanges()
+      .subscribe((next) => {
+        this.usuarios = next as Usuario[];
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subFire?.unsubscribe();
+  }
+
   accesoRapido(mail: string, password: string) {
     this.fg.controls['correo'].setValue(mail);
     this.fg.controls['clave'].setValue(password);
   }
 
   acceder() {
-    this.util.mostrarSpinner('Iniciando sesión...');
     if (this.fg.valid) {
-      this.userService
-        .login(
+      this.util.mostrarSpinner('Iniciando sesión...');
+      setTimeout(() => {
+        const flag = this.getUsuario(
           this.fg.controls['correo'].value,
           this.fg.controls['clave'].value
-        )
-        .then(() => {
-          this.userService.getRol(this.fg.controls['correo'].value);
-          console.log(this.userService.rol);
-          if (this.userService.rol === 'admin') {
+        );
+
+        //Antes de iniciar sesion tengo que ver que esten habilitados para usar el sistema
+        if (flag) {
+          if (this.usuario.habilitado) this.iniciarSesion();
+          else {
+            Alert.error(
+              'No se encuentra habilitado',
+              'Consulte en administración para la habilitación'
+            );
             this.util.ocultarSpinner();
-            this.router.navigateByUrl('/admin');
           }
-        })
-        .catch(() => {
-          //Muestro un alert de que no esta registrado
+        } else {
+          this.util.ocultarSpinner();
           Alert.error(
             'No se encuentra registrado',
             'Verifique correo y contraseña ingresadas'
           );
-        })
-        .finally(() => {
-          this.fg.reset();
-          this.util.ocultarSpinner();
-        });
+        }
+      }, 1200);
+    } else {
+      //Muestro todos los errores
+      Object.keys(this.fg.controls).forEach((controlName) => {
+        this.fg.controls[controlName].markAsTouched();
+      });
     }
+  }
+
+  getUsuario(correo: string, clave: string) {
+    for (let index = 0; index < this.usuarios.length; index++) {
+      const element = this.usuarios[index];
+      if (element.mail === correo && element.password === clave) {
+        this.usuario = element;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  iniciarSesion() {
+    this.userService
+      .login(this.fg.controls['correo'].value, this.fg.controls['clave'].value)
+      .then(() => {
+        //Dirige a sus rutas correspodientes
+        this.userService.rutearSegunRol(this.usuario.rol);
+      })
+      .catch(() => {
+        //Muestro un alert de que no esta registrado
+        Alert.error(
+          'No se encuentra registrado',
+          'Verifique correo y contraseña ingresadas'
+        );
+      })
+      .finally(() => {
+        this.fg.reset();
+        this.util.ocultarSpinner();
+      });
   }
 }
