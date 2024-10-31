@@ -108,18 +108,17 @@ export class LoginComponent {
       .login(this.fg.controls['correo'].value, this.fg.controls['clave'].value)
       .then(() => {
         //Dirige a sus rutas correspodientes
+        this.userService.rol = this.usuario.rol;
         this.userService.rutearSegunRol(this.usuario.rol);
+        this.fg.reset();
       })
       .catch(() => {
         //Muestro un alert de que no esta registrado
+        this.util.ocultarSpinner();
         Alert.error(
           'No se encuentra registrado',
           'Verifique correo y contraseña ingresadas'
         );
-      })
-      .finally(() => {
-        this.fg.reset();
-        this.util.ocultarSpinner();
       });
   }
 }
