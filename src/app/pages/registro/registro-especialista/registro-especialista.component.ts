@@ -12,6 +12,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -27,6 +28,7 @@ export class RegistroEspecialistaComponent {
   errorImg: string = '';
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
+  private auth: AuthService = inject(AuthService);
   list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra'];
 
   constructor() {
@@ -87,34 +89,48 @@ export class RegistroEspecialistaComponent {
     user.rol = Rol.especialista;
     return user;
   }
+
   async cargar() {
     if (this.fg.valid && this.validarImagen()) {
       this.util.mostrarSpinner('Guardando especialista...');
-      const url = await this.guardarImagen();
-      const user = this.generarUsuario(url);
-
-      this.fire
-        .addUsuario(user)
+      this.auth
+        .registrarse(
+          this.fg.controls['correo'].value,
+          this.fg.controls['clave'].value
+        )
         .then(() => {
-          Alert.exito('Se cargo con exito!');
-          this.fg.reset();
-          this.errorImg = '';
-          this.fg.controls['especialidad'].setValue(
-            this.list_especialidades[0]
-          );
+          this.guardarFire();
         })
-        .catch((res) => {
-          console.log(res);
-          Alert.error(
-            'No se pudo cargar a la base de datos!',
-            'Intentelo más tarde.'
-          );
-        })
-        .finally(() => {
+        .catch((err) => {
           this.util.ocultarSpinner();
+          Alert.error('El correo ya se encuentra registrado');
         });
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
     }
+  }
+
+  async guardarFire() {
+    const url = await this.guardarImagen();
+    const user = this.generarUsuario(url);
+
+    this.fire
+      .addUsuario(user)
+      .then(() => {
+        Alert.exito('Se cargo con exito!');
+        this.fg.reset();
+        this.errorImg = '';
+        this.fg.controls['especialidad'].setValue(this.list_especialidades[0]);
+      })
+      .catch((res) => {
+        console.log(res);
+        Alert.error(
+          'No se pudo cargar a la base de datos!',
+          'Intentelo más tarde.'
+        );
+      })
+      .finally(() => {
+        this.util.ocultarSpinner();
+      });
   }
 }
