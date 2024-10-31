@@ -68,6 +68,7 @@ export class LoginComponent {
 
         //Antes de iniciar sesion tengo que ver que esten habilitados para usar el sistema
         if (flag) {
+          localStorage.setItem('rol', this.usuario.rol);
           if (this.usuario.habilitado) this.iniciarSesion();
           else {
             Alert.error(
@@ -83,7 +84,7 @@ export class LoginComponent {
             'Verifique correo y contraseña ingresadas'
           );
         }
-      }, 1200);
+      }, 2000);
     } else {
       //Muestro todos los errores
       Object.keys(this.fg.controls).forEach((controlName) => {
