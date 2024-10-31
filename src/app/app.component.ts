@@ -15,4 +15,11 @@ export class AppComponent {
   title = 'clinica';
   util: UtilsService = inject(UtilsService);
   user: AuthService = inject(AuthService);
+
+  constructor() {
+    this.util.mostrarSpinner('Cargando...');
+    setTimeout(() => {
+      this.util.ocultarSpinner();
+    }, 2000);
+  }
 }

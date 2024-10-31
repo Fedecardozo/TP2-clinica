@@ -6,9 +6,10 @@ import { UtilsService } from '../services/utils.service';
 export const actAdminGuard: CanActivateFn = (route, state) => {
   const user = inject(AuthService);
   const router = inject(Router);
+  const rol = localStorage.getItem('rol') || '';
 
-  if (user.rol !== 'admin') {
-    router.navigateByUrl('/home');
+  if (rol !== 'admin') {
+    user.rutearSegunRol(rol);
     return false;
   }
 

@@ -44,6 +44,15 @@ export const routes: Routes = [
     canActivate: [actAdminGuard],
   },
 
+  //Registro
+  {
+    path: 'registro',
+    loadComponent: () =>
+      import('./pages/registro/registro.component').then(
+        (m) => m.RegistroComponent
+      ),
+  },
+
   //solo entran los que no iniciaron sesion LOGIN
   {
     path: 'login',

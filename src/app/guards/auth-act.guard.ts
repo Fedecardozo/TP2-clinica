@@ -5,8 +5,9 @@ import { AuthService } from '../services/auth.service';
 export const authActGuard: CanActivateFn = (route, state) => {
   const user = inject(AuthService);
   const router = inject(Router);
-  if (user.correo) {
-    router.navigateByUrl('/home');
+  const rol = localStorage.getItem('rol');
+  if (rol) {
+    user.rutearSegunRol(rol);
   }
 
   return true;

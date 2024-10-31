@@ -31,8 +31,7 @@ export class AuthService {
         this.correo = this.auth.currentUser?.email;
         this.getUser();
         setTimeout(() => {
-          console.log(this.correo);
-          console.log(this.rol);
+          localStorage.setItem('rol', this.rol);
         }, 2000);
       } else {
         this.rol = '';
@@ -56,6 +55,7 @@ export class AuthService {
   }
 
   cerrarSesion() {
+    localStorage.setItem('rol', '');
     return this.auth.signOut();
   }
 
