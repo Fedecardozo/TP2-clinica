@@ -93,7 +93,7 @@
             </div>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <label for="especialidad" class="form-label">Especialidad</label>
             <select
               class="form-select"
@@ -101,12 +101,32 @@
               formControlName="especialidad"
             >
               @for (item of this.list_especialidades; track $index) {
-              <option value="{{ item }}">{{ item }}</option>
+              <option value="{{ item }}">
+                {{ item }}
+              </option>
               }
             </select>
           </div>
 
-          <div class="col-4">
+          <div class="col-sm-6">
+            <label for="otro" class="form-label">Especialidad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="otro"
+              placeholder="Escriba su especialidad..."
+              formControlName="otro"
+            />
+            <div class="div-p">
+              @if(this.fg.controls['otro'].errors !== null &&
+              this.fg.controls["otro"].touched) { @if
+              (this.fg.controls['otro'].errors!['required']) {
+              <p class="invalido">Debes ingresar una especialidad</p>
+              } }
+            </div>
+          </div>
+
+          <div class="col-6">
             <label for="dni" class="form-label">DNI</label>
             <input
               type="number"
@@ -128,7 +148,7 @@
             </div>
           </div>
 
-          <div class="col-4">
+          <div class="col-6">
             <label for="edad" class="form-label">Edad</label>
             <input
               type="number"

@@ -16,6 +16,6 @@
 
 @media (max-height: 800px) {
   img {
-    display: 50px;
+    display: none;
   }
 }

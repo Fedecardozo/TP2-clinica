@@ -41,29 +41,6 @@
         } }
       </div>
 
-      <div class="d-flex justify-content-around mb-3">
-        <button
-          type="button"
-          class="btn btn-outline-primary btn-sm"
-          (click)="this.accesoRapido('fede@g.com', 'asdasd')"
-        >
-          Admin
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary btn-sm"
-          (click)="this.accesoRapido('lea@gm.com', 'asdasd')"
-        >
-          Especialista
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-primary btn-sm"
-          (click)="this.accesoRapido('paciente@g.com', '123456')"
-        >
-          Paciente
-        </button>
-      </div>
       <button
         class="w-100 btn btn-lg btn-primary"
         type="submit"
@@ -71,7 +48,52 @@
       >
         Iniciar Sesión
       </button>
-      <p class="mt-5 mb-3 text-muted text-center">&copy; 2024-2C</p>
     </form>
+    <div class="d-flex justify-content-around mb-3 mt-3">
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm redondo"
+        (click)="this.accesoRapido('fede@g.com', 'asdasd')"
+      >
+        <img src="/admin.png" alt="admin" class="icono" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-success btn-sm redondo"
+        (click)="this.accesoRapido('lea@gm.com', 'asdasd')"
+      >
+        <img src="/especialista.png" alt="especialista" class="icono" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-success btn-sm redondo"
+        (click)="this.accesoRapido('lea@gm.com', 'asdasd')"
+      >
+        <img src="/especialista_mujer.png" alt="especialista" class="icono" />
+      </button>
+    </div>
+    <div class="d-flex justify-content-around mb-3">
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-sm redondo"
+        (click)="this.accesoRapido('paciente@g.com', '123456')"
+      >
+        <img src="/paciente_mujer.png" alt="paciente" class="icono" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-sm redondo"
+        (click)="this.accesoRapido('paciente@g.com', '123456')"
+      >
+        <img src="/paciente.png" alt="paciente" class="icono" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-sm redondo"
+        (click)="this.accesoRapido('paciente@g.com', '123456')"
+      >
+        <img src="/paciente_mujer.png" alt="paciente" class="icono" />
+      </button>
+    </div>
   </div>
 </div>

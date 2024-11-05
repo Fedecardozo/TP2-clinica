@@ -49,3 +49,14 @@ p {
   height: 22px;
   margin-bottom: 1rem;
 }
+
+.redondo {
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.icono {
+  height: 50px;
+  width: 50px;
+}

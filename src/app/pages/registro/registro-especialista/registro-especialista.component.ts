@@ -6,6 +6,7 @@ import {
   FormsModule,
   Validators,
   ReactiveFormsModule,
+  AbstractControl,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../services/firebase.service';
@@ -29,7 +30,7 @@ export class RegistroEspecialistaComponent {
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
   private auth: AuthService = inject(AuthService);
-  list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra'];
+  list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra', 'Otro'];
 
   constructor() {
     this.fg = this.fb.group({
@@ -48,6 +49,15 @@ export class RegistroEspecialistaComponent {
       especialidad: [this.list_especialidades[0]],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
       imagen: [''],
+      otro: [{ value: '', disabled: true }],
+    });
+  }
+
+  ngOnInit(): void {
+    this.fg.controls['especialidad'].valueChanges.subscribe((value) => {
+      if (value === 'Otro') {
+        this.fg.controls['otro'].enable();
+      } else this.fg.controls['otro'].disable();
     });
   }
 
@@ -107,6 +117,10 @@ export class RegistroEspecialistaComponent {
         });
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
+      //Muestro todos los errores
+      Object.keys(this.fg.controls).forEach((controlName) => {
+        this.fg.controls[controlName].markAsTouched();
+      });
     }
   }
 
