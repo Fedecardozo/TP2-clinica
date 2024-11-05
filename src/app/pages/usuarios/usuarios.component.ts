@@ -34,7 +34,6 @@ export class UsuariosComponent {
         this.especialistas = aux.filter(
           (item) => (item.rol = Rol.especialista)
         );
-        console.log(this.especialistas);
       });
   }
 
@@ -48,13 +47,6 @@ export class UsuariosComponent {
       }
     });
   }
-
-  // guardarCambios() {
-
-  //       // this.especialistas.forEach((item) => {
-  //       //   this.fire.updateUsuario(item);
-  //       // });
-  // }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();

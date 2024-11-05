@@ -29,9 +29,9 @@ export const routes: Routes = [
       {
         path: 'registro',
         loadComponent: () =>
-          import(
-            './pages/registro/registro-administrador/registro-administrador.component'
-          ).then((m) => m.RegistroAdministradorComponent),
+          import('./pages/registro/registro.component').then(
+            (m) => m.RegistroComponent
+          ),
       },
       {
         path: 'usuarios',

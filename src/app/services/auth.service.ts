@@ -30,9 +30,6 @@ export class AuthService {
       if (auth?.email) {
         this.correo = this.auth.currentUser?.email;
         this.getUser();
-        setTimeout(() => {
-          localStorage.setItem('rol', this.rol);
-        }, 2000);
       } else {
         this.rol = '';
         this.correo = null;
@@ -66,6 +63,7 @@ export class AuthService {
       .subscribe((next) => {
         this.usuarios = next as Usuario[];
         this.rol = this.getRol(this.correo || '');
+        localStorage.setItem('rol', this.rol);
       });
   }
 
