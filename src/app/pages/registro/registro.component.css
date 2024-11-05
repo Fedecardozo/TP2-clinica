@@ -1,0 +1,8 @@
+.redondo {
+  border-radius: 50%;
+  height: 360px;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
