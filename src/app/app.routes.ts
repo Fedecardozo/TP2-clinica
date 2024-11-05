@@ -47,10 +47,37 @@ export const routes: Routes = [
   //Registro
   {
     path: 'registro',
-    loadComponent: () =>
-      import('./pages/registro/registro.component').then(
-        (m) => m.RegistroComponent
-      ),
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/registro/registro.component').then(
+            (m) => m.RegistroComponent
+          ),
+      },
+      {
+        path: 'admin',
+        loadComponent: () =>
+          import(
+            './pages/registro/registro-administrador/registro-administrador.component'
+          ).then((m) => m.RegistroAdministradorComponent),
+      },
+      {
+        path: 'especialista',
+        loadComponent: () =>
+          import(
+            './pages/registro/registro-especialista/registro-especialista.component'
+          ).then((m) => m.RegistroEspecialistaComponent),
+      },
+      {
+        path: 'paciente',
+        loadComponent: () =>
+          import(
+            './pages/registro/registro-paciente/registro-paciente.component'
+          ).then((m) => m.RegistroPacienteComponent),
+      },
+    ],
   },
 
   //solo entran los que no iniciaron sesion LOGIN

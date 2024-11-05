@@ -30,6 +30,12 @@ export class FirebaseService {
     return await doc.update({ ...usuario });
   }
 
+  updateUser(usuario: Usuario) {
+    return this.firestore
+      .doc<Usuario>(`usuarios/${usuario.id}`)
+      .update(usuario);
+  }
+
   getCollection(collection: 'usuarios' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;

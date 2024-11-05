@@ -39,30 +39,22 @@ export class UsuariosComponent {
   }
 
   seleccion(especialista: Usuario) {
-    if (especialista.habilitado) {
-      Alert.question('¿Desesa inhabilitar a este especialista?').then((res) => {
-        if (res.isConfirmed) {
-          especialista.habilitado = false;
-        }
-      });
-    } else {
-      Alert.question('¿Desea habilitar a este especialista?').then((res) => {
-        if (res.isConfirmed) {
-          especialista.habilitado = true;
-        }
-      });
-    }
-  }
-
-  guardarCambios() {
-    Alert.question('¿Esta seguro de guardar los cambios?').then((res) => {
+    const isHabilitado = especialista.habilitado;
+    const text = isHabilitado ? 'inhabilitar' : 'habilitar';
+    Alert.question(`¿Desesa ${text} a este especialista?`).then((res) => {
       if (res.isConfirmed) {
-        this.especialistas.forEach((item) => {
-          this.fire.updateUsuario(item);
-        });
+        especialista.habilitado = !isHabilitado;
+        this.fire.updateUser(especialista);
       }
     });
   }
+
+  // guardarCambios() {
+
+  //       // this.especialistas.forEach((item) => {
+  //       //   this.fire.updateUsuario(item);
+  //       // });
+  // }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
