@@ -31,7 +31,7 @@ export class PerfilComponent {
   seleccion_horario_fin = '';
 
   constructor() {
-    this.dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+    this.dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
     this.class = [
       this.clase,
       this.clase,
