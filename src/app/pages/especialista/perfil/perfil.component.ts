@@ -40,8 +40,8 @@ export class PerfilComponent {
       this.clase,
       this.clase,
     ];
-    this.horarioInicio = [...this.generar_horarios()];
-    this.horariosFin = [...this.generar_horarios()];
+    this.horarioInicio = [...this.util.generar_horarios(7)];
+    this.horariosFin = [...this.util.generar_horarios(7)];
     this.horarioInicio.pop();
     this.horariosFin.shift();
   }
@@ -53,28 +53,6 @@ export class PerfilComponent {
     this.user.userActual?.dias_de_trabajo.forEach((item) => {
       this.seleccionarDia(item);
     });
-  }
-
-  generar_horarios() {
-    const aux = [];
-    let hora = 7;
-    let minutos = 30;
-
-    do {
-      if (hora < 19 && minutos === 0) minutos += 30;
-      else if (hora < 19 && minutos === 30) {
-        minutos = 0;
-        hora++;
-      }
-
-      aux.push(
-        `${hora >= 10 ? hora : '0' + hora}:${minutos === 30 ? minutos : '00'}`
-      );
-
-      if (hora === 18 && minutos === 30) break;
-    } while (true);
-
-    return aux;
   }
 
   clickDias() {

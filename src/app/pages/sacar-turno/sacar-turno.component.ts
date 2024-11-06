@@ -3,11 +3,17 @@ import { EspecialidadComponent } from './especialidad/especialidad.component';
 import { EspecialistaComponent } from './especialista/especialista.component';
 import { Usuario } from '../../models/usuario';
 import { DiaComponent } from './dia/dia.component';
+import { HorarioComponent } from './horario/horario.component';
 
 @Component({
   selector: 'app-sacar-turno',
   standalone: true,
-  imports: [EspecialidadComponent, EspecialistaComponent, DiaComponent],
+  imports: [
+    EspecialidadComponent,
+    EspecialistaComponent,
+    DiaComponent,
+    HorarioComponent,
+  ],
   templateUrl: './sacar-turno.component.html',
   styleUrl: './sacar-turno.component.css',
 })
