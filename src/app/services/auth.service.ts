@@ -102,6 +102,7 @@ export class AuthService {
         break;
 
       default:
+        this.router.navigateByUrl('/home');
         this.util.ocultarSpinner();
         break;
     }

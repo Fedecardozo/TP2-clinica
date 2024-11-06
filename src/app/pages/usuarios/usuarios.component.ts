@@ -32,7 +32,7 @@ export class UsuariosComponent {
       .subscribe((next) => {
         const aux = next as Usuario[];
         this.especialistas = aux.filter(
-          (item) => (item.rol = Rol.especialista)
+          (item) => item.rol === Rol.especialista
         );
       });
   }
