@@ -116,7 +116,7 @@ export class PerfilComponent {
       this.fire
         .updateUsuario(this.user.userActual)
         .then(() => {
-          Alert.exito('Se guardaron cambios exitosamente!');
+          Alert.exito('Se guardaron los cambios exitosamente!');
         })
         .catch(() => {
           Alert.error(
