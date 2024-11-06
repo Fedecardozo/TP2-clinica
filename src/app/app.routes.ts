@@ -106,7 +106,7 @@ export const routes: Routes = [
       {
         path: 'sacar-turno',
         loadComponent: () =>
-          import('./pages/paciente/sacar-turno/sacar-turno.component').then(
+          import('./pages/sacar-turno/sacar-turno.component').then(
             (m) => m.SacarTurnoComponent
           ),
       },

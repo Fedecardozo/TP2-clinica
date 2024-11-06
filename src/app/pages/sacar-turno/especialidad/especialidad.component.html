@@ -1,0 +1,51 @@
+<!-- Seleccionar Especialidad -->
+<div class="padre d-flex align-items-center justify-content-center mt-3">
+  <div class="row sub-container w-75">
+    <div class="col-12 mb-2 d-flex justify-content-center">
+      <h4 class="mb-3">Seleccione una especialidad</h4>
+    </div>
+    <!-- Cardiologo -->
+    <div class="col-6 mb-2 d-flex justify-content-center">
+      <div
+        (click)="incrementarContador('cardiologo')"
+        class="btn btn-outline-success redondo"
+      >
+        <img src="/cardiologo.png" alt="cardiologo" />
+        <span>Cardiologo</span>
+      </div>
+    </div>
+
+    <!-- Dentista -->
+    <div class="col-6 mb-2 d-flex justify-content-center">
+      <div
+        (click)="incrementarContador('dentista')"
+        class="btn btn-outline-success redondo"
+      >
+        <img src="/dentista.png" alt="dentista" />
+        <span>Dentista</span>
+      </div>
+    </div>
+
+    <!-- pediatra -->
+    <div class="col-6 mb-2 d-flex justify-content-center">
+      <div
+        (click)="incrementarContador('pediatra')"
+        class="btn btn-outline-success redondo"
+      >
+        <img src="/pediatra.png" alt="pediatra" />
+        <span>Pediatra</span>
+      </div>
+    </div>
+
+    <!-- Radiologo -->
+    <div class="col-6 mb-2 d-flex justify-content-center">
+      <div
+        (click)="incrementarContador('radiologo')"
+        class="btn btn-outline-success redondo"
+      >
+        <img src="/radiologo.png" alt="radiologo" />
+        <span>Radiologo</span>
+      </div>
+    </div>
+  </div>
+</div>
