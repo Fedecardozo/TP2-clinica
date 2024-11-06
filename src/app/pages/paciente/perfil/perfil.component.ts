@@ -15,7 +15,5 @@ export class PerfilComponent {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('hola');
-  }
+  ngOnInit(): void {}
 }
