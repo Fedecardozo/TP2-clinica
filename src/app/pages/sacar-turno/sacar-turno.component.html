@@ -3,7 +3,10 @@
 <app-especialidad (incrementar)="addEspecialidad($event)"></app-especialidad>
 } @case (1) {
 <!-- Seleccionar Especialista -->
-
+<app-especialista
+  [especialidad]="especialidad"
+  (incrementar)="addEspecialista($event)"
+></app-especialista>
 } @case (2) {
 
 <!-- Seleccionar Dia -->

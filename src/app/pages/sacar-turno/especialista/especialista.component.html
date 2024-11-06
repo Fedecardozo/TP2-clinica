@@ -1,0 +1,33 @@
+<!-- Seleccionar Especialidad -->
+<div
+  class="padre container d-flex align-items-center justify-content-center mt-3"
+>
+  <div class="row sub-container w-100">
+    <div class="col-12 mb-2 d-flex justify-content-center">
+      <h4 class="mb-3">Seleccione un especialista</h4>
+    </div>
+
+    @for (item of list_especialista; track $index) {
+    <div class="col-12 mb-3">
+      <div
+        (click)="incrementarContador(item)"
+        class="btn btn-outline-success w-100 d-flex justify-content-around align-items-center"
+      >
+        <img [src]="item.foto_url" alt="perfil" />
+        <span>Nombre: {{ item.nombre | titlecase }}</span>
+        <span>Apellido: {{ item.apellido | titlecase }}</span>
+        <span>Edad: {{ item.edad.toString() | titlecase }} años</span>
+        <span>Atención: {{ item.dias_de_trabajo.toString() | titlecase }}</span>
+        <span>Horario de inicio: {{ item.horario_de_inicio }}hs</span>
+        <span>Horario de fin: {{ item.horario_de_fin }}hs</span>
+      </div>
+    </div>
+    } @empty {
+    <div class="col-12">
+      <h5 class="text-center text-danger">
+        No hay especialista por el momento
+      </h5>
+    </div>
+    }
+  </div>
+</div>
