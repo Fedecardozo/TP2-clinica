@@ -30,8 +30,10 @@ export class RegistroPacienteComponent {
   imagenCargada: File | null = null;
   imagenCargada2: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
+  isAdmin: boolean;
 
   constructor() {
+    this.isAdmin = this.auth.rol === 'admin';
     this.fg = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
@@ -88,19 +90,8 @@ export class RegistroPacienteComponent {
 
   async cargar() {
     if (this.fg.valid && this.validarImagen()) {
-      this.util.mostrarSpinner('Guardando especialista...');
-      this.auth
-        .registrarse(
-          this.fg.controls['correo'].value,
-          this.fg.controls['clave'].value
-        )
-        .then(() => {
-          this.guardarFire();
-        })
-        .catch((err) => {
-          this.util.ocultarSpinner();
-          Alert.error('El correo ya se encuentra registrado');
-        });
+      this.util.mostrarSpinner('Guardando paciente...');
+      this.guardarFire();
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
       //Muestro todos los errores
@@ -114,24 +105,14 @@ export class RegistroPacienteComponent {
     const url = await this.guardarImagen(this.imagenCargada);
     const url2 = await this.guardarImagen(this.imagenCargada2);
     const user = this.generarUsuario(url, url2);
-
-    this.fire
-      .addUsuario(user)
-      .then(() => {
-        Alert.exito('Se cargo con exito!');
-        this.fg.reset();
-        this.errorImg = '';
-      })
-      .catch((res) => {
-        console.log(res);
-        Alert.error(
-          'No se pudo cargar a la base de datos!',
-          'Intentelo más tarde.'
-        );
-      })
-      .finally(() => {
-        this.util.ocultarSpinner();
-      });
+    this.auth.registrarUsuario(
+      this.fg.controls['correo'].value,
+      this.fg.controls['clave'].value,
+      this.isAdmin,
+      user
+    );
+    this.fg.reset();
+    this.errorImg = '';
   }
 
   generarUsuario(url: string, url2: string): Usuario {

@@ -89,18 +89,8 @@ export class RegistroAdministradorComponent {
   async cargar() {
     if (this.fg.valid && this.validarImagen()) {
       this.util.mostrarSpinner('Guardando administrador...');
-      this.auth
-        .registrarse(
-          this.fg.controls['correo'].value,
-          this.fg.controls['clave'].value
-        )
-        .then(() => {
-          this.guardarFire();
-        })
-        .catch((err) => {
-          this.util.ocultarSpinner();
-          Alert.error('El correo ya se encuentra registrado');
-        });
+
+      this.guardarFire();
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
     }
@@ -110,24 +100,11 @@ export class RegistroAdministradorComponent {
     const url = await this.guardarImagen();
 
     const user = this.generarUsuario(url);
-
-    this.fire
-      .addUsuario(user)
-      .then(() => {
-        this.auth.registrarse(user.mail, user.password);
-        Alert.exito('Se cargo con exito!');
-        this.fg.reset();
-        this.errorImg = '';
-      })
-      .catch((res) => {
-        console.log(res);
-        Alert.error(
-          'No se pudo cargar a la base de datos!',
-          'Intentelo más tarde.'
-        );
-      })
-      .finally(() => {
-        this.util.ocultarSpinner();
-      });
+    await this.auth.registrarUsuario(
+      this.fg.controls['correo'].value,
+      this.fg.controls['clave'].value,
+      true,
+      user
+    );
   }
 }

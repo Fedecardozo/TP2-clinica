@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Alert } from '../../../models/alert';
 import {
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
   AbstractControl,
+  FormArray,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../services/firebase.service';
@@ -30,9 +31,13 @@ export class RegistroEspecialistaComponent {
   imagenCargada: File | null = null;
   private fire: FirebaseService = inject(FirebaseService);
   private auth: AuthService = inject(AuthService);
-  list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra', 'Otro'];
+  list_especialidades = ['Cardiologo', 'Dentista', 'Pediatra', 'Radiologo'];
+  list_especialidad_selecionada: string[] = ['Dentista'];
+  indexOtro = -1;
+  isAdmin: boolean;
 
   constructor() {
+    this.isAdmin = this.auth.rol === 'admin';
     this.fg = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
@@ -46,20 +51,20 @@ export class RegistroEspecialistaComponent {
           Validators.max(99999999),
         ],
       ],
-      especialidad: [this.list_especialidades[0]],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
       imagen: [''],
-      otro: [{ value: '', disabled: true }],
+      otro: [''],
     });
   }
 
-  ngOnInit(): void {
-    this.fg.controls['especialidad'].valueChanges.subscribe((value) => {
-      if (value === 'Otro') {
-        this.fg.controls['otro'].enable();
-      } else this.fg.controls['otro'].disable();
-    });
+  addCheckEspecialidad(especialidad: string) {
+    const index = this.list_especialidad_selecionada.indexOf(especialidad);
+
+    if (index >= 0) this.list_especialidad_selecionada.splice(index, index + 1);
+    else this.list_especialidad_selecionada.push(especialidad);
   }
+
+  ngOnInit(): void {}
 
   validarImagen(): boolean {
     if (this.fg.controls['imagen'].value === '') {
@@ -92,7 +97,7 @@ export class RegistroEspecialistaComponent {
     user.apellido = this.fg.controls['apellido'].value;
     user.edad = this.fg.controls['edad'].value;
     user.dni = this.fg.controls['dni'].value;
-    user.especialidad = this.fg.controls['especialidad'].value;
+    user.especialidad = this.list_especialidad_selecionada;
     user.mail = this.fg.controls['correo'].value;
     user.password = this.fg.controls['clave'].value;
     user.foto_url = url;
@@ -100,21 +105,30 @@ export class RegistroEspecialistaComponent {
     return user;
   }
 
+  verificarOtro() {
+    const otro = this.fg.controls['otro'].value;
+    console.log(this.indexOtro);
+    if (this.indexOtro >= 0) {
+      this.list_especialidad_selecionada.splice(
+        this.indexOtro,
+        this.indexOtro + 1
+      );
+      this.indexOtro = -1;
+    }
+    if (otro !== '')
+      this.indexOtro = this.list_especialidad_selecionada.push(otro) - 1;
+  }
+
   async cargar() {
-    if (this.fg.valid && this.validarImagen()) {
+    this.verificarOtro();
+    if (
+      this.fg.valid &&
+      this.validarImagen() &&
+      this.list_especialidad_selecionada.length
+    ) {
       this.util.mostrarSpinner('Guardando especialista...');
-      this.auth
-        .registrarse(
-          this.fg.controls['correo'].value,
-          this.fg.controls['clave'].value
-        )
-        .then(() => {
-          this.guardarFire();
-        })
-        .catch((err) => {
-          this.util.ocultarSpinner();
-          Alert.error('El correo ya se encuentra registrado');
-        });
+
+      this.guardarFire();
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
       //Muestro todos los errores
@@ -127,24 +141,13 @@ export class RegistroEspecialistaComponent {
   async guardarFire() {
     const url = await this.guardarImagen();
     const user = this.generarUsuario(url);
-
-    this.fire
-      .addUsuario(user)
-      .then(() => {
-        Alert.exito('Se cargo con exito!');
-        this.fg.reset();
-        this.errorImg = '';
-        this.fg.controls['especialidad'].setValue(this.list_especialidades[0]);
-      })
-      .catch((res) => {
-        console.log(res);
-        Alert.error(
-          'No se pudo cargar a la base de datos!',
-          'Intentelo más tarde.'
-        );
-      })
-      .finally(() => {
-        this.util.ocultarSpinner();
-      });
+    this.auth.registrarUsuario(
+      this.fg.controls['correo'].value,
+      this.fg.controls['clave'].value,
+      this.isAdmin,
+      user
+    );
+    this.fg.reset();
+    this.errorImg = '';
   }
 }

@@ -93,23 +93,30 @@
             </div>
           </div>
 
-          <div class="col-md-6">
-            <label for="especialidad" class="form-label">Especialidad</label>
-            <select
-              class="form-select"
-              id="especialidad"
-              formControlName="especialidad"
-            >
+          <div class="col-12">
+            <label for="" class="form-label">Especialidad</label>
+            <div class="d-flex justify-content-around">
               @for (item of this.list_especialidades; track $index) {
-              <option value="{{ item }}">
-                {{ item }}
-              </option>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="item"
+                  (click)="addCheckEspecialidad(item)"
+                  [checked]="$index === 1"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  {{ item }}
+                </label>
+              </div>
               }
-            </select>
+            </div>
           </div>
 
-          <div class="col-sm-6">
-            <label for="otro" class="form-label">Especialidad</label>
+          <div class="col-12">
+            <label for="otro" class="form-label"
+              >Otra especialidad (Opcional)</label
+            >
             <input
               type="text"
               class="form-control"
@@ -118,11 +125,12 @@
               formControlName="otro"
             />
             <div class="div-p">
-              @if(this.fg.controls['otro'].errors !== null &&
-              this.fg.controls["otro"].touched) { @if
-              (this.fg.controls['otro'].errors!['required']) {
-              <p class="invalido">Debes ingresar una especialidad</p>
-              } }
+              @if(this.list_especialidad_selecionada.length<=0 &&
+              fg.controls['otro'].value==='') {
+              <p class="invalido">
+                Debes seleccionar o escribir una especialidad por lo menos
+              </p>
+              }
             </div>
           </div>
 

@@ -10,6 +10,7 @@ import { Usuario } from '../models/usuario';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { UtilsService } from './utils.service';
+import { Alert } from '../models/alert';
 
 @Injectable({
   providedIn: 'root',
@@ -19,17 +20,21 @@ export class AuthService {
   private fire = inject(FirebaseService);
   private util = inject(UtilsService);
   private router = inject(Router);
+  private adminEmail: string | null = null;
+  private adminPassword: string | null = null;
   private unSuscribe?: Unsubscribe;
   correo: string | null | undefined = undefined;
   usuarios: Usuario[] = [];
   rol = '';
   subFire?: Subscription;
+  userActual?: Usuario;
 
   constructor() {
     this.unSuscribe = this.auth.onAuthStateChanged((auth) => {
       if (auth?.email) {
         this.correo = this.auth.currentUser?.email;
         this.getUser();
+        console.log(this.correo);
       } else {
         this.rol = '';
         this.correo = null;
@@ -47,8 +52,19 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  registrarse(email: string, password: string) {
-    return createUserWithEmailAndPassword(this.auth, email, password);
+  async registrarse(email: string, password: string) {
+    try {
+      const res = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+      // Cerrar sesión inmediatamente después del registro
+      await this.auth.signOut();
+    } catch (err) {
+      this.util.ocultarSpinner();
+      Alert.error('El correo ya se encuentra registrado');
+    }
   }
 
   cerrarSesion() {
@@ -62,16 +78,17 @@ export class AuthService {
       .valueChanges()
       .subscribe((next) => {
         this.usuarios = next as Usuario[];
-        this.rol = this.getRol(this.correo || '');
+        this.userActual = this.getUserActual(this.correo || '') || undefined;
+        this.rol = this.userActual?.rol || '';
         localStorage.setItem('rol', this.rol);
       });
   }
 
-  getRol(correo: string) {
+  private getUserActual(correo: string) {
     for (let index = 0; index < this.usuarios.length; index++) {
       const element = this.usuarios[index];
       if (element.mail === correo) {
-        return element.rol;
+        return element;
       }
     }
     return '';
@@ -88,5 +105,71 @@ export class AuthService {
         this.util.ocultarSpinner();
         break;
     }
+  }
+
+  async saveAdminCredentials(email: string, password: string): Promise<void> {
+    this.adminEmail = email;
+    this.adminPassword = password;
+  }
+
+  async registerUser(email: string, password: string): Promise<void> {
+    try {
+      // Guardar el usuario actual (admin) para volver a autenticarlo luego
+      const currentUser = this.auth.currentUser;
+
+      console.log(this.userActual);
+      //Guardo las crendeciales
+      this.saveAdminCredentials(
+        this.userActual?.mail || '',
+        this.userActual?.password || ''
+      );
+
+      // Crear el nuevo usuario
+      await createUserWithEmailAndPassword(this.auth, email, password);
+      console.log('Usuario registrado:', email);
+
+      // Cerrar la sesión del nuevo usuario
+      await this.auth.signOut();
+
+      // Volver a iniciar sesión con el usuario administrador
+      if (currentUser && this.adminEmail && this.adminPassword) {
+        await signInWithEmailAndPassword(
+          this.auth,
+          this.adminEmail,
+          this.adminPassword
+        );
+        console.log('Sesión restaurada para el administrador');
+      }
+    } catch (error) {
+      console.error('Error al registrar el usuario:', error);
+    }
+  }
+
+  async registrarUsuario(
+    email: string,
+    password: string,
+    isAdmin: boolean,
+    usuario: Usuario
+  ) {
+    if (isAdmin) {
+      this.registerUser(email, password);
+    } else {
+      this.registrarse(email, password);
+    }
+    this.fire
+      .addUsuario(usuario)
+      .then(() => {
+        Alert.exito('Se cargo con exito!');
+      })
+      .catch((res) => {
+        console.log(res);
+        Alert.error(
+          'No se pudo cargar a la base de datos!',
+          'Intentelo más tarde.'
+        );
+      })
+      .finally(() => {
+        this.util.ocultarSpinner();
+      });
   }
 }
