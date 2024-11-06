@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { Usuario } from '../../../models/usuario';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
@@ -12,10 +11,4 @@ import { TitleCasePipe } from '@angular/common';
 })
 export class PerfilComponent {
   user = inject(AuthService);
-
-  constructor() {}
-
-  ngOnInit(): void {
-    console.log('hola');
-  }
 }

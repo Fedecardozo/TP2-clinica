@@ -4,11 +4,17 @@ import { UtilsService } from './services/utils.service';
 import { AuthService } from './services/auth.service';
 import { NavAdminComponent } from './components/nav/nav-admin/nav-admin.component';
 import { NavPacienteComponent } from './components/nav/nav-paciente/nav-paciente.component';
+import { NavEspecialistaComponent } from './components/nav/nav-especialista/nav-especialista.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavAdminComponent, NavPacienteComponent],
+  imports: [
+    RouterOutlet,
+    NavAdminComponent,
+    NavPacienteComponent,
+    NavEspecialistaComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

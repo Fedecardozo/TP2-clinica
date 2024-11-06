@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authActGuard } from './guards/auth-act.guard';
 import { actAdminGuard } from './guards/act-admin.guard';
 import { actPacGuard } from './guards/act-pac.guard';
+import { actEspecialistaGuard } from './guards/act-especialista.guard';
 
 export const routes: Routes = [
   //solo entran los que no iniciaron sesion HOME
@@ -43,6 +44,33 @@ export const routes: Routes = [
       },
     ],
     canActivate: [actAdminGuard],
+  },
+
+  //Especialista
+  {
+    path: 'especialista',
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/especialista/especialista.component').then(
+            (m) => m.EspecialistaComponent
+          ),
+      },
+      {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./pages/especialista/perfil/perfil.component').then(
+            (m) => m.PerfilComponent
+          ),
+      },
+    ],
+    canActivate: [actEspecialistaGuard],
   },
 
   //Pacientes

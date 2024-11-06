@@ -127,7 +127,10 @@ export class AuthService {
         this.util.ocultarSpinner();
         this.router.navigateByUrl('/paciente');
         break;
-
+      case 'especialista':
+        this.util.ocultarSpinner();
+        this.router.navigateByUrl('/especialista');
+        break;
       default:
         this.util.ocultarSpinner();
         this.router.navigateByUrl('/home');
