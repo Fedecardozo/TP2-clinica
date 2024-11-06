@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   Unsubscribe,
 } from '@angular/fire/auth';
@@ -48,8 +49,32 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async login(email: string, password: string) {
+    return await signInWithEmailAndPassword(this.auth, email, password)
+      .then((res) => {
+        console.log(res);
+        console.log(res.user);
+
+        if (res.user.emailVerified) {
+          this.rol = localStorage.getItem('rol') || '';
+          //Dirige a sus rutas correspodientes
+          this.rutearSegunRol(this.rol);
+        } else {
+          sendEmailVerification(res.user);
+          this.cerrarSesion();
+          Alert.error(
+            'Su correo no esta verificado',
+            'Verifique su casilla de correo electronico'
+          );
+        }
+      })
+      .catch(() => {
+        //Muestro un alert de que no esta registrado
+        Alert.error(
+          'No se encuentra registrado',
+          'Verifique correo y contraseña ingresadas'
+        );
+      });
   }
 
   async registrarse(email: string, password: string) {
@@ -59,6 +84,7 @@ export class AuthService {
         email,
         password
       );
+      sendEmailVerification(res.user);
       // Cerrar sesión inmediatamente después del registro
       await this.auth.signOut();
     } catch (err) {
@@ -126,8 +152,14 @@ export class AuthService {
       );
 
       // Crear el nuevo usuario
-      await createUserWithEmailAndPassword(this.auth, email, password);
+      const res = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       console.log('Usuario registrado:', email);
+      sendEmailVerification(res.user);
+      console.log(res);
 
       // Cerrar la sesión del nuevo usuario
       await this.auth.signOut();
