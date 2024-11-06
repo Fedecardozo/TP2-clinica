@@ -1,0 +1,36 @@
+<div class="container d-flex align-items-center justify-content-center padre">
+  <div class="row sub-container w-50">
+    <div class="col-6">
+      <h4 class="mb-3">Mi perfil</h4>
+    </div>
+    <div class="col-3">
+      <img [src]="this.user.userActual?.foto_url" alt="perfil" />
+    </div>
+    <div class="col-3">
+      <img [src]="this.user.userActual?.foto_url_2" alt="perfil2" />
+    </div>
+    <!-- Nombre -->
+    <div class="col-md-6 col-lg-6">Nombre</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.nombre }}</div>
+
+    <!-- Apellido -->
+    <div class="col-md-6 col-lg-6">Apellido</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.apellido }}</div>
+
+    <!-- DNI -->
+    <div class="col-md-6 col-lg-6">DNI</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.dni }}</div>
+
+    <!-- Edad -->
+    <div class="col-md-6 col-lg-6">Edad</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.edad }}</div>
+
+    <!-- Email -->
+    <div class="col-md-6 col-lg-6">Correo</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.mail }}</div>
+
+    <!-- Obra social -->
+    <div class="col-md-6 col-lg-6">Obra social</div>
+    <div class="col-md-6 col-lg-6">{{ this.user.userActual?.obra_social }}</div>
+  </div>
+</div>
