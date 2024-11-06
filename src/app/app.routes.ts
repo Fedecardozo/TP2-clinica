@@ -69,6 +69,13 @@ export const routes: Routes = [
             (m) => m.PerfilComponent
           ),
       },
+      {
+        path: 'mis-turnos',
+        loadComponent: () =>
+          import('./pages/especialista/mis-turnos/mis-turnos.component').then(
+            (m) => m.MisTurnosComponent
+          ),
+      },
     ],
     canActivate: [actEspecialistaGuard],
   },
