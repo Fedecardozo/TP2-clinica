@@ -36,7 +36,7 @@ export class FirebaseService {
       .update(usuario);
   }
 
-  getCollection(collection: 'usuarios' = 'usuarios') {
+  getCollection(collection: 'usuarios' | 'turnos' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;
   }
