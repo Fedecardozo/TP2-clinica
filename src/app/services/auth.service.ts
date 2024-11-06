@@ -52,9 +52,6 @@ export class AuthService {
   async login(email: string, password: string) {
     return await signInWithEmailAndPassword(this.auth, email, password)
       .then((res) => {
-        console.log(res);
-        console.log(res.user);
-
         if (res.user.emailVerified) {
           this.rol = localStorage.getItem('rol') || '';
           //Dirige a sus rutas correspodientes
@@ -126,10 +123,14 @@ export class AuthService {
         this.util.ocultarSpinner();
         this.router.navigateByUrl('/admin');
         break;
+      case 'paciente':
+        this.util.ocultarSpinner();
+        this.router.navigateByUrl('/paciente');
+        break;
 
       default:
-        this.router.navigateByUrl('/home');
         this.util.ocultarSpinner();
+        this.router.navigateByUrl('/home');
         break;
     }
   }

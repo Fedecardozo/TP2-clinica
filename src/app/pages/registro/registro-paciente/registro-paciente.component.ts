@@ -127,6 +127,7 @@ export class RegistroPacienteComponent {
     user.foto_url = url;
     user.foto_url_2 = url2;
     user.rol = Rol.paciente;
+    user.habilitado = true;
     return user;
   }
 }

@@ -12,9 +12,11 @@
 <app-nav-admin></app-nav-admin>
 
 } @case ('paciente') {
-<app-nav-admin></app-nav-admin>
+<app-nav-paciente></app-nav-paciente>
 
-} }
+} @default {
+<!-- <app-nav-paciente></app-nav-paciente> -->
+}}
 
 <router-outlet />
 }

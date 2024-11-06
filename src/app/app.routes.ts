@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authActGuard } from './guards/auth-act.guard';
 import { actAdminGuard } from './guards/act-admin.guard';
+import { actPacGuard } from './guards/act-pac.guard';
 
 export const routes: Routes = [
   //solo entran los que no iniciaron sesion HOME
@@ -44,6 +45,32 @@ export const routes: Routes = [
     canActivate: [actAdminGuard],
   },
 
+  //Pacientes
+  {
+    path: 'paciente',
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/paciente/paciente.component').then(
+            (m) => m.PacienteComponent
+          ),
+      },
+      {
+        path: 'mis-turnos',
+        loadComponent: () =>
+          import('./pages/paciente/mis-turnos/mis-turnos.component').then(
+            (m) => m.MisTurnosComponent
+          ),
+      },
+    ],
+    canActivate: [actPacGuard],
+  },
   //Registro
   {
     path: 'registro',
