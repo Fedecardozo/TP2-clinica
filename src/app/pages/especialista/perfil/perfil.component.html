@@ -1,5 +1,11 @@
 <div class="container d-flex align-items-center justify-content-center padre">
   <div class="row sub-container w-50">
+    <div class="col-12 d-flex justify-content-center">
+      <h5 [class]="decoration" (click)="clickPefil()">Perfil</h5>
+      <h5 [class]="decoration2" (click)="clickDias()">Dias</h5>
+    </div>
+
+    @if(perfil){
     <div class="col-6">
       <h4 class="mb-3">Mi perfil</h4>
     </div>
@@ -47,5 +53,50 @@
     <div class="col-md-6 col-lg-6 mb-3">
       {{ this.user.userActual?.especialidad?.toString() | titlecase }}
     </div>
+    } @else {
+    <div class="col-6">
+      <h4 class="mb-3">Dias de trabajo</h4>
+    </div>
+
+    @for (item of dias; track $index) {
+    <div [class]="class[$index]" (click)="seleccionarDia(item)">
+      {{ item | titlecase }}
+    </div>
+    }
+
+    <div class="col-6 mt-3">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          [(ngModel)]="seleccion_horario_inicio"
+        >
+          @for (item of horarioInicio; track $index) {
+          <option>{{ item }}</option>
+          }
+        </select>
+        <label for="floatingSelect">Hora de inicio</label>
+      </div>
+    </div>
+    <div class="col-6 mt-3">
+      <div class="form-floating">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          [(ngModel)]="seleccion_horario_fin"
+        >
+          @for (item of horariosFin; track $index) {
+          <option>{{ item }}</option>
+          }
+        </select>
+        <label for="floatingSelect">Hora de fin</label>
+      </div>
+    </div>
+    <button class="btn btn-primary col-12 mt-3" (click)="guardar()">
+      Guardar cambios
+    </button>
+    }
   </div>
 </div>
