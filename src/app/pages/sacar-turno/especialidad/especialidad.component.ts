@@ -9,7 +9,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class EspecialidadComponent {
   @Output() incrementar = new EventEmitter<string>();
+  @Output() back = new EventEmitter<void>();
+
   incrementarContador(item: string) {
     this.incrementar.emit(item);
+  }
+  goBack() {
+    this.back.emit();
   }
 }

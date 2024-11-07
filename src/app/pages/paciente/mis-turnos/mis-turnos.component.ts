@@ -5,13 +5,13 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { FirebaseService } from '../../../services/firebase.service';
 import { Router } from '@angular/router';
-import { TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Turno } from '../../../models/turno';
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, DatePipe],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
 })

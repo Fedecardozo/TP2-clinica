@@ -14,9 +14,14 @@ import { TitleCasePipe } from '@angular/common';
 export class EspecialistaComponent {
   @Output() incrementar = new EventEmitter<Usuario>();
   @Input() especialidad = '';
+  @Output() back = new EventEmitter<void>();
   fire = inject(FirebaseService);
   util = inject(UtilsService);
   list_especialista: Usuario[] = [];
+
+  goBack() {
+    this.back.emit();
+  }
 
   ngOnInit(): void {
     this.fire

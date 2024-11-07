@@ -16,3 +16,7 @@ body {
   border-radius: 10px; /* Bordes redondeados */
   padding: 20px; /* Espaciado interno */
 }
+
+.back {
+  cursor: pointer;
+}

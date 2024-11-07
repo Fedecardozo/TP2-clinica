@@ -1,19 +1,28 @@
 @switch (contador) { @case (0) {
 <!-- Seleccionar Especialidad -->
-<app-especialidad (incrementar)="addEspecialidad($event)"></app-especialidad>
+<app-especialidad
+  (incrementar)="addEspecialidad($event)"
+  (back)="removeEspecialidad()"
+></app-especialidad>
 } @case (1) {
 <!-- Seleccionar Especialista -->
 <app-especialista
   [especialidad]="especialidad"
   (incrementar)="addEspecialista($event)"
+  (back)="removeEspecialista()"
 ></app-especialista>
 } @case (2) {
 <!-- Seleccionar Dia -->
 <app-dia
   [especialista]="especialista"
   (dia_seleccionado)="addDia($event)"
+  (back)="removeDia()"
 ></app-dia>
 } @case (3) {
 <!-- Seleccionar Horario -->
-<app-horario [especialista]="especialista"></app-horario>
+<app-horario
+  [especialista]="especialista"
+  (horario_seleccionado)="addHorario($event)"
+  (back)="removeHorario()"
+></app-horario>
 } }

@@ -14,6 +14,11 @@ export class DiaComponent {
   fechas: Date[] = [];
   dias: string[] = [];
   @Output() dia_seleccionado = new EventEmitter<Date>();
+  @Output() back = new EventEmitter<void>();
+
+  goBack() {
+    this.back.emit();
+  }
 
   ngOnInit(): void {
     this.generarDias();

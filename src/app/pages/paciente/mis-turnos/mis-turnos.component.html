@@ -10,12 +10,12 @@
     <tbody>
       @for (item of this.turnos; track $index) {
       <tr (click)="seleccion(item)">
-        <td>{{ item.especialidad }}</td>
-        <td>{{ item.especialista }}</td>
-        <td>{{ item.fecha }}</td>
-        <td>{{ item.hora }}</td>
-        <td>{{ item.email_especialista }}</td>
-        <td>{{ item.estado }}</td>
+        <td>{{ item.especialidad | titlecase }}</td>
+        <td>{{ item.especialista | titlecase }}</td>
+        <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ item.hora }}hs</td>
+        <td>{{ item.email_especialista | titlecase }}</td>
+        <td>{{ item.estado | titlecase }}</td>
       </tr>
       }
     </tbody>

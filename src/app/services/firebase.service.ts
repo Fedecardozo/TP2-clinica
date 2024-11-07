@@ -8,6 +8,7 @@ import {
   uploadString,
 } from '@angular/fire/storage';
 import { Usuario } from '../models/usuario';
+import { Turno } from '../models/turno';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +22,14 @@ export class FirebaseService {
     usuario.id = doc.ref.id;
 
     return await doc.set({ ...usuario });
+  }
+
+  async addTurno(turno: Turno) {
+    const colturnos = this.firestore.collection('turnos');
+    const doc = colturnos.doc();
+    turno.id = doc.ref.id;
+
+    return await doc.set({ ...turno });
   }
 
   async updateUsuario(usuario: Usuario) {

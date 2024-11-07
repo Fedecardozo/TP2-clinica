@@ -7,6 +7,11 @@ export class Turno {
   estado: string;
   id_paciente: string;
   id_especialista: string;
+  id: string;
+
+  static estado_pediente = 'pediente';
+  static estado_aceptado = 'aceptado';
+  static estado_cancelado = 'cancelado';
 
   constructor() {
     this.especialidad = '';
@@ -17,6 +22,7 @@ export class Turno {
     this.estado = '';
     this.id_paciente = '';
     this.id_especialista = '';
+    this.id = '';
   }
 
   static keys() {
