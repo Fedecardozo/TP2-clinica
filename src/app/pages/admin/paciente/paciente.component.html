@@ -1,0 +1,24 @@
+<div class="container padre d-flex flex-column justify-content-center">
+  <table class="table table-hover flex-row">
+    <thead>
+      <tr class="table-primary">
+        @for (item of this.th; track $index) {
+        <th scope="col">{{ item | titlecase }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of this.pacientes; track $index) {
+      <tr (click)="seleccion(item)">
+        <td>{{ item.nombre | titlecase }}</td>
+        <td>{{ item.apellido | titlecase }}</td>
+        <td>{{ item.edad }}</td>
+        <td>{{ item.dni }}</td>
+        <td>{{ item.mail | titlecase }}</td>
+        <td>{{ item.habilitado ? "Habilitado" : "Inhabilitado" }}</td>
+        <td>{{ item.obra_social | titlecase }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,4 +1,6 @@
-@switch (contador) { @case (0) {
+@if(user.rol === 'admin' && isTurnoHabilitado) {
+<app-paciente (seleccion_paciente)="adminAddPaciente($event)"></app-paciente>
+} @else { @switch (contador) { @case (0) {
 <!-- Seleccionar Especialidad -->
 <app-especialidad
   (incrementar)="addEspecialidad($event)"
@@ -25,4 +27,4 @@
   (horario_seleccionado)="addHorario($event)"
   (back)="removeHorario()"
 ></app-horario>
-} }
+} } }

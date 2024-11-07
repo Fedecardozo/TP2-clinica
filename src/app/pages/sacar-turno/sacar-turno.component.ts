@@ -10,6 +10,7 @@ import { Turno } from '../../models/turno';
 import { AuthService } from '../../services/auth.service';
 import { UtilsService } from '../../services/utils.service';
 import { Router } from '@angular/router';
+import { PacienteComponent } from '../admin/paciente/paciente.component';
 
 @Component({
   selector: 'app-sacar-turno',
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
     EspecialistaComponent,
     DiaComponent,
     HorarioComponent,
+    PacienteComponent,
   ],
   templateUrl: './sacar-turno.component.html',
   styleUrl: './sacar-turno.component.css',
@@ -34,8 +36,15 @@ export class SacarTurnoComponent {
   dia?: Date;
   horario: string = '';
   @Input() paciente?: Usuario = this.user.userActual;
+  isTurnoHabilitado = true;
 
   ngOnInit(): void {}
+
+  adminAddPaciente(paciente: Usuario) {
+    this.paciente = paciente;
+    this.isTurnoHabilitado = false;
+    console.log(this.paciente);
+  }
 
   addEspecialidad(especialidad: string) {
     this.contador++;
@@ -44,7 +53,9 @@ export class SacarTurnoComponent {
 
   removeEspecialidad() {
     this.especialidad = '';
-    this.router.navigateByUrl('/home');
+    if (this.user.rol === 'admin') {
+      this.isTurnoHabilitado = true;
+    } else this.router.navigateByUrl('/home');
   }
 
   addEspecialista(especialista: Usuario) {

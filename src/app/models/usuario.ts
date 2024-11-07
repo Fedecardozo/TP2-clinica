@@ -48,4 +48,15 @@ export class Usuario {
   static getAtributosEspecialista() {
     return ['Nombre', 'Apellido', 'Edad', 'DNI', 'correo', 'Estado'];
   }
+  static getAtributosPaciente() {
+    return [
+      'Nombre',
+      'Apellido',
+      'Edad',
+      'DNI',
+      'correo',
+      'Estado',
+      'obra social',
+    ];
+  }
 }

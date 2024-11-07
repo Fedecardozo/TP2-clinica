@@ -42,6 +42,13 @@ export const routes: Routes = [
             (m) => m.UsuariosComponent
           ),
       },
+      {
+        path: 'sacar-turno',
+        loadComponent: () =>
+          import('./pages/sacar-turno/sacar-turno.component').then(
+            (m) => m.SacarTurnoComponent
+          ),
+      },
     ],
     canActivate: [actAdminGuard],
   },
