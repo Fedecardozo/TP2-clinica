@@ -22,6 +22,8 @@ export class UsuariosComponent {
   th: string[] = Usuario.getAtributosEspecialista();
   sub?: Subscription;
   especialistas: Usuario[] = [];
+  pacientes: Usuario[] = [];
+  admins: Usuario[] = [];
 
   constructor() {}
 
@@ -34,6 +36,8 @@ export class UsuariosComponent {
         this.especialistas = aux.filter(
           (item) => item.rol === Rol.especialista
         );
+        this.admins = aux.filter((item) => item.rol === Rol.admin);
+        this.pacientes = aux.filter((item) => item.rol === Rol.paciente);
       });
   }
 
