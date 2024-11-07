@@ -74,7 +74,7 @@ export class AuthService {
       });
   }
 
-  async registrarse(email: string, password: string) {
+  async registrarse(email: string, password: string, usuario: Usuario) {
     try {
       const res = await createUserWithEmailAndPassword(
         this.auth,
@@ -82,6 +82,8 @@ export class AuthService {
         password
       );
       sendEmailVerification(res.user);
+      this.guardarDb(usuario);
+
       // Cerrar sesión inmediatamente después del registro
       await this.auth.signOut();
     } catch (err) {
@@ -143,7 +145,11 @@ export class AuthService {
     this.adminPassword = password;
   }
 
-  async registerUser(email: string, password: string): Promise<void> {
+  async registerUser(
+    email: string,
+    password: string,
+    usuario: Usuario
+  ): Promise<void> {
     try {
       // Guardar el usuario actual (admin) para volver a autenticarlo luego
       const currentUser = this.auth.currentUser;
@@ -161,9 +167,9 @@ export class AuthService {
         email,
         password
       );
-      console.log('Usuario registrado:', email);
+
       sendEmailVerification(res.user);
-      console.log(res);
+      this.guardarDb(usuario);
 
       // Cerrar la sesión del nuevo usuario
       await this.auth.signOut();
@@ -175,10 +181,10 @@ export class AuthService {
           this.adminEmail,
           this.adminPassword
         );
-        console.log('Sesión restaurada para el administrador');
       }
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
+      Alert.error('El correo ya se encuentra registrado');
     }
   }
 
@@ -189,17 +195,19 @@ export class AuthService {
     usuario: Usuario
   ) {
     if (isAdmin) {
-      this.registerUser(email, password);
+      this.registerUser(email, password, usuario);
     } else {
-      this.registrarse(email, password);
+      this.registrarse(email, password, usuario);
     }
+  }
+
+  guardarDb(usuario: Usuario) {
     this.fire
       .addUsuario(usuario)
       .then(() => {
         Alert.exito('Se cargo con exito!');
       })
       .catch((res) => {
-        console.log(res);
         Alert.error(
           'No se pudo cargar a la base de datos!',
           'Intentelo más tarde.'
