@@ -7,6 +7,14 @@ export class UtilsService {
   spinner: boolean = false;
   tituloSpinner: string = '';
 
+  siteKey: string;
+  theme: any;
+
+  constructor() {
+    this.siteKey = '6Lf1jPUpAAAAAFsA3PZvTcUe1g199AaK8XTzSfzm';
+    this.theme = 'Light';
+  }
+
   mostrarSpinner(tituloSpinner: string = '') {
     this.spinner = true;
     this.tituloSpinner = tituloSpinner;

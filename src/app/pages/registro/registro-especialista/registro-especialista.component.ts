@@ -15,11 +15,12 @@ import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
 import { AuthService } from '../../../services/auth.service';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @Component({
   selector: 'app-registro-especialista',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css',
 })
@@ -54,6 +55,7 @@ export class RegistroEspecialistaComponent {
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
       imagen: [''],
       otro: [''],
+      recaptcha: ['', Validators.required],
     });
   }
 

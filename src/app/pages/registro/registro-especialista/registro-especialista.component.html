@@ -2,14 +2,6 @@
   <div class="row g-5 d-flex justify-content-end">
     <!-- FORM -->
     <div class="col-md-6 col-lg-6 sub-container">
-      <div class="text-center">
-        <img
-          src="especialista.png"
-          alt="especialista"
-          width="150"
-          height="150"
-        />
-      </div>
       <h4 class="mb-3">Datos del especialista</h4>
       <form class="needs-validation" novalidate [formGroup]="fg">
         <div class="row g-3">
@@ -196,7 +188,21 @@
             </div>
           </div>
         </div>
-
+        <div class="col-12 d-flex justify-content-center">
+          <ngx-recaptcha2
+            #captchaElem
+            [siteKey]="util.siteKey"
+            [theme]="util.theme"
+            formControlName="recaptcha"
+          ></ngx-recaptcha2>
+        </div>
+        <div class="div-p col-12 d-flex justify-content-center">
+          @if(this.fg.controls['recaptcha'].errors !== null &&
+          this.fg.controls["recaptcha"].touched) { @if
+          (this.fg.controls['recaptcha'].errors!['required']) {
+          <p class="invalido">Debes verificar que no sos un robot</p>
+          }}
+        </div>
         <br />
         <button
           class="w-100 btn btn-primary btn-lg"

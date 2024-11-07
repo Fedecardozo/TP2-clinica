@@ -13,10 +13,11 @@ import { UtilsService } from '../../../services/utils.service';
 import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
 import { AuthService } from '../../../services/auth.service';
+import { NgxCaptchaModule } from 'ngx-captcha';
 @Component({
   selector: 'app-registro-administrador',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-administrador.component.html',
   styleUrl: './registro-administrador.component.css',
 })
@@ -45,6 +46,7 @@ export class RegistroAdministradorComponent {
       ],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
       imagen: [''],
+      recaptcha: ['', Validators.required],
     });
   }
 
@@ -93,6 +95,10 @@ export class RegistroAdministradorComponent {
       this.guardarFire();
     } else {
       Alert.error('Hay campos vacios!', 'Complete todos los campos!');
+      //Muestro todos los errores
+      Object.keys(this.fg.controls).forEach((controlName) => {
+        this.fg.controls[controlName].markAsTouched();
+      });
     }
   }
 

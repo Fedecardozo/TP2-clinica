@@ -13,11 +13,12 @@ import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
 import { UtilsService } from '../../../services/utils.service';
 import { AuthService } from '../../../services/auth.service';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @Component({
   selector: 'app-registro-paciente',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-paciente.component.html',
   styleUrl: './registro-paciente.component.css',
 })
@@ -51,6 +52,7 @@ export class RegistroPacienteComponent {
       edad: ['', [Validators.required, Validators.min(18), Validators.max(65)]],
       imagen: [''],
       imagen2: [''],
+      recaptcha: ['', Validators.required],
     });
   }
 
