@@ -82,10 +82,10 @@ export class AuthService {
         password
       );
       sendEmailVerification(res.user);
-      this.guardarDb(usuario);
 
       // Cerrar sesión inmediatamente después del registro
       await this.auth.signOut();
+      this.guardarDb(usuario);
     } catch (err) {
       this.util.ocultarSpinner();
       Alert.error('El correo ya se encuentra registrado');
@@ -169,7 +169,6 @@ export class AuthService {
       );
 
       sendEmailVerification(res.user);
-      this.guardarDb(usuario);
 
       // Cerrar la sesión del nuevo usuario
       await this.auth.signOut();
@@ -182,7 +181,10 @@ export class AuthService {
           this.adminPassword
         );
       }
+
+      this.guardarDb(usuario);
     } catch (error) {
+      this.util.ocultarSpinner();
       console.error('Error al registrar el usuario:', error);
       Alert.error('El correo ya se encuentra registrado');
     }
@@ -201,8 +203,8 @@ export class AuthService {
     }
   }
 
-  guardarDb(usuario: Usuario) {
-    this.fire
+  async guardarDb(usuario: Usuario) {
+    await this.fire
       .addUsuario(usuario)
       .then(() => {
         Alert.exito('Se cargo con exito!');

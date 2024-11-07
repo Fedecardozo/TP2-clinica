@@ -11,7 +11,7 @@ export class UtilsService {
   theme: any;
 
   constructor() {
-    this.siteKey = '6Lf1jPUpAAAAAFsA3PZvTcUe1g199AaK8XTzSfzm';
+    this.siteKey = '6Ld_r3cqAAAAAKzRjEKwEDHBqhtzP1O9M28oMk-E';
     this.theme = 'Light';
   }
 
