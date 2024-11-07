@@ -50,6 +50,10 @@ export class FirebaseService {
     return col;
   }
 
+  getUser(userId: string) {
+    return this.firestore.collection('usuarios').doc(userId).get();
+  }
+
   //IMAGENES
   async uploadImage(path: string, data_url: string) {
     return uploadString(ref(getStorage(), path), data_url, 'data_url').then(

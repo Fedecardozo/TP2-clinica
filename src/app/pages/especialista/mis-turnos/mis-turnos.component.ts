@@ -4,25 +4,29 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
+import { Usuario } from '../../../models/usuario';
+import { UtilsService } from '../../../services/utils.service';
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, DatePipe],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
 })
 export class MisTurnosComponent {
   fire = inject(FirebaseService);
   auth = inject(AuthService);
+  util = inject(UtilsService);
   router = inject(Router);
   th: string[];
   sub?: Subscription;
   turnos: Turno[] = [];
+  pacientes: Usuario[] = [];
 
   constructor() {
-    this.th = Turno.keys();
+    this.th = Turno.keys_paciente();
   }
 
   ngOnInit(): void {
@@ -34,7 +38,22 @@ export class MisTurnosComponent {
         this.turnos = aux.filter(
           (item) => item.id_especialista === this.auth.userActual?.id
         );
+        this.cargarPacientes();
       });
+  }
+
+  async cargarPacientes() {
+    this.turnos.forEach(async (item) => {
+      await this.fire.getUser(item.id_paciente).forEach((next) => {
+        const paciente = next.data() as Usuario;
+        this.pacientes.push(paciente);
+      });
+    });
+  }
+
+  getNamePaciente(usuario: Usuario) {
+    if (usuario) return `${usuario.nombre ?? ''} ${usuario.apellido ?? ''}`;
+    else return '...';
   }
 
   seleccion(turno: Turno) {

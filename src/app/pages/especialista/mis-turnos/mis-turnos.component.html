@@ -8,16 +8,20 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of this.turnos; track $index) {
+      @for (item of this.turnos; track $index) { @if(pacientes[$index]){
       <tr (click)="seleccion(item)">
-        <td>{{ item.especialidad }}</td>
-        <td>{{ item.especialista }}</td>
-        <td>{{ item.fecha }}</td>
-        <td>{{ item.hora }}</td>
-        <td>{{ item.email_especialista }}</td>
-        <td>{{ item.estado }}</td>
+        <td>
+          {{ getNamePaciente(pacientes[$index]) | titlecase }}
+        </td>
+        <td>{{ pacientes[$index].edad }}</td>
+        <td>{{ pacientes[$index].mail | titlecase }}</td>
+        <td>{{ pacientes[$index].obra_social | titlecase }}</td>
+        <td>{{ item.especialidad | titlecase }}</td>
+        <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ item.hora }}hs</td>
+        <td>{{ item.estado | titlecase }}</td>
       </tr>
-      }
+      } }
     </tbody>
   </table>
 </div>

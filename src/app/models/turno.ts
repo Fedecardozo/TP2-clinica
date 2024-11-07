@@ -9,6 +9,8 @@ export class Turno {
   id_especialista: string;
   id: string;
   reseña: string;
+  paciente: string;
+  edad_paciente: string;
 
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
@@ -25,6 +27,8 @@ export class Turno {
     this.id_especialista = '';
     this.id = '';
     this.reseña = '';
+    this.paciente = '';
+    this.edad_paciente = '';
   }
 
   static keys() {
@@ -34,6 +38,19 @@ export class Turno {
       'fecha',
       'hora',
       'email_especialista',
+      'estado',
+    ];
+  }
+
+  static keys_paciente() {
+    return [
+      'Paciente',
+      'edad',
+      'correo',
+      'obra social',
+      'especialidad',
+      'fecha',
+      'hora',
       'estado',
     ];
   }
