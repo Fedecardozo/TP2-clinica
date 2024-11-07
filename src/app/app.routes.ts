@@ -36,6 +36,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'perfil',
+        loadComponent: () =>
+          import('./pages/admin/perfil/perfil.component').then(
+            (m) => m.PerfilComponent
+          ),
+      },
+      {
         path: 'usuarios',
         loadComponent: () =>
           import('./pages/usuarios/usuarios.component').then(

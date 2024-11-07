@@ -32,7 +32,7 @@ export class MisTurnosComponent {
       .subscribe((next) => {
         const aux = next as Turno[];
         this.turnos = aux.filter(
-          (item) => item.id_paciente === this.auth.userActual?.id
+          (item) => item.id_especialista === this.auth.userActual?.id
         );
       });
   }

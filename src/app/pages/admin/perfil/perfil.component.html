@@ -1,0 +1,40 @@
+<div class="container d-flex align-items-center justify-content-center padre">
+  <div class="row sub-container w-50">
+    <div class="col-6">
+      <h4 class="mb-3">Mi perfil</h4>
+    </div>
+    <div class="col-6 mb-3 d-flex justify-content-center">
+      <img [src]="this.user.userActual?.foto_url" alt="perfil" />
+    </div>
+
+    <!-- Nombre -->
+    <div class="col-md-6 col-lg-6 mb-3">Nombre</div>
+    <div class="col-md-6 col-lg-6 mb-3">
+      {{ this.user.userActual?.nombre | titlecase }}
+    </div>
+
+    <!-- Apellido -->
+    <div class="col-md-6 col-lg-6 mb-3">Apellido</div>
+    <div class="col-md-6 col-lg-6 mb-3">
+      {{ this.user.userActual?.apellido | titlecase }}
+    </div>
+
+    <!-- DNI -->
+    <div class="col-md-6 col-lg-6 mb-3">DNI</div>
+    <div class="col-md-6 col-lg-6 mb-3">
+      {{ this.user.userActual?.dni?.toString() | titlecase }}
+    </div>
+
+    <!-- Edad -->
+    <div class="col-md-6 col-lg-6 mb-3">Edad</div>
+    <div class="col-md-6 col-lg-6 mb-3">
+      {{ this.user.userActual?.edad?.toString() | titlecase }} Años
+    </div>
+
+    <!-- Email -->
+    <div class="col-md-6 col-lg-6 mb-3">Correo</div>
+    <div class="col-md-6 col-lg-6 mb-3">
+      {{ this.user.userActual?.mail | titlecase }}
+    </div>
+  </div>
+</div>
