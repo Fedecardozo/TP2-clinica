@@ -8,6 +8,7 @@ export class Turno {
   id_paciente: string;
   id_especialista: string;
   id: string;
+  reseña: string;
 
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
@@ -23,6 +24,7 @@ export class Turno {
     this.id_paciente = '';
     this.id_especialista = '';
     this.id = '';
+    this.reseña = '';
   }
 
   static keys() {

@@ -43,7 +43,6 @@ export class SacarTurnoComponent {
   adminAddPaciente(paciente: Usuario) {
     this.paciente = paciente;
     this.isTurnoHabilitado = false;
-    console.log(this.paciente);
   }
 
   addEspecialidad(especialidad: string) {
