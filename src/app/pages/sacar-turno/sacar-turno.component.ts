@@ -3,7 +3,6 @@ import { EspecialidadComponent } from './especialidad/especialidad.component';
 import { EspecialistaComponent } from './especialista/especialista.component';
 import { Usuario } from '../../models/usuario';
 import { DiaComponent } from './dia/dia.component';
-import { HorarioComponent } from './horario/horario.component';
 import { Alert } from '../../models/alert';
 import { FirebaseService } from '../../services/firebase.service';
 import { Turno } from '../../models/turno';
@@ -11,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 import { UtilsService } from '../../services/utils.service';
 import { Router } from '@angular/router';
 import { PacienteComponent } from '../admin/paciente/paciente.component';
+import { Horario } from '../../models/horario';
 
 @Component({
   selector: 'app-sacar-turno',
@@ -19,7 +19,6 @@ import { PacienteComponent } from '../admin/paciente/paciente.component';
     EspecialidadComponent,
     EspecialistaComponent,
     DiaComponent,
-    HorarioComponent,
     PacienteComponent,
   ],
   templateUrl: './sacar-turno.component.html',
@@ -33,8 +32,7 @@ export class SacarTurnoComponent {
   contador = 0;
   especialidad = '';
   especialista?: Usuario;
-  dia?: Date;
-  horario: string = '';
+  dia_horario?: Horario;
   @Input() paciente?: Usuario = this.user.userActual;
   isTurnoHabilitado = true;
 
@@ -67,24 +65,14 @@ export class SacarTurnoComponent {
     this.especialista = undefined;
   }
 
-  addDia(dia: Date) {
-    this.contador++;
-    this.dia = dia;
-  }
-
   removeDia() {
     this.contador--;
-    this.dia = undefined;
+    this.dia_horario = undefined;
   }
 
-  removeHorario() {
-    this.contador--;
-    this.horario = '';
-  }
-
-  addHorario(hora: string) {
-    this.horario = hora;
-    Alert.question('¿Esta seguro de que quieres reservar este horario?').then(
+  addDia(dia_horario: Horario) {
+    this.contador++;
+    Alert.question('¿Esta seguro de que quieres reservar este turno?').then(
       (res) => {
         if (res.isConfirmed) {
           this.util.mostrarSpinner('Cargando turno...');
@@ -93,8 +81,8 @@ export class SacarTurnoComponent {
           turno.especialidad = this.especialidad;
           turno.especialista =
             this.especialista?.nombre + ' ' + this.especialista?.apellido;
-          turno.fecha = this.dia?.getTime().toString() ?? '';
-          turno.hora = this.horario;
+          turno.fecha = dia_horario.fecha?.getTime().toString() ?? '';
+          turno.hora = dia_horario.hora_seleccionada;
           turno.id_especialista = this.especialista?.id ?? '';
           turno.id_paciente = this.paciente?.id ?? '';
           turno.estado = Turno.estado_pediente;
