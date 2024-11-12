@@ -16,6 +16,15 @@
         <td>{{ item.hora }}hs</td>
         <td>{{ item.email_especialista | titlecase }}</td>
         <td>{{ item.estado | titlecase }}</td>
+        @for (acc of item.acciones; track $index) {
+        <td>
+          @switch (acc) { @case ('Cancelar') {
+          <button class="btn btn-danger" (click)="cancelar(item)">
+            {{ acc | titlecase }}
+          </button>
+          } }
+        </td>
+        }
       </tr>
       }
     </tbody>

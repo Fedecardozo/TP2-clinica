@@ -25,6 +25,7 @@ export class MisTurnosComponent {
 
   constructor() {
     this.th = Turno.keys();
+    this.th.push('Acciones');
   }
 
   ngOnInit(): void {
@@ -36,6 +37,12 @@ export class MisTurnosComponent {
         this.turnos = aux.filter(
           (item) => item.id_paciente === this.auth.userActual?.id
         );
+        this.turnos.forEach((item) => {
+          if (item.estado !== Turno.estado_finalizado)
+            item.acciones = [...['Cancelar']];
+
+          console.log(item);
+        });
       });
   }
 
@@ -48,6 +55,27 @@ export class MisTurnosComponent {
     //     this.fire.updateUser(especialista);
     //   }
     // });
+  }
+
+  cancelar(turno: Turno) {
+    Alert.input(
+      'Si desea cancelar el turno justifique los motivos',
+      'Cancelar turno',
+      'Conservar turno'
+    ).then((res) => {
+      if (res.isConfirmed) {
+        turno.reseña = res.value || 'No dejo motivos';
+        turno.estado = Turno.estado_cancelado;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se cancelo el turno exitosamente!');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error al cancelar el turno', 'error');
+          });
+      }
+    });
   }
 
   ngOnDestroy(): void {

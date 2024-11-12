@@ -11,10 +11,12 @@ export class Turno {
   reseña: string;
   paciente: string;
   edad_paciente: string;
+  acciones: string[];
 
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';
+  static estado_finalizado = 'finalizado';
 
   constructor() {
     this.especialidad = '';
@@ -29,6 +31,7 @@ export class Turno {
     this.reseña = '';
     this.paciente = '';
     this.edad_paciente = '';
+    this.acciones = [];
   }
 
   static keys() {

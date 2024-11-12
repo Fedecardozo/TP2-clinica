@@ -45,6 +45,10 @@ export class FirebaseService {
       .update(usuario);
   }
 
+  updateTurno(obj: Turno) {
+    return this.firestore.doc(`turnos/${obj.id}`).update(obj);
+  }
+
   getCollection(collection: 'usuarios' | 'turnos' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;
