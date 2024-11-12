@@ -76,7 +76,12 @@ export class MisTurnosComponent {
   }
 
   verResenia(turno: Turno) {
-    Alert.info('Reseña', turno.reseña);
+    Alert.info(
+      turno.estado === Turno.estado_cancelado
+        ? 'Motivo de cancelación'
+        : 'Reseña',
+      turno.reseña
+    );
   }
 
   ngOnDestroy(): void {

@@ -16,7 +16,7 @@ export class Turno {
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';
-  static estado_finalizado = 'finalizado';
+  static estado_realizado = 'realizado';
 
   constructor() {
     this.especialidad = '';
