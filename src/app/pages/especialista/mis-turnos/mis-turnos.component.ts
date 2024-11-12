@@ -82,12 +82,23 @@ export class MisTurnosComponent {
   }
 
   verResenia(turno: Turno) {
-    Alert.info(
-      turno.estado === Turno.estado_cancelado
-        ? 'Motivo de cancelación'
-        : 'Reseña',
-      turno.reseña
-    );
+    const msj = `Comentario: ${turno.reseña}<br><br>${
+      turno.calificacion
+        ? 'Calificación: ' + turno.calificacion + ' puntos'
+        : ''
+    }`;
+    let estado = '';
+
+    if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
+    else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
+
+    const reseña =
+      turno.estado === Turno.estado_finalizado ||
+      turno.estado === Turno.estado_realizado;
+
+    const titulo = !reseña ? 'Motivo de ' + estado : 'Reseña';
+
+    Alert.info(titulo, msj);
   }
 
   rechazar(turno: Turno) {
@@ -113,7 +124,7 @@ export class MisTurnosComponent {
 
   finalizar(turno: Turno) {
     Alert.input(
-      'Si desea aceptar el turno deje una reseña',
+      'Si desea finalizar el turno deje una reseña',
       'Si, finalizar',
       'No, finalizar'
     ).then((res) => {

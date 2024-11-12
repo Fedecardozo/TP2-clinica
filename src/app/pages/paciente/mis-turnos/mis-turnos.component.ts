@@ -43,15 +43,23 @@ export class MisTurnosComponent {
       });
   }
 
-  seleccion(turno: Turno) {
-    // const isHabilitado = especialista.habilitado;
-    // const text = isHabilitado ? 'inhabilitar' : 'habilitar';
-    // Alert.question(`¿Desesa ${text} a este especialista?`).then((res) => {
-    //   if (res.isConfirmed) {
-    //     especialista.habilitado = !isHabilitado;
-    //     this.fire.updateUser(especialista);
-    //   }
-    // });
+  realizarEncuesta(turno: Turno) {
+    Alert.encuesta('Realizar encuesta', 'Enviar', 'Cancelar').then((res) => {
+      if (res.isConfirmed) {
+        const { calificacion, comentario } = res.value;
+        turno.reseña = comentario || 'No dejo motivos';
+        turno.estado = Turno.estado_finalizado;
+        turno.calificacion = calificacion;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se cargo la encuesta exitosamente!');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error cargar la encuesta', 'error');
+          });
+      }
+    });
   }
 
   cancelar(turno: Turno) {
@@ -76,12 +84,23 @@ export class MisTurnosComponent {
   }
 
   verResenia(turno: Turno) {
-    Alert.info(
-      turno.estado === Turno.estado_cancelado
-        ? 'Motivo de cancelación'
-        : 'Reseña',
-      turno.reseña
-    );
+    const msj = `Comentario: ${turno.reseña}<br><br>${
+      turno.calificacion
+        ? 'Calificación: ' + turno.calificacion + ' puntos'
+        : ''
+    }`;
+    let estado = '';
+
+    if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
+    else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
+
+    const reseña =
+      turno.estado === Turno.estado_finalizado ||
+      turno.estado === Turno.estado_realizado;
+
+    const titulo = !reseña ? 'Motivo de ' + estado : 'Reseña';
+
+    Alert.info(titulo, msj);
   }
 
   ngOnDestroy(): void {

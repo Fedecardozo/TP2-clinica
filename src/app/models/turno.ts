@@ -9,6 +9,7 @@ export class Turno {
   id_especialista: string;
   id: string;
   reseña: string;
+  calificacion: string;
   paciente: string;
   edad_paciente: string;
   acciones: string[];
@@ -18,6 +19,7 @@ export class Turno {
   static estado_cancelado = 'cancelado';
   static estado_rechazado = 'rechazado';
   static estado_realizado = 'realizado';
+  static estado_finalizado = 'finalizado';
 
   constructor() {
     this.especialidad = '';
@@ -33,6 +35,7 @@ export class Turno {
     this.paciente = '';
     this.edad_paciente = '';
     this.acciones = [];
+    this.calificacion = '';
   }
 
   static keys() {
@@ -65,9 +68,11 @@ export class Turno {
     if (turno.reseña) acciones.push('Ver reseña');
     switch (turno.estado) {
       case Turno.estado_pediente:
+      case Turno.estado_aceptado:
         acciones.push('Cancelar');
         break;
-      default:
+      case Turno.estado_realizado:
+        acciones.push('Realizar encuesta');
         break;
     }
     turno.acciones = [...acciones];

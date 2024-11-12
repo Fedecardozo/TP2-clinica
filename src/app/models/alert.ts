@@ -34,10 +34,10 @@ export class Alert {
     });
   }
 
-  static info(titulo: string = '', texto: string = '') {
+  static info(titulo: string = '', html: string = '') {
     return Swal.fire({
       title: titulo,
-      text: texto,
+      html: html,
       icon: 'info',
       backdrop: true, // Esta opción asegura que el fondo sea oscuro
       allowOutsideClick: false, // Impide cerrar al hacer clic fuera del modal
@@ -60,6 +60,38 @@ export class Alert {
       showCancelButton: true,
       confirmButtonText: textBtnConfirm,
       cancelButtonText: textCancelBtn,
+    });
+  }
+
+  static encuesta(
+    titulo: string = '',
+    textBtnConfirm: string = '',
+    textCancelBtn: string = ''
+  ) {
+    return Swal.fire({
+      title: titulo,
+      html: `
+    <label for="calificacion-range">Calificar atención</label>
+    <br>
+    <input type="range" id="calificacion-range" name="calificacion" min="1" max="5" value="3" class="w-75 mt-2">
+    <br><br>
+    <input type="text" id="comentario-input" name="comentario" class="swal2-input w-75" placeholder="Escribe tu comentario">
+  `,
+      backdrop: true,
+      allowOutsideClick: false,
+      showCancelButton: true,
+      confirmButtonText: textBtnConfirm,
+      cancelButtonText: textCancelBtn,
+      preConfirm: () => {
+        const calificacion = (
+          document.getElementById('calificacion-range') as HTMLInputElement
+        ).value;
+        const comentario = (
+          document.getElementById('comentario-input') as HTMLInputElement
+        ).value;
+
+        return { calificacion, comentario };
+      },
     });
   }
 

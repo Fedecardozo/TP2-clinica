@@ -2,23 +2,25 @@
   <table class="table table-hover flex-row">
     <thead>
       <tr class="table-primary">
-        @for (item of this.th; track $index) {
+        @for (item of this.th; track $index) { @if($index === th.length-1) {
+        <th scope="col" class="text-center">{{ item | titlecase }}</th>
+        } @else {
         <th scope="col">{{ item | titlecase }}</th>
-        }
+        } }
       </tr>
     </thead>
     <tbody>
       @for (item of this.turnos; track $index) {
-      <tr (click)="seleccion(item)">
+      <tr>
         <td>{{ item.especialidad | titlecase }}</td>
         <td>{{ item.especialista | titlecase }}</td>
         <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.hora }}hs</td>
         <td>{{ item.email_especialista | titlecase }}</td>
         <td>{{ item.estado | titlecase }}</td>
-        @for (acc of item.acciones; track $index) {
-        <td>
-          @switch (acc) { @case ('Cancelar') {
+        <td class="d-flex justify-content-around">
+          @for (acc of item.acciones; track $index) { @switch (acc) { @case
+          ('Cancelar') {
           <button class="btn btn-danger" (click)="cancelar(item)">
             {{ acc | titlecase }}
           </button>
@@ -26,9 +28,12 @@
           <button class="btn btn-info" (click)="verResenia(item)">
             {{ acc | titlecase }}
           </button>
-          }}
+          } @case ('Realizar encuesta') {
+          <button class="btn btn-primary" (click)="realizarEncuesta(item)">
+            {{ acc | titlecase }}
+          </button>
+          }} }
         </td>
-        }
       </tr>
       }
     </tbody>
