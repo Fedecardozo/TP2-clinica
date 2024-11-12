@@ -22,7 +22,11 @@
           <button class="btn btn-danger" (click)="cancelar(item)">
             {{ acc | titlecase }}
           </button>
-          } }
+          } @case ('Ver reseña') {
+          <button class="btn btn-info" (click)="verResenia(item)">
+            {{ acc | titlecase }}
+          </button>
+          }}
         </td>
         }
       </tr>

@@ -34,6 +34,16 @@ export class Alert {
     });
   }
 
+  static info(titulo: string = '', texto: string = '') {
+    return Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: 'info',
+      backdrop: true, // Esta opción asegura que el fondo sea oscuro
+      allowOutsideClick: false, // Impide cerrar al hacer clic fuera del modal
+    });
+  }
+
   static input(
     titulo: string = '',
     textBtnConfirm: string = '',

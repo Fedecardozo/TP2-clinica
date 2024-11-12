@@ -38,10 +38,7 @@ export class MisTurnosComponent {
           (item) => item.id_paciente === this.auth.userActual?.id
         );
         this.turnos.forEach((item) => {
-          if (item.estado !== Turno.estado_finalizado)
-            item.acciones = [...['Cancelar']];
-
-          console.log(item);
+          Turno.generarAcciones(item);
         });
       });
   }
@@ -76,6 +73,10 @@ export class MisTurnosComponent {
           });
       }
     });
+  }
+
+  verResenia(turno: Turno) {
+    Alert.info('Reseña', turno.reseña);
   }
 
   ngOnDestroy(): void {

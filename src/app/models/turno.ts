@@ -57,4 +57,17 @@ export class Turno {
       'estado',
     ];
   }
+
+  static generarAcciones(turno: Turno) {
+    const acciones = [];
+    if (turno.reseña) acciones.push('Ver reseña');
+    switch (turno.estado) {
+      case Turno.estado_pediente:
+        acciones.push('Cancelar');
+        break;
+      default:
+        break;
+    }
+    turno.acciones = [...acciones];
+  }
 }
