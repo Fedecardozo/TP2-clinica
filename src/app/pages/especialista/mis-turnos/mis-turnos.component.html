@@ -1,4 +1,17 @@
 <div class="container padre d-flex flex-column justify-content-center">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Filtrar por especialista especialidad"
+      [(ngModel)]="filtro"
+      (input)="filtrar()"
+    />
+    <span class="input-group-text" id="basic-addon2"
+      ><i class="fa-solid fa-magnifying-glass fa-lg"></i
+    ></span>
+  </div>
+
   <table class="table table-hover flex-row">
     <thead>
       <tr class="table-primary">

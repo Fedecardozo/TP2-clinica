@@ -7,11 +7,12 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { Router } from '@angular/router';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Turno } from '../../../models/turno';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe],
+  imports: [TitleCasePipe, DatePipe, FormsModule],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
 })
@@ -22,6 +23,8 @@ export class MisTurnosComponent {
   th: string[];
   sub?: Subscription;
   turnos: Turno[] = [];
+  filtro = '';
+  filtro_data: Turno[] = [];
 
   constructor() {
     this.th = Turno.keys();
@@ -40,7 +43,17 @@ export class MisTurnosComponent {
         this.turnos.forEach((item) => {
           Turno.generarAcciones(item);
         });
+        this.filtro_data = [...this.turnos];
       });
+  }
+
+  filtrar() {
+    const term = this.filtro.toLowerCase();
+    this.filtro_data = this.turnos.filter(
+      (item) =>
+        item.especialidad.toLowerCase().includes(term) ||
+        item.especialista.toLowerCase().includes(term)
+    );
   }
 
   realizarEncuesta(turno: Turno) {

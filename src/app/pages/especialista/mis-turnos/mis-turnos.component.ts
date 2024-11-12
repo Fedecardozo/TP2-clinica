@@ -8,11 +8,12 @@ import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Usuario } from '../../../models/usuario';
 import { UtilsService } from '../../../services/utils.service';
 import { Alert } from '../../../models/alert';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe],
+  imports: [TitleCasePipe, DatePipe, FormsModule],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
 })
@@ -25,6 +26,8 @@ export class MisTurnosComponent {
   sub?: Subscription;
   turnos: Turno[] = [];
   pacientes: Usuario[] = [];
+  filtro = '';
+  filtro_data: Turno[] = [];
 
   constructor() {
     this.th = Turno.keys_paciente();
@@ -43,7 +46,17 @@ export class MisTurnosComponent {
           Turno.generarAccionesEspecialista(item);
         });
         this.cargarPacientes();
+        this.filtro_data = [...this.turnos];
       });
+  }
+
+  filtrar() {
+    const term = this.filtro.toLowerCase();
+    this.filtro_data = this.turnos.filter(
+      (item) =>
+        item.especialidad.toLowerCase().includes(term) ||
+        item.paciente.toLowerCase().includes(term)
+    );
   }
 
   async cargarPacientes() {
