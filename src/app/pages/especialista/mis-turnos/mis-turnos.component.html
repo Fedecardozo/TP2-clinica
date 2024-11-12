@@ -2,14 +2,16 @@
   <table class="table table-hover flex-row">
     <thead>
       <tr class="table-primary">
-        @for (item of this.th; track $index) {
+        @for (item of this.th; track $index) { @if($index === th.length-1) {
+        <th scope="col" class="text-center">{{ item | titlecase }}</th>
+        } @else {
         <th scope="col">{{ item | titlecase }}</th>
-        }
+        } }
       </tr>
     </thead>
     <tbody>
       @for (item of this.turnos; track $index) { @if(pacientes[$index]){
-      <tr (click)="seleccion(item)">
+      <tr>
         <td>
           {{ getNamePaciente(pacientes[$index]) | titlecase }}
         </td>
@@ -20,6 +22,30 @@
         <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.hora }}hs</td>
         <td>{{ item.estado | titlecase }}</td>
+        <td class="d-flex justify-content-around">
+          @for (acc of item.acciones; track $index) { @switch (acc) { @case
+          ('Rechazar') {
+          <button class="btn btn-secondary" (click)="rechazar(item)">
+            {{ acc | titlecase }}
+          </button>
+          } @case ('Cancelar') {
+          <button class="btn btn-danger" (click)="cancelar(item)">
+            {{ acc | titlecase }}
+          </button>
+          } @case ('Ver reseña') {
+          <button class="btn btn-info" (click)="verResenia(item)">
+            {{ acc | titlecase }}
+          </button>
+          } @case ('Aceptar') {
+          <button class="btn btn-primary" (click)="aceptar(item)">
+            {{ acc | titlecase }}
+          </button>
+          } @case ('Finalizar') {
+          <button class="btn btn-success" (click)="finalizar(item)">
+            {{ acc | titlecase }}
+          </button>
+          } } }
+        </td>
       </tr>
       } }
     </tbody>

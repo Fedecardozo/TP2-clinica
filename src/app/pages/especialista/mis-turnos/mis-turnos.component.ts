@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Usuario } from '../../../models/usuario';
 import { UtilsService } from '../../../services/utils.service';
+import { Alert } from '../../../models/alert';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -38,6 +39,9 @@ export class MisTurnosComponent {
         this.turnos = aux.filter(
           (item) => item.id_especialista === this.auth.userActual?.id
         );
+        this.turnos.forEach((item) => {
+          Turno.generarAccionesEspecialista(item);
+        });
         this.cargarPacientes();
       });
   }
@@ -56,15 +60,92 @@ export class MisTurnosComponent {
     else return '...';
   }
 
-  seleccion(turno: Turno) {
-    // const isHabilitado = especialista.habilitado;
-    // const text = isHabilitado ? 'inhabilitar' : 'habilitar';
-    // Alert.question(`¿Desesa ${text} a este especialista?`).then((res) => {
-    //   if (res.isConfirmed) {
-    //     especialista.habilitado = !isHabilitado;
-    //     this.fire.updateUser(especialista);
-    //   }
-    // });
+  cancelar(turno: Turno) {
+    Alert.input(
+      'Si desea cancelar el turno justifique los motivos',
+      'Cancelar turno',
+      'Conservar turno'
+    ).then((res) => {
+      if (res.isConfirmed) {
+        turno.reseña = res.value || 'No dejo motivos';
+        turno.estado = Turno.estado_cancelado;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se cancelo el turno exitosamente!');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error al cancelar el turno', 'error');
+          });
+      }
+    });
+  }
+
+  verResenia(turno: Turno) {
+    Alert.info(
+      turno.estado === Turno.estado_cancelado
+        ? 'Motivo de cancelación'
+        : 'Reseña',
+      turno.reseña
+    );
+  }
+
+  rechazar(turno: Turno) {
+    Alert.input(
+      'Si desea rechazar el turno justifique los motivos',
+      'Si, rechazar',
+      'No, rechazar'
+    ).then((res) => {
+      if (res.isConfirmed) {
+        turno.reseña = res.value || 'No dejo motivos';
+        turno.estado = Turno.estado_rechazado;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se rechazo el turno exitosamente!');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error al rechazar el turno', 'error');
+          });
+      }
+    });
+  }
+
+  finalizar(turno: Turno) {
+    Alert.input(
+      'Si desea aceptar el turno deje una reseña',
+      'Si, finalizar',
+      'No, finalizar'
+    ).then((res) => {
+      if (res.isConfirmed) {
+        turno.reseña = res.value || 'No dejo motivos';
+        turno.estado = Turno.estado_realizado;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se finalizo el turno exitosamente!');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error al finalizar el turno', 'error');
+          });
+      }
+    });
+  }
+
+  aceptar(turno: Turno) {
+    Alert.question('¿Estas seguro de aceptar el turno?').then((res) => {
+      if (res.isConfirmed) {
+        turno.estado = Turno.estado_aceptado;
+        this.fire
+          .updateTurno(turno)
+          .then(() => {
+            Alert.msjTimer('Se acepto el turno');
+          })
+          .catch(() => {
+            Alert.msjTimer('Hubo un error al aceptar el turno', 'error');
+          });
+      }
+    });
   }
 
   ngOnDestroy(): void {

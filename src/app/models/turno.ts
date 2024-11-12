@@ -16,6 +16,7 @@ export class Turno {
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';
+  static estado_rechazado = 'rechazado';
   static estado_realizado = 'realizado';
 
   constructor() {
@@ -55,6 +56,7 @@ export class Turno {
       'fecha',
       'hora',
       'estado',
+      'acciones',
     ];
   }
 
@@ -66,6 +68,22 @@ export class Turno {
         acciones.push('Cancelar');
         break;
       default:
+        break;
+    }
+    turno.acciones = [...acciones];
+  }
+
+  static generarAccionesEspecialista(turno: Turno) {
+    const acciones = [];
+    if (turno.reseña) acciones.push('Ver reseña');
+    switch (turno.estado) {
+      case Turno.estado_pediente:
+        acciones.push('Rechazar');
+        acciones.push('Aceptar');
+        break;
+      case Turno.estado_aceptado:
+        acciones.push('Cancelar');
+        acciones.push('Finalizar');
         break;
     }
     turno.acciones = [...acciones];

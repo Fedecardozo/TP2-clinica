@@ -60,7 +60,6 @@ export class Alert {
       showCancelButton: true,
       confirmButtonText: textBtnConfirm,
       cancelButtonText: textCancelBtn,
-      showLoaderOnConfirm: true,
     });
   }
 
