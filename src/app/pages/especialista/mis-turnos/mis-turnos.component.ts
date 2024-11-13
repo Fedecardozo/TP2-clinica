@@ -80,7 +80,7 @@ export class MisTurnosComponent {
       'Conservar turno'
     ).then((res) => {
       if (res.isConfirmed) {
-        turno.reseña = res.value || 'No dejo motivos';
+        turno.reseña_especialista = res.value || 'No dejo motivos';
         turno.estado = Turno.estado_cancelado;
         this.fire
           .updateTurno(turno)
@@ -105,7 +105,7 @@ export class MisTurnosComponent {
       'No, rechazar'
     ).then((res) => {
       if (res.isConfirmed) {
-        turno.reseña = res.value || 'No dejo motivos';
+        turno.reseña_especialista = res.value || 'No dejo motivos';
         turno.estado = Turno.estado_rechazado;
         this.fire
           .updateTurno(turno)
@@ -130,7 +130,7 @@ export class MisTurnosComponent {
         turno.peso = peso;
         turno.presion = presion;
         turno.temperatura = temperatura;
-        turno.reseña = reseña || 'No dejo reseña';
+        turno.reseña_especialista = reseña || 'No dejo reseña';
         turno.map = extraFields;
         turno.estado = Turno.estado_realizado;
         this.fire
