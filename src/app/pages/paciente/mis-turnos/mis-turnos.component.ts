@@ -97,23 +97,7 @@ export class MisTurnosComponent {
   }
 
   verResenia(turno: Turno) {
-    const msj = `Comentario: ${turno.reseña}<br><br>${
-      turno.calificacion
-        ? 'Calificación: ' + turno.calificacion + ' puntos'
-        : ''
-    }`;
-    let estado = '';
-
-    if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
-    else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
-
-    const reseña =
-      turno.estado === Turno.estado_finalizado ||
-      turno.estado === Turno.estado_realizado;
-
-    const titulo = !reseña ? 'Motivo de ' + estado : 'Reseña';
-
-    Alert.info(titulo, msj);
+    Turno.verResenia(turno);
   }
 
   ngOnDestroy(): void {

@@ -95,23 +95,7 @@ export class MisTurnosComponent {
   }
 
   verResenia(turno: Turno) {
-    const msj = `Comentario: ${turno.reseña}<br><br>${
-      turno.calificacion
-        ? 'Calificación: ' + turno.calificacion + ' puntos'
-        : ''
-    }`;
-    let estado = '';
-
-    if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
-    else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
-
-    const reseña =
-      turno.estado === Turno.estado_finalizado ||
-      turno.estado === Turno.estado_realizado;
-
-    const titulo = !reseña ? 'Motivo de ' + estado : 'Reseña';
-
-    Alert.info(titulo, msj);
+    Turno.verResenia(turno);
   }
 
   rechazar(turno: Turno) {
@@ -136,13 +120,18 @@ export class MisTurnosComponent {
   }
 
   finalizar(turno: Turno) {
-    Alert.input(
-      'Si desea finalizar el turno deje una reseña',
-      'Si, finalizar',
-      'No, finalizar'
-    ).then((res) => {
-      if (res.isConfirmed) {
-        turno.reseña = res.value || 'No dejo motivos';
+    Alert.resenia_especialista().then((result) => {
+      if (result.isConfirmed) {
+        console.log('Datos ingresados:', result.value);
+        const { altura, peso, presion, temperatura, extraFields, reseña } =
+          result.value;
+
+        turno.altura = altura;
+        turno.peso = peso;
+        turno.presion = presion;
+        turno.temperatura = temperatura;
+        turno.reseña = reseña || 'No dejo reseña';
+        turno.map = extraFields;
         turno.estado = Turno.estado_realizado;
         this.fire
           .updateTurno(turno)

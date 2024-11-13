@@ -1,3 +1,5 @@
+import { Alert } from './alert';
+
 export class Turno {
   especialidad: string;
   especialista: string;
@@ -9,10 +11,16 @@ export class Turno {
   id_especialista: string;
   id: string;
   reseña: string;
+  reseña_especialista: string;
   calificacion: string;
   paciente: string;
   edad_paciente: string;
   acciones: string[];
+  altura: number;
+  peso: number;
+  temperatura: number;
+  presion: number;
+  map: Map<string, number>;
 
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
@@ -36,6 +44,12 @@ export class Turno {
     this.edad_paciente = '';
     this.acciones = [];
     this.calificacion = '';
+    this.altura = 0;
+    this.peso = 0;
+    this.presion = 0;
+    this.temperatura = 0;
+    this.map = new Map<string, number>();
+    this.reseña_especialista = '';
   }
 
   static keys() {
@@ -77,7 +91,7 @@ export class Turno {
 
   static generarAcciones(turno: Turno) {
     const acciones = [];
-    if (turno.reseña) acciones.push('Ver reseña');
+    if (turno.reseña || turno.reseña_especialista) acciones.push('Ver reseña');
     switch (turno.estado) {
       case Turno.estado_pediente:
       case Turno.estado_aceptado:
@@ -92,7 +106,7 @@ export class Turno {
 
   static generarAccionesEspecialista(turno: Turno) {
     const acciones = [];
-    if (turno.reseña) acciones.push('Ver reseña');
+    if (turno.reseña || turno.reseña_especialista) acciones.push('Ver reseña');
     switch (turno.estado) {
       case Turno.estado_pediente:
         acciones.push('Rechazar');
@@ -104,5 +118,40 @@ export class Turno {
         break;
     }
     turno.acciones = [...acciones];
+  }
+
+  static verResenia(turno: Turno) {
+    let msj = `Comentario del paciente: ${
+      turno.reseña || 'No hay comentarios'
+    }<br><br>${
+      turno.calificacion
+        ? 'Calificación: ' + turno.calificacion + ' puntos'
+        : ''
+    }`;
+    let estado = '';
+
+    if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
+    else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
+
+    if (turno.estado === Turno.estado_realizado) {
+      msj = msj + `<br>Reseña especialista: ${turno.reseña_especialista}`;
+      msj = msj + `<br><br>Altura: ${turno.altura}cm`;
+      msj = msj + `<br>Peso: ${turno.peso}kg`;
+      msj = msj + `<br>Presion: ${turno.presion}`;
+      msj = msj + `<br>Temperatura: ${turno.temperatura}`;
+
+      for (const element of turno.map) {
+        const aux = element as any;
+        msj = msj + `<br>${aux.clave}: ${aux.valor}`;
+      }
+    }
+
+    const reseña =
+      turno.estado === Turno.estado_finalizado ||
+      turno.estado === Turno.estado_realizado;
+
+    const titulo = !reseña ? 'Motivo de ' + estado : 'Reseña';
+
+    Alert.info(titulo, msj);
   }
 }

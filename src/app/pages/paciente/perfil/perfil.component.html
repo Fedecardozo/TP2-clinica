@@ -1,14 +1,16 @@
 <div class="container d-flex align-items-center justify-content-center padre">
   <div class="row sub-container w-50">
-    <div class="col-6">
-      <h4 class="mb-3">Mi perfil</h4>
+    <div class="col-12 d-flex justify-content-center">
+      <h5 [class]="decoration" (click)="clickPefil()">Perfil</h5>
+      <h5 [class]="decoration2" (click)="clickHistorial()">Historia clinica</h5>
     </div>
-    <div class="col-3 mb-3">
-      <img [src]="this.user.userActual?.foto_url" alt="perfil" />
+    <div class="col-12 d-flex justify-content-center">
+      <img [src]="this.user.userActual?.foto_url" alt="perfil" class="m-3" />
+      <img [src]="this.user.userActual?.foto_url_2" alt="perfil2" class="m-3" />
     </div>
-    <div class="col-3 mb-3">
-      <img [src]="this.user.userActual?.foto_url_2" alt="perfil2" />
-    </div>
+
+    @if(perfil) {
+
     <!-- Nombre -->
     <div class="col-md-6 col-lg-6 mb-3">Nombre</div>
     <div class="col-md-6 col-lg-6 mb-3">
@@ -44,5 +46,6 @@
     <div class="col-md-6 col-lg-6 mb-3">
       {{ this.user.userActual?.obra_social | titlecase }}
     </div>
+    } @else { historial }
   </div>
 </div>

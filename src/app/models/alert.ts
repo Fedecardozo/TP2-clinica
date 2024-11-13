@@ -105,4 +105,96 @@ export class Alert {
       timer: 1500,
     });
   }
+
+  static resenia_especialista() {
+    let claveValorCount = 0;
+
+    return Swal.fire({
+      title: 'Ingrese los datos',
+      html: `
+        <input id="altura" class="swal2-input" placeholder="Altura (cm)" type="number">
+        <input id="peso" class="swal2-input" placeholder="Peso (kg)" type="number">
+        <input id="presion" class="swal2-input" placeholder="Presión (mmHg)" type="number">
+        <input id="temperatura" class="swal2-input" placeholder="Temperatura (°C)" type="number">
+        <div id="extraFieldsContainer"></div>
+        <button id="addFieldButton" class="swal2-confirm swal2-styled" style="margin-top: 10px;">Agregar otro</button>
+        <textarea id="reseña" class="swal2-textarea" placeholder="Reseña"></textarea>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Si, finalizar',
+      cancelButtonText: 'No, finalizar',
+      backdrop: true,
+      allowOutsideClick: false,
+      didOpen: () => {
+        const addFieldButton = document.getElementById('addFieldButton');
+        const extraFieldsContainer = document.getElementById(
+          'extraFieldsContainer'
+        );
+
+        addFieldButton?.addEventListener('click', () => {
+          if (claveValorCount < 3) {
+            claveValorCount++;
+            const claveValorHTML = `
+              <div id="extraField${claveValorCount}" style="display: flex; gap: 5px; margin-bottom: 5px;">
+                <input id="extraKey${claveValorCount}" class="swal2-input" style="width: 50%;" placeholder="Clave extra ${claveValorCount}">
+                <input id="extraValue${claveValorCount}" class="swal2-input" style="width: 50%;" placeholder="Valor ${claveValorCount}" type="number">
+              </div>`;
+            extraFieldsContainer?.insertAdjacentHTML(
+              'beforeend',
+              claveValorHTML
+            );
+
+            if (claveValorCount === 3) {
+              addFieldButton.style.display = 'none';
+            }
+          }
+        });
+      },
+      preConfirm: () => {
+        const altura = (document.getElementById('altura') as HTMLInputElement)
+          .value;
+        const peso = (document.getElementById('peso') as HTMLInputElement)
+          .value;
+        const presion = (document.getElementById('presion') as HTMLInputElement)
+          .value;
+        const temperatura = (
+          document.getElementById('temperatura') as HTMLInputElement
+        ).value;
+
+        // Validar que todos los campos requeridos estén completos
+        if (!altura || !peso || !presion || !temperatura) {
+          Swal.showValidationMessage(
+            'Por favor, complete los campos de altura, peso, presión y temperatura.'
+          );
+          return;
+        }
+
+        const reseña = (document.getElementById('reseña') as HTMLInputElement)
+          .value;
+
+        const extraFields = [];
+        for (let i = 1; i <= claveValorCount; i++) {
+          const key = (
+            document.getElementById(`extraKey${i}`) as HTMLInputElement
+          ).value;
+          const value = +(
+            document.getElementById(`extraValue${i}`) as HTMLInputElement
+          ).value;
+          if (key && !isNaN(value)) {
+            extraFields.push({ clave: key, valor: value });
+          }
+        }
+
+        return {
+          altura: +altura,
+          peso: +peso,
+          presion: +presion,
+          temperatura: +temperatura,
+          extraFields,
+          reseña,
+        };
+      },
+    });
+  }
 }
