@@ -129,23 +129,16 @@ export class Turno {
         ? 'Calificación: ' + turno.calificacion + ' puntos'
         : ''
     }`;
+
+    msj =
+      msj +
+      `Reseña del especilista: ${
+        turno.reseña_especialista || 'No dejo reseñas'
+      }`;
     let estado = '';
 
     if (turno.estado === Turno.estado_cancelado) estado = 'cancelación';
     else if (turno.estado == Turno.estado_rechazado) estado = 'rechazo';
-
-    if (turno.estado === Turno.estado_realizado) {
-      msj = msj + `<br>Reseña especialista: ${turno.reseña_especialista}`;
-      msj = msj + `<br><br>Altura: ${turno.altura}cm`;
-      msj = msj + `<br>Peso: ${turno.peso}kg`;
-      msj = msj + `<br>Presion: ${turno.presion}`;
-      msj = msj + `<br>Temperatura: ${turno.temperatura}`;
-
-      for (const element of turno.map) {
-        const aux = element as any;
-        msj = msj + `<br>${aux.clave}: ${aux.valor}`;
-      }
-    }
 
     const reseña =
       turno.estado === Turno.estado_finalizado ||
