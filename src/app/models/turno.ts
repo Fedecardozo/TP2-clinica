@@ -63,6 +63,18 @@ export class Turno {
     ];
   }
 
+  static keys_admin() {
+    return [
+      'Paciente',
+      'Especialista',
+      'especialidad',
+      'fecha',
+      'hora',
+      'estado',
+      'acciones',
+    ];
+  }
+
   static generarAcciones(turno: Turno) {
     const acciones = [];
     if (turno.reseña) acciones.push('Ver reseña');

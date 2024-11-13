@@ -56,6 +56,13 @@ export const routes: Routes = [
             (m) => m.SacarTurnoComponent
           ),
       },
+      {
+        path: 'turnos',
+        loadComponent: () =>
+          import('./pages/admin/turnos/turnos.component').then(
+            (m) => m.TurnosComponent
+          ),
+      },
     ],
     canActivate: [actAdminGuard],
   },

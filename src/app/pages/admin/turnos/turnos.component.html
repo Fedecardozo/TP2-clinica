@@ -1,0 +1,51 @@
+<div class="container padre d-flex flex-column justify-content-center">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Filtrar por especialista especialidad"
+      [(ngModel)]="filtro"
+      (input)="filtrar()"
+    />
+    <span class="input-group-text" id="basic-addon2"
+      ><i class="fa-solid fa-magnifying-glass fa-lg"></i
+    ></span>
+  </div>
+
+  <table class="table table-hover flex-row">
+    <thead>
+      <tr class="table-primary">
+        @for (item of this.th; track $index) { @if($index === th.length-1) {
+        <th scope="col" class="text-center">{{ item | titlecase }}</th>
+        } @else {
+        <th scope="col">{{ item | titlecase }}</th>
+        } }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of this.turnos; track $index) { @if(pacientes[$index]){
+      <tr>
+        <td>
+          {{ getNamePaciente(pacientes[$index]) | titlecase }}
+        </td>
+        <td>{{ pacientes[$index].edad }}</td>
+        <td>{{ item.especialidad | titlecase }}</td>
+        <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ item.hora }}hs</td>
+        <td>{{ item.estado | titlecase }}</td>
+        <td class="d-flex justify-content-around">
+          @if ( item.acciones[0] === 'Cancelar') {
+          <button class="btn btn-danger" (click)="cancelar(item)">
+            Cancelar
+          </button>
+          } @else {
+          <button class="btn btn-info" (click)="verResenia(item)">
+            Ver reseña
+          </button>
+          }
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>
