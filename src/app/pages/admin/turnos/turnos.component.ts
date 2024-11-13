@@ -55,7 +55,6 @@ export class TurnosComponent {
         item.especialidad.toLowerCase().includes(term) ||
         item.especialista.toLowerCase().includes(term)
     );
-    console.log(this.filtro_data);
   }
 
   verResenia(turno: Turno) {

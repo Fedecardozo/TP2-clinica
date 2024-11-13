@@ -28,7 +28,7 @@
         <td>
           {{ getNamePaciente(pacientes[$index]) | titlecase }}
         </td>
-        <td>{{ pacientes[$index].edad }}</td>
+        <td>{{ item.especialista | titlecase }}</td>
         <td>{{ item.especialidad | titlecase }}</td>
         <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.hora }}hs</td>
