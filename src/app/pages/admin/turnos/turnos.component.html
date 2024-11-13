@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of this.turnos; track $index) { @if(pacientes[$index]){
+      @for (item of filtro_data; track $index) { @if(pacientes[$index]){
       <tr>
         <td>
           {{ getNamePaciente(pacientes[$index]) | titlecase }}

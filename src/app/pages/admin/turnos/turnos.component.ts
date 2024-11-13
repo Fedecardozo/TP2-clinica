@@ -27,6 +27,7 @@ export class TurnosComponent {
   pacientes: Usuario[] = [];
   filtro = '';
   filtro_data: Turno[] = [];
+
   constructor() {
     this.th = Turno.keys_admin();
   }
@@ -44,7 +45,6 @@ export class TurnosComponent {
         });
         this.cargarPacientes();
         this.filtro_data = [...this.turnos];
-        console.log(this.filtro_data);
       });
   }
 
@@ -53,8 +53,9 @@ export class TurnosComponent {
     this.filtro_data = this.turnos.filter(
       (item) =>
         item.especialidad.toLowerCase().includes(term) ||
-        item.paciente.toLowerCase().includes(term)
+        item.especialista.toLowerCase().includes(term)
     );
+    console.log(this.filtro_data);
   }
 
   verResenia(turno: Turno) {
