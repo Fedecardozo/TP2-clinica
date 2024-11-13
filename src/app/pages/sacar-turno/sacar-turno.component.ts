@@ -86,6 +86,8 @@ export class SacarTurnoComponent {
           turno.id_especialista = this.especialista?.id ?? '';
           turno.id_paciente = this.paciente?.id ?? '';
           turno.estado = Turno.estado_pediente;
+          turno.paciente =
+            this.paciente?.nombre + ' ' + this.paciente?.apellido;
           this.fire
             .addTurno(turno)
             .then(() => {

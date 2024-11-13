@@ -4,11 +4,12 @@ import { FirebaseService } from '../../services/firebase.service';
 import { Subscription } from 'rxjs';
 import { Turno } from '../../models/turno';
 import { Alert } from '../../models/alert';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-historia-clinica',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe, JsonPipe],
+  imports: [TitleCasePipe, DatePipe, JsonPipe, FormsModule],
   templateUrl: './historia-clinica.component.html',
   styleUrl: './historia-clinica.component.css',
 })
@@ -19,9 +20,12 @@ export class HistoriaClinicaComponent {
   th: string[] = [];
   @Input() id_paciente = '';
   @Input() id_especialista = '';
+  filtro = '';
+  filtro_data: Turno[] = [];
 
   constructor() {
     this.th = [
+      'paciente',
       'especialidad',
       'especialista',
       'altura',
@@ -56,12 +60,26 @@ export class HistoriaClinicaComponent {
             item.msjMap.push(`${aux2.clave}: ${aux2.valor}`);
           }
         });
-
+        this.filtro_data = [...this.turnos];
         if (!this.turnos.length) Alert.info('No hay datos para mostrar');
       });
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  filtrar() {
+    const term = this.filtro.toLowerCase();
+    this.filtro_data = this.turnos.filter(
+      (item) =>
+        item.especialidad.toLowerCase().includes(term) ||
+        item.paciente.toLowerCase().includes(term) ||
+        item.especialista.toLowerCase().includes(term) ||
+        item.altura.toString().toLowerCase().includes(term) ||
+        item.peso.toString().toLowerCase().includes(term) ||
+        item.presion.toString().toLowerCase().includes(term) ||
+        item.temperatura.toString().toLowerCase().includes(term)
+    );
   }
 }
