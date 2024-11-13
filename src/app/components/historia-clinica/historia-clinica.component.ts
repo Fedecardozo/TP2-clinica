@@ -3,6 +3,7 @@ import { DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
 import { FirebaseService } from '../../services/firebase.service';
 import { Subscription } from 'rxjs';
 import { Turno } from '../../models/turno';
+import { Alert } from '../../models/alert';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -17,6 +18,7 @@ export class HistoriaClinicaComponent {
   turnos: Turno[] = [];
   th: string[] = [];
   @Input() id_paciente = '';
+  @Input() id_especialista = '';
 
   constructor() {
     this.th = [
@@ -40,10 +42,12 @@ export class HistoriaClinicaComponent {
         const aux = next as Turno[];
         this.turnos = aux.filter(
           (item) =>
-            (item.id_paciente === this.id_paciente &&
-              item.estado === Turno.estado_realizado) ||
-            item.estado === Turno.estado_finalizado
+            (item.id_paciente === this.id_paciente ||
+              item.id_especialista === this.id_especialista) &&
+            (item.estado === Turno.estado_realizado ||
+              item.estado === Turno.estado_finalizado)
         );
+
         this.turnos.forEach((item: Turno) => {
           item.msjMap = [];
           for (const element of item.map) {
@@ -52,6 +56,8 @@ export class HistoriaClinicaComponent {
             item.msjMap.push(`${aux2.clave}: ${aux2.valor}`);
           }
         });
+
+        if (!this.turnos.length) Alert.info('No hay datos para mostrar');
       });
   }
 

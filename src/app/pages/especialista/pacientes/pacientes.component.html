@@ -1,0 +1,8 @@
+<div class="container d-flex align-items-center justify-content-center padre">
+  <div class="row sub-container w-75">
+    <h1>Pacientes</h1>
+    <app-historia-clinica
+      [id_especialista]="this.user.userActual?.id || ''"
+    ></app-historia-clinica>
+  </div>
+</div>
