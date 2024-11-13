@@ -1,24 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Usuario } from '../../../models/usuario';
-import { TitleCasePipe } from '@angular/common';
+import { DatePipe, JsonPipe, TitleCasePipe } from '@angular/common';
+import { FirebaseService } from '../../../services/firebase.service';
+import { Subscription } from 'rxjs';
+import { Turno } from '../../../models/turno';
+import { HistoriaClinicaComponent } from '../../../components/historia-clinica/historia-clinica.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [TitleCasePipe],
+  imports: [TitleCasePipe, DatePipe, JsonPipe, HistoriaClinicaComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })
 export class PerfilComponent {
+  fire = inject(FirebaseService);
   user = inject(AuthService);
   decoration = 'm-3 text-primary text-decoration-underline';
   decoration2 = 'm-3 text-primary';
   perfil = true;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   clickHistorial() {
     if (this.perfil) {

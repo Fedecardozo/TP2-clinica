@@ -1,5 +1,5 @@
 <div class="container d-flex align-items-center justify-content-center padre">
-  <div class="row sub-container w-50">
+  <div class="row sub-container w-75">
     <div class="col-12 d-flex justify-content-center">
       <h5 [class]="decoration" (click)="clickPefil()">Perfil</h5>
       <h5 [class]="decoration2" (click)="clickHistorial()">Historia clinica</h5>
@@ -46,6 +46,10 @@
     <div class="col-md-6 col-lg-6 mb-3">
       {{ this.user.userActual?.obra_social | titlecase }}
     </div>
-    } @else { historial }
+    } @else {
+    <app-historia-clinica
+      [id_paciente]="this.user.userActual?.id || ''"
+    ></app-historia-clinica>
+    }
   </div>
 </div>

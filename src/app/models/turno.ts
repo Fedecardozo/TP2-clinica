@@ -21,7 +21,7 @@ export class Turno {
   temperatura: number;
   presion: number;
   map: Map<string, number>;
-
+  msjMap: string[];
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';
@@ -50,6 +50,7 @@ export class Turno {
     this.temperatura = 0;
     this.map = new Map<string, number>();
     this.reseña_especialista = '';
+    this.msjMap = [];
   }
 
   static keys() {
