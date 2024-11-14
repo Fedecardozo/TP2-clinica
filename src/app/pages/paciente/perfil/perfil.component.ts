@@ -6,6 +6,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { Subscription } from 'rxjs';
 import { Turno } from '../../../models/turno';
 import { HistoriaClinicaComponent } from '../../../components/historia-clinica/historia-clinica.component';
+import { PdfService } from '../../../services/pdf.service';
 
 @Component({
   selector: 'app-perfil',
@@ -17,6 +18,7 @@ import { HistoriaClinicaComponent } from '../../../components/historia-clinica/h
 export class PerfilComponent {
   fire = inject(FirebaseService);
   user = inject(AuthService);
+  pdf = inject(PdfService);
   decoration = 'm-3 text-primary text-decoration-underline';
   decoration2 = 'm-3 text-primary';
   perfil = true;
@@ -37,5 +39,9 @@ export class PerfilComponent {
       this.decoration = aux;
       this.perfil = true;
     }
+  }
+
+  exportToPDF() {
+    this.pdf.exportToPDF();
   }
 }

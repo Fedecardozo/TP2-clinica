@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Turno } from '../../models/turno';
 import { Alert } from '../../models/alert';
 import { FormsModule } from '@angular/forms';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class HistoriaClinicaComponent {
   fire = inject(FirebaseService);
+  pdf = inject(PdfService);
   sub?: Subscription;
   turnos: Turno[] = [];
   th: string[] = [];
@@ -61,6 +63,7 @@ export class HistoriaClinicaComponent {
           }
         });
         this.filtro_data = [...this.turnos];
+        this.pdf.datos = [...this.filtro_data];
         if (!this.turnos.length) Alert.info('No hay datos para mostrar');
       });
   }

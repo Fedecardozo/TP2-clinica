@@ -4,6 +4,7 @@
       <h5 [class]="decoration" (click)="clickPefil()">Perfil</h5>
       <h5 [class]="decoration2" (click)="clickHistorial()">Historia clinica</h5>
     </div>
+
     <div class="col-12 d-flex justify-content-center">
       <img [src]="this.user.userActual?.foto_url" alt="perfil" class="m-3" />
       <img [src]="this.user.userActual?.foto_url_2" alt="perfil2" class="m-3" />
@@ -47,6 +48,11 @@
       {{ this.user.userActual?.obra_social | titlecase }}
     </div>
     } @else {
+    <div class="col-12 d-flex justify-content-end">
+      <button (click)="exportToPDF()" class="btn btn-info mb-3">
+        Descargar PDF
+      </button>
+    </div>
     <app-historia-clinica
       [id_paciente]="this.user.userActual?.id || ''"
     ></app-historia-clinica>

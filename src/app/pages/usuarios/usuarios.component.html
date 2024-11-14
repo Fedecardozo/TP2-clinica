@@ -1,8 +1,8 @@
 <div class="container padre d-flex flex-column justify-content-center">
-  <div class="d-flex justify-content-around mb-3">
-    <button class="btn btn-primary">Pacientes</button
-    ><button class="btn btn-primary">Especialistas</button
-    ><button class="btn btn-primary">Administradores</button>
+  <div class="col-12 d-flex justify-content-center">
+    <h5 [class]="decoration1" (click)="click(1)">Especialistas</h5>
+    <h5 [class]="decoration2" (click)="click(2)">Pacientes</h5>
+    <h5 [class]="decoration3" (click)="click(3)">Administradores</h5>
   </div>
   <table class="table table-hover flex-row">
     <thead>
@@ -10,17 +10,37 @@
         @for (item of this.th; track $index) {
         <th scope="col">{{ item | titlecase }}</th>
         }
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      @for (item of this.especialistas; track $index) {
-      <tr (click)="seleccion(item)">
+      @for (item of this.usuarios; track $index) {
+      <tr>
         <td>{{ item.nombre }}</td>
         <td>{{ item.apellido }}</td>
         <td>{{ item.edad }}</td>
         <td>{{ item.dni }}</td>
         <td>{{ item.mail }}</td>
         <td>{{ item.habilitado ? "Habilitado" : "Inhabilitado" }}</td>
+        @if(this.paciente){
+        <td>
+          <button class="btn btn-primary" (click)="verHistoria(item)">
+            Historia clinica
+          </button>
+        </td>
+        } @else(){
+        <td>
+          @if (item.habilitado) {
+          <button class="btn btn-danger" (click)="seleccion(item)">
+            Deshabilitar
+          </button>
+          } @else {
+          <button class="btn btn-primary" (click)="seleccion(item)">
+            Habilitar
+          </button>
+          }
+        </td>
+        }
       </tr>
       }
     </tbody>
