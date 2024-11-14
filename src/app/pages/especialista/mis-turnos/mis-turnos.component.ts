@@ -131,8 +131,15 @@ export class MisTurnosComponent {
         turno.presion = presion;
         turno.temperatura = temperatura;
         turno.reseña_especialista = reseña || 'No dejo reseña';
-        turno.map = extraFields;
+        // turno.map = extraFields;
         turno.estado = Turno.estado_realizado;
+        console.log(extraFields);
+
+        for (const element of extraFields) {
+          const aux2 = element as any;
+          console.log(`${aux2.clave}: ${aux2.valor}`);
+          turno.msjMap.push(`${aux2.clave}: ${aux2.valor}`);
+        }
         this.fire
           .updateTurno(turno)
           .then(() => {

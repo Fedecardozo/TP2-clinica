@@ -88,12 +88,15 @@ export class SacarTurnoComponent {
           turno.estado = Turno.estado_pediente;
           turno.paciente =
             this.paciente?.nombre + ' ' + this.paciente?.apellido;
+          console.log(this.paciente?.nombre);
+          console.log(this.paciente?.apellido);
           this.fire
             .addTurno(turno)
             .then(() => {
               Alert.exito('Se genero exitosamente su turno');
             })
-            .catch(() => {
+            .catch((err) => {
+              console.log(err);
               Alert.error(
                 'Hubo un error al cargar su turno',
                 'Intentelo más tarde...'
