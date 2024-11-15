@@ -64,16 +64,8 @@ export class HistoriaClinicaComponent {
               item.estado === Turno.estado_finalizado)
         );
 
-        // this.turnos.forEach((item: Turno) => {
-        //   item.msjMap = [];
-        //   for (const element of item.map) {
-        //     const aux2 = element as any;
-        //     // console.log(`${aux2.clave}: ${aux2.valor}`);
-        //     item.msjMap.push(`${aux2.clave}: ${aux2.valor}`);
-        //   }
-        // });
         this.filtro_data = [...this.turnos];
-        this.pdf.datos = [...this.filtro_data];
+        this.pdf.datos = this.filtro_data;
         if (!this.turnos.length) Alert.info('No hay datos para mostrar');
       });
   }
@@ -91,6 +83,8 @@ export class HistoriaClinicaComponent {
       this.filtro_data = this.turnos.filter(
         (value) => value.especialidad.toLowerCase() === select
       );
+
+    this.pdf.datos = this.filtro_data;
   }
 
   filtrar() {
@@ -105,5 +99,7 @@ export class HistoriaClinicaComponent {
         item.presion.toString().toLowerCase().includes(term) ||
         item.temperatura.toString().toLowerCase().includes(term)
     );
+
+    this.pdf.datos = this.filtro_data;
   }
 }
