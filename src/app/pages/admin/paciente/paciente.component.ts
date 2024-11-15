@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../services/firebase.service';
 import { TitleCasePipe } from '@angular/common';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-paciente',
@@ -14,6 +15,7 @@ import { TitleCasePipe } from '@angular/common';
   imports: [TitleCasePipe, RouterLink],
   templateUrl: './paciente.component.html',
   styleUrl: './paciente.component.css',
+  animations: [slideUpAnimation],
 })
 export class PacienteComponent {
   fire = inject(FirebaseService);

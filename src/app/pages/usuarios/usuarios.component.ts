@@ -8,6 +8,8 @@ import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Rol } from '../../models/rol';
 import { HistoriaClinicaComponent } from '../../components/historia-clinica/historia-clinica.component';
+import { fadeIn, slideUpAnimation } from '../../utils/animation';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -15,10 +17,12 @@ import { HistoriaClinicaComponent } from '../../components/historia-clinica/hist
   imports: [TitleCasePipe, RouterLink, HistoriaClinicaComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
+  animations: [slideUpAnimation, fadeIn],
 })
 export class UsuariosComponent {
   fire = inject(FirebaseService);
   auth = inject(AuthService);
+  util = inject(UtilsService);
   router = inject(Router);
   th: string[] = Usuario.getAtributosEspecialista();
   sub?: Subscription;
@@ -37,7 +41,12 @@ export class UsuariosComponent {
   mostrarHistorial = false;
   id_user = '';
 
-  constructor() {}
+  obj_isFadein: any;
+
+  constructor() {
+    this.obj_isFadein = { isFadein: false };
+    this.util.mostrarFadeIn(this.obj_isFadein);
+  }
 
   ngOnInit(): void {
     this.sub = this.fire
@@ -66,8 +75,10 @@ export class UsuariosComponent {
   }
 
   click(num: number) {
+    this.obj_isFadein = { isFadein: false };
     switch (num) {
       case 1:
+        this.util.mostrarFadeIn(this.obj_isFadein);
         this.especialista = true;
         this.paciente = false;
         this.admin = false;
@@ -75,10 +86,11 @@ export class UsuariosComponent {
         this.decoration2 = this.decorationAux;
         this.decoration3 = this.decorationAux;
         this.usuarios = [...this.especialistas];
-
         break;
 
       case 2:
+        this.util.mostrarFadeIn(this.obj_isFadein);
+
         this.especialista = false;
         this.paciente = true;
         this.admin = false;
@@ -89,6 +101,8 @@ export class UsuariosComponent {
         break;
 
       case 3:
+        this.util.mostrarFadeIn(this.obj_isFadein);
+
         this.especialista = false;
         this.paciente = false;
         this.admin = true;

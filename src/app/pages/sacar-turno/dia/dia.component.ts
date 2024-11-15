@@ -6,6 +6,7 @@ import { Horario } from '../../../models/horario';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../../services/firebase.service';
 import { Turno } from '../../../models/turno';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-dia',
@@ -13,6 +14,7 @@ import { Turno } from '../../../models/turno';
   imports: [TitleCasePipe, DatePipe],
   templateUrl: './dia.component.html',
   styleUrl: './dia.component.css',
+  animations: [slideUpAnimation],
 })
 export class DiaComponent {
   @Input() especialista?: Usuario;

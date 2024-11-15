@@ -3,6 +3,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { Usuario } from '../../../models/usuario';
 import { UtilsService } from '../../../services/utils.service';
 import { TitleCasePipe } from '@angular/common';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-especialista',
@@ -10,6 +11,7 @@ import { TitleCasePipe } from '@angular/common';
   imports: [TitleCasePipe],
   templateUrl: './especialista.component.html',
   styleUrl: './especialista.component.css',
+  animations: [slideUpAnimation],
 })
 export class EspecialistaComponent {
   @Output() incrementar = new EventEmitter<Usuario>();

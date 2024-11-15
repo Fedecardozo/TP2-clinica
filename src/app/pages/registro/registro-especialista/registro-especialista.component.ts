@@ -16,6 +16,7 @@ import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
 import { AuthService } from '../../../services/auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -23,6 +24,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
   imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css',
+  animations: [slideUpAnimation],
 })
 export class RegistroEspecialistaComponent {
   public fb: FormBuilder = inject(FormBuilder);

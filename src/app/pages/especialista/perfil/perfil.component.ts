@@ -5,6 +5,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { UtilsService } from '../../../services/utils.service';
 import { FormsModule } from '@angular/forms';
 import { Alert } from '../../../models/alert';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-perfil',
@@ -12,6 +13,7 @@ import { Alert } from '../../../models/alert';
   imports: [TitleCasePipe, FormsModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
+  animations: [slideUpAnimation],
 })
 export class PerfilComponent {
   user = inject(AuthService);

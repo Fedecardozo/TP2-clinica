@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Turno } from '../../../models/turno';
 import { FormsModule } from '@angular/forms';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
   imports: [TitleCasePipe, DatePipe, FormsModule],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
+  animations: [slideUpAnimation],
 })
 export class MisTurnosComponent {
   fire = inject(FirebaseService);

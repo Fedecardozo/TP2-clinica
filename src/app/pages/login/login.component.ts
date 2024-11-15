@@ -13,6 +13,7 @@ import { UtilsService } from '../../services/utils.service';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../services/firebase.service';
 import { Usuario } from '../../models/usuario';
+import { fadeIn } from '../../utils/animation';
 
 @Component({
   selector: 'app-login',
@@ -20,23 +21,27 @@ import { Usuario } from '../../models/usuario';
   imports: [ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
+  animations: [fadeIn],
 })
 export class LoginComponent {
   public fb: FormBuilder = inject(FormBuilder);
   public fg: FormGroup;
   private userService: AuthService = inject(AuthService);
   private router = inject(Router);
-  private util = inject(UtilsService);
+  protected util = inject(UtilsService);
   private fire = inject(FirebaseService);
   private subFire?: Subscription;
   private usuarios: Usuario[] = [];
   usuario = new Usuario();
+  obj_isFadein: any;
 
   constructor() {
     this.fg = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required]],
     });
+    this.obj_isFadein = { isFadein: false };
+    this.util.mostrarFadeIn(this.obj_isFadein);
   }
 
   ngOnInit(): void {

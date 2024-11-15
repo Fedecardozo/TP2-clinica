@@ -1,10 +1,13 @@
-<div class="container padre d-flex flex-column justify-content-center">
+<div class="container padre d-flex flex-column justify-content-center" @slideUp>
   <div class="col-12 d-flex justify-content-center">
     <h5 [class]="decoration1" (click)="click(1)">Especialistas</h5>
     <h5 [class]="decoration2" (click)="click(2)">Pacientes</h5>
     <h5 [class]="decoration3" (click)="click(3)">Administradores</h5>
   </div>
-  <table class="table table-hover flex-row">
+  <table
+    class="table table-hover flex-row"
+    [@fadeIn]="obj_isFadein.isFadeIn ? 'show' : 'hide'"
+  >
     <thead>
       <tr class="table-primary">
         @for (item of this.th; track $index) {

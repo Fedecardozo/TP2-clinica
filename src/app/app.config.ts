@@ -9,6 +9,7 @@ import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +21,6 @@ export const appConfig: ApplicationConfig = {
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     provideMessaging(() => getMessaging()),
     provideStorage(() => getStorage()),
+    provideAnimations(),
   ],
 };

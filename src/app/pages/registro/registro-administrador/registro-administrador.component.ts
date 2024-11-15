@@ -14,12 +14,14 @@ import { Usuario } from '../../../models/usuario';
 import { Rol } from '../../../models/rol';
 import { AuthService } from '../../../services/auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { slideUpAnimation } from '../../../utils/animation';
 @Component({
   selector: 'app-registro-administrador',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-administrador.component.html',
   styleUrl: './registro-administrador.component.css',
+  animations: [slideUpAnimation],
 })
 export class RegistroAdministradorComponent {
   public fb: FormBuilder = inject(FormBuilder);

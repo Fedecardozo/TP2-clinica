@@ -6,13 +6,20 @@ import { Injectable } from '@angular/core';
 export class UtilsService {
   spinner: boolean = false;
   tituloSpinner: string = '';
-
   siteKey: string;
   theme: any;
 
   constructor() {
     this.siteKey = '6LdfCXgqAAAAAKvWVjqc28NWCnqK8V1vHRdeEsVS';
     this.theme = 'Light';
+  }
+
+  mostrarFadeIn(obj: any) {
+    obj.isFadeIn = false; // Activa 'fadeIn' para aparecer suavemente.
+
+    setTimeout(() => {
+      obj.isFadeIn = true;
+    }, 150);
   }
 
   mostrarSpinner(tituloSpinner: string = '') {

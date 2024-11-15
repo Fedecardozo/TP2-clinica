@@ -8,6 +8,7 @@ import { FirebaseService } from '../../../services/firebase.service';
 import { Subscription } from 'rxjs';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-turnos',
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
   imports: [TitleCasePipe, DatePipe, FormsModule],
   templateUrl: './turnos.component.html',
   styleUrl: './turnos.component.css',
+  animations: [slideUpAnimation],
 })
 export class TurnosComponent {
   fire = inject(FirebaseService);

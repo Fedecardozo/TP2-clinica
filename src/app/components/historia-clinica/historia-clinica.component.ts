@@ -6,6 +6,8 @@ import { Turno } from '../../models/turno';
 import { Alert } from '../../models/alert';
 import { FormsModule } from '@angular/forms';
 import { PdfService } from '../../services/pdf.service';
+import { fadeIn } from '../../utils/animation';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-historia-clinica',
@@ -13,10 +15,12 @@ import { PdfService } from '../../services/pdf.service';
   imports: [TitleCasePipe, DatePipe, JsonPipe, FormsModule],
   templateUrl: './historia-clinica.component.html',
   styleUrl: './historia-clinica.component.css',
+  animations: [fadeIn],
 })
 export class HistoriaClinicaComponent {
   fire = inject(FirebaseService);
   pdf = inject(PdfService);
+  util = inject(UtilsService);
   sub?: Subscription;
   turnos: Turno[] = [];
   th: string[] = [];
@@ -24,8 +28,11 @@ export class HistoriaClinicaComponent {
   @Input() id_especialista = '';
   filtro = '';
   filtro_data: Turno[] = [];
+  obj_isFadein: any;
 
   constructor() {
+    this.obj_isFadein = { isFadein: false };
+    this.util.mostrarFadeIn(this.obj_isFadein);
     this.th = [
       'paciente',
       'especialidad',

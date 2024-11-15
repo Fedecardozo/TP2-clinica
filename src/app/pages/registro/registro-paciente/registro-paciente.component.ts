@@ -14,6 +14,7 @@ import { Rol } from '../../../models/rol';
 import { UtilsService } from '../../../services/utils.service';
 import { AuthService } from '../../../services/auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { slideUpAnimation } from '../../../utils/animation';
 
 @Component({
   selector: 'app-registro-paciente',
@@ -21,6 +22,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
   imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
   templateUrl: './registro-paciente.component.html',
   styleUrl: './registro-paciente.component.css',
+  animations: [slideUpAnimation],
 })
 export class RegistroPacienteComponent {
   public fb: FormBuilder = inject(FormBuilder);

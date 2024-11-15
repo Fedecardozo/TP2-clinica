@@ -3,6 +3,7 @@ import { RegistroEspecialistaComponent } from './registro-especialista/registro-
 import { RegistroPacienteComponent } from './registro-paciente/registro-paciente.component';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { slideUpAnimation } from '../../utils/animation';
 
 @Component({
   selector: 'app-registro',
@@ -14,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
   ],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
+  animations: [slideUpAnimation],
 })
 export class RegistroComponent {
   auth = inject(AuthService);
