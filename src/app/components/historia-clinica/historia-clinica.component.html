@@ -1,37 +1,61 @@
-<div class="input-group mb-3">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Filtrar por cualquiera de sus campos"
-    [(ngModel)]="filtro"
-    (input)="filtrar()"
-  />
-  <span class="input-group-text" id="basic-addon2"
-    ><i class="fa-solid fa-magnifying-glass fa-lg"></i
-  ></span>
-</div>
-<table class="table table-hover flex-row">
-  <thead>
-    <tr class="table-primary text-center">
-      @for (item of this.th; track $index) {
-      <th scope="col">{{ item | titlecase }}</th>
+<div class="container text-center">
+  <div class="row d-flex align-items-center">
+    <div class="col-8">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filtrar por cualquiera de sus campos"
+          [(ngModel)]="filtro"
+          (input)="filtrar()"
+        />
+        <span class="input-group-text" id="basic-addon2"
+          ><i class="fa-solid fa-magnifying-glass fa-lg"></i
+        ></span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-floating mb-3">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          (change)="seleccion($event)"
+        >
+          @for (item of select; track $index) {
+          <option [value]="item" selected>
+            {{ item }}
+          </option>
+          }
+        </select>
+        <label for="floatingSelect">Seleccione una especialidad</label>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover flex-row">
+    <thead>
+      <tr class="table-primary text-center">
+        @for (item of this.th; track $index) {
+        <th scope="col">{{ item | titlecase }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of this.filtro_data; track $index) {
+      <tr class="text-center">
+        <td>{{ item.paciente | titlecase }}</td>
+        <td>{{ item.especialidad | titlecase }}</td>
+        <td>{{ item.especialista | titlecase }}</td>
+        <td>{{ item.altura + "cm" }}</td>
+        <td>{{ item.peso + "kg" }}</td>
+        <td>{{ item.presion }}</td>
+        <td>{{ item.temperatura }}</td>
+        <td>{{ item.msjMap[0] || "----" }}</td>
+        <td>{{ item.msjMap[1] || "----" }}</td>
+        <td>{{ item.msjMap[2] || "----" }}</td>
+      </tr>
       }
-    </tr>
-  </thead>
-  <tbody>
-    @for (item of this.filtro_data; track $index) {
-    <tr class="text-center">
-      <td>{{ item.paciente | titlecase }}</td>
-      <td>{{ item.especialidad | titlecase }}</td>
-      <td>{{ item.especialista | titlecase }}</td>
-      <td>{{ item.altura + "cm" }}</td>
-      <td>{{ item.peso + "kg" }}</td>
-      <td>{{ item.presion }}</td>
-      <td>{{ item.temperatura }}</td>
-      <td>{{ item.msjMap[0] || "----" }}</td>
-      <td>{{ item.msjMap[1] || "----" }}</td>
-      <td>{{ item.msjMap[2] || "----" }}</td>
-    </tr>
-    }
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

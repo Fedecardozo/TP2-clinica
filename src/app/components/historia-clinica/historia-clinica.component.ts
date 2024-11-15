@@ -24,6 +24,7 @@ export class HistoriaClinicaComponent {
   sub?: Subscription;
   turnos: Turno[] = [];
   th: string[] = [];
+  select: string[] = [];
   @Input() id_paciente = '';
   @Input() id_especialista = '';
   filtro = '';
@@ -45,6 +46,8 @@ export class HistoriaClinicaComponent {
       'extra 2',
       'extra 3',
     ];
+
+    this.select = ['Cardiologo', 'Dentista', 'Pediatra', 'Radiologo', 'Todos'];
   }
 
   ngOnInit(): void {
@@ -77,6 +80,17 @@ export class HistoriaClinicaComponent {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  seleccion(item: Event) {
+    const selectElement = item.target as HTMLSelectElement;
+    const select = selectElement.value.toLowerCase();
+
+    if (select === 'todos') this.filtro_data = this.turnos;
+    else
+      this.filtro_data = this.turnos.filter(
+        (value) => value.especialidad.toLowerCase() === select
+      );
   }
 
   filtrar() {
