@@ -20,7 +20,7 @@ export class PdfService {
     doc.setFontSize(16);
     const fecha = new Date();
     console.log(fecha.toLocaleDateString());
-    doc.text('Fecha: ' + fecha.toLocaleDateString(), 150, 10);
+    doc.text('Fecha emisión: ' + fecha.toLocaleDateString(), 135, 10);
     doc.text('Historia Clínica', 85, 70);
     // Encabezado de la tabla
     const headers = [
