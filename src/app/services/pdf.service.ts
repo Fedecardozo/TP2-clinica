@@ -18,8 +18,10 @@ export class PdfService {
     // Agregar logo y título
     doc.addImage(logoBase64, 'PNG', 80, 10, 50, 50); // Posición y tamaño del logo
     doc.setFontSize(16);
-    doc.text('Historial de Pacientes', 80, 70);
-
+    const fecha = new Date();
+    console.log(fecha.toLocaleDateString());
+    doc.text('Fecha: ' + fecha.toLocaleDateString(), 150, 10);
+    doc.text('Historia Clínica', 85, 70);
     // Encabezado de la tabla
     const headers = [
       [
