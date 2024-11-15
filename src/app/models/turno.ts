@@ -22,6 +22,7 @@ export class Turno {
   presion: number;
   // map: Map<string, number>;
   msjMap: string[];
+
   static estado_pediente = 'pediente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';

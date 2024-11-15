@@ -20,6 +20,7 @@ export class Usuario {
   //Paciente
   obra_social: string;
   foto_url_2: string;
+  fechas_turnos: string[];
 
   constructor() {
     //Usuarios
@@ -43,6 +44,7 @@ export class Usuario {
     //Paciente
     this.obra_social = '';
     this.foto_url_2 = '';
+    this.fechas_turnos = [];
   }
 
   static getAtributosEspecialista() {

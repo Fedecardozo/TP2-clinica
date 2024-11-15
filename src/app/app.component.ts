@@ -27,6 +27,6 @@ export class AppComponent {
     this.util.mostrarSpinner('Cargando...');
     setTimeout(() => {
       this.util.ocultarSpinner();
-    }, 2000);
+    }, 2500);
   }
 }

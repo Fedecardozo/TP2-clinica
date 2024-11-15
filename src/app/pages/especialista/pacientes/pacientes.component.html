@@ -2,10 +2,61 @@
   class="container d-flex align-items-center justify-content-center padre"
   @slideUp
 >
-  <div class="row sub-container w-75">
-    <h1>Pacientes</h1>
+  <div class="row sub-container w-100">
+    <!-- <h1>Pacientes</h1>
     <app-historia-clinica
       [id_especialista]="this.user.userActual?.id || ''"
-    ></app-historia-clinica>
+    ></app-historia-clinica> -->
+
+    @for (item of pacientes; track $index) {
+
+    <div class="card m-3" style="width: 18rem">
+      <img [src]="item.foto_url || ''" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ item.nombre + " " | titlecase }} {{ item.apellido | titlecase }}
+        </h5>
+        <h6>Turnos</h6>
+        <p class="card-text">
+          1-
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 1]
+              ? "Fecha:"
+              : "Sin turno previo"
+          }}
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 1] || ""
+              | date : "dd/MM/yyy"
+          }}
+        </p>
+        <p class="card-text">
+          2-
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 2]
+              ? "Fecha:"
+              : "Sin turno previo"
+          }}
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 2] || ""
+              | date : "dd/MM/yyy"
+          }}
+        </p>
+        <p class="card-text">
+          3-
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 3]
+              ? "Fecha:"
+              : "Sin turno previo"
+          }}
+          {{
+            item.fechas_turnos[item.fechas_turnos.length - 3] || ""
+              | date : "dd/MM/yyy"
+          }}
+        </p>
+
+        <button class="btn btn-primary">Historia clínica</button>
+      </div>
+    </div>
+    }
   </div>
 </div>
