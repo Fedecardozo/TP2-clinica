@@ -2,7 +2,9 @@
   class="container d-flex align-items-center justify-content-center padre"
   @slideUp
 >
-  <div class="row sub-container w-100">
+  <div
+    class="sub-container d-flex align-items-center justify-content-evenly flex-wrap w-100"
+  >
     <!-- <h1>Pacientes</h1>
     <app-historia-clinica
       [id_especialista]="this.user.userActual?.id || ''"
@@ -16,7 +18,7 @@
         <h5 class="card-title">
           {{ item.nombre + " " | titlecase }} {{ item.apellido | titlecase }}
         </h5>
-        <h6>Turnos</h6>
+        <h6>Ultimos 3 turnos:</h6>
         <p class="card-text">
           1-
           {{
