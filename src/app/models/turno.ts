@@ -23,7 +23,7 @@ export class Turno {
   // map: Map<string, number>;
   msjMap: string[];
 
-  static estado_pediente = 'pediente';
+  static estado_pediente = 'pendiente';
   static estado_aceptado = 'aceptado';
   static estado_cancelado = 'cancelado';
   static estado_rechazado = 'rechazado';

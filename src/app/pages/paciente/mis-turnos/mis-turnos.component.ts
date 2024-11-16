@@ -54,7 +54,11 @@ export class MisTurnosComponent {
     this.filtro_data = this.turnos.filter(
       (item) =>
         item.especialidad.toLowerCase().includes(term) ||
-        item.especialista.toLowerCase().includes(term)
+        item.especialista.toLowerCase().includes(term) ||
+        item.fecha.toLowerCase().includes(term) ||
+        item.hora.toLowerCase().includes(term) ||
+        item.email_especialista.toLowerCase().includes(term) ||
+        item.estado.toLowerCase().includes(term)
     );
   }
 
