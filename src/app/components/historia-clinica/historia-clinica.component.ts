@@ -89,16 +89,26 @@ export class HistoriaClinicaComponent {
 
   filtrar() {
     const term = this.filtro.toLowerCase();
-    this.filtro_data = this.turnos.filter(
-      (item) =>
+
+    this.filtro_data = this.turnos.filter((item) => {
+      //BUSCAR DATOS DINAMICOS
+      const extra1 = item.msjMap[0] ? item.msjMap[0].toString() : '';
+      const extra2 = item.msjMap[1] ? item.msjMap[1].toString() : '';
+      const extra3 = item.msjMap[2] ? item.msjMap[2].toString() : '';
+
+      return (
         item.especialidad.toLowerCase().includes(term) ||
         item.paciente.toLowerCase().includes(term) ||
         item.especialista.toLowerCase().includes(term) ||
         item.altura.toString().toLowerCase().includes(term) ||
         item.peso.toString().toLowerCase().includes(term) ||
         item.presion.toString().toLowerCase().includes(term) ||
-        item.temperatura.toString().toLowerCase().includes(term)
-    );
+        item.temperatura.toString().toLowerCase().includes(term) ||
+        extra1.includes(term) ||
+        extra2.includes(term) ||
+        extra3.includes(term)
+      );
+    });
 
     this.pdf.datos = this.filtro_data;
   }
