@@ -3,13 +3,14 @@ import { Turno } from '../../../models/turno';
 import { FirebaseService } from '../../../services/firebase.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { pipe, Subscription } from 'rxjs';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Usuario } from '../../../models/usuario';
 import { UtilsService } from '../../../services/utils.service';
 import { Alert } from '../../../models/alert';
 import { FormsModule } from '@angular/forms';
 import { slideUpAnimation } from '../../../utils/animation';
+import { TurnoPaciente } from '../../../models/turno-paciente';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -29,7 +30,8 @@ export class MisTurnosComponent {
   turnos: Turno[] = [];
   pacientes: Usuario[] = [];
   filtro = '';
-  filtro_data: Turno[] = [];
+  filtro_data: TurnoPaciente[] = [];
+  turnos_pacientes: TurnoPaciente[] = [];
 
   constructor() {
     this.th = Turno.keys_paciente();
@@ -44,31 +46,48 @@ export class MisTurnosComponent {
         this.turnos = aux.filter(
           (item) => item.id_especialista === this.auth.userActual?.id
         );
-        this.turnos.forEach((item) => {
-          Turno.generarAccionesEspecialista(item);
+
+        this.turnos.forEach(async (item) => {
+          await this.fire.getUser(item.id_paciente).forEach((next) => {
+            const paciente = next.data() as Usuario;
+            this.turnos_pacientes.push(new TurnoPaciente(item, paciente));
+          });
+          this.turnos_pacientes.forEach((item) => {
+            Turno.generarAccionesEspecialista(item.turno);
+          });
+          this.filtro_data = [...this.turnos_pacientes];
         });
-        this.cargarPacientes();
-        this.filtro_data = [...this.turnos];
       });
   }
 
   filtrar() {
     const term = this.filtro.toLowerCase();
-    this.filtro_data = this.turnos.filter(
-      (item) =>
-        item.especialidad.toLowerCase().includes(term) ||
-        item.paciente.toLowerCase().includes(term)
-    );
-  }
+    this.filtro_data = this.turnos_pacientes.filter((item) => {
+      const pac = item.paciente;
+      const turno = item.turno;
+      const fecha = new Date(parseInt(turno.fecha)).toLocaleDateString();
 
-  async cargarPacientes() {
-    this.turnos.forEach(async (item) => {
-      await this.fire.getUser(item.id_paciente).forEach((next) => {
-        const paciente = next.data() as Usuario;
-        this.pacientes.push(paciente);
-      });
+      return (
+        turno.especialidad.toLowerCase().includes(term) ||
+        turno.paciente.toLowerCase().includes(term) ||
+        fecha.includes(term) ||
+        turno.hora.includes(term) ||
+        turno.estado.toLowerCase().includes(term) ||
+        pac.obra_social.toLowerCase().includes(term) ||
+        pac.mail.toLowerCase().includes(term) ||
+        pac.edad.toString().includes(term)
+      );
     });
   }
+
+  // async cargarPacientes() {
+  //   this.turnos.forEach(async (item) => {
+  //     await this.fire.getUser(item.id_paciente).forEach((next) => {
+  //       const paciente = next.data() as Usuario;
+  //       this.pacientes.push(paciente);
+  //     });
+  //   });
+  // }
 
   getNamePaciente(usuario: Usuario) {
     if (usuario) return `${usuario.nombre ?? ''} ${usuario.apellido ?? ''}`;

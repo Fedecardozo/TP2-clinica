@@ -3,7 +3,7 @@
     <input
       type="text"
       class="form-control"
-      placeholder="Filtrar por paciente ó especialidad"
+      placeholder="Filtrar por cualquiera de sus campos"
       [(ngModel)]="filtro"
       (input)="filtrar()"
     />
@@ -23,44 +23,44 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of filtro_data; track $index) { @if(pacientes[$index]){
+      @for (item of filtro_data; track $index) {
       <tr>
         <td>
-          {{ getNamePaciente(pacientes[$index]) | titlecase }}
+          {{ getNamePaciente(item.paciente) | titlecase }}
         </td>
-        <td>{{ pacientes[$index].edad }}</td>
-        <td>{{ pacientes[$index].mail | titlecase }}</td>
-        <td>{{ pacientes[$index].obra_social | titlecase }}</td>
-        <td>{{ item.especialidad | titlecase }}</td>
-        <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
-        <td>{{ item.hora }}hs</td>
-        <td>{{ item.estado | titlecase }}</td>
+        <td>{{ item.paciente.edad }}</td>
+        <td>{{ item.paciente.mail | titlecase }}</td>
+        <td>{{ item.paciente.obra_social | titlecase }}</td>
+        <td>{{ item.turno.especialidad | titlecase }}</td>
+        <td>{{ item.turno.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ item.turno.hora }}hs</td>
+        <td>{{ item.turno.estado | titlecase }}</td>
         <td class="d-flex justify-content-around">
-          @for (acc of item.acciones; track $index) { @switch (acc) { @case
-          ('Rechazar') {
-          <button class="btn btn-secondary" (click)="rechazar(item)">
+          @for (acc of item.turno.acciones; track $index) { @switch (acc) {
+          @case ('Rechazar') {
+          <button class="btn btn-secondary" (click)="rechazar(item.turno)">
             {{ acc | titlecase }}
           </button>
           } @case ('Cancelar') {
-          <button class="btn btn-danger" (click)="cancelar(item)">
+          <button class="btn btn-danger" (click)="cancelar(item.turno)">
             {{ acc | titlecase }}
           </button>
           } @case ('Ver reseña') {
-          <button class="btn btn-info" (click)="verResenia(item)">
+          <button class="btn btn-info" (click)="verResenia(item.turno)">
             {{ acc | titlecase }}
           </button>
           } @case ('Aceptar') {
-          <button class="btn btn-primary" (click)="aceptar(item)">
+          <button class="btn btn-primary" (click)="aceptar(item.turno)">
             {{ acc | titlecase }}
           </button>
           } @case ('Finalizar') {
-          <button class="btn btn-success" (click)="finalizar(item)">
+          <button class="btn btn-success" (click)="finalizar(item.turno)">
             {{ acc | titlecase }}
           </button>
           } } }
         </td>
       </tr>
-      } }
+      }
     </tbody>
   </table>
 </div>
