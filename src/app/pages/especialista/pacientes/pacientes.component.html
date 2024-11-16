@@ -5,12 +5,22 @@
   <div
     class="sub-container d-flex align-items-center justify-content-evenly flex-wrap w-100"
   >
-    <!-- <h1>Pacientes</h1>
-    <app-historia-clinica
-      [id_especialista]="this.user.userActual?.id || ''"
-    ></app-historia-clinica> -->
+    <!-- Contenedor flotante -->
+    @if (mostrarModal) {
 
-    @for (item of pacientes; track $index) {
+    <div class="overlay">
+      <div class="modal-content">
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-outline-danger mb-3" (click)="cerrarModal()">
+            <i class="fa-solid fa-xmark fa-2xl"></i>
+          </button>
+        </div>
+        <app-historia-clinica
+          [id_paciente]="id_paciente"
+        ></app-historia-clinica>
+      </div>
+    </div>
+    } @for (item of pacientes; track $index) {
 
     <div class="card m-3" style="width: 18rem">
       <img [src]="item.foto_url || ''" class="card-img-top" alt="..." />
@@ -56,7 +66,9 @@
           }}
         </p>
 
-        <button class="btn btn-primary">Historia clínica</button>
+        <button class="btn btn-primary" (click)="verHistoriaClinica(item)">
+          Historia clínica
+        </button>
       </div>
     </div>
     }

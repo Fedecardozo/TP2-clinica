@@ -34,6 +34,8 @@ export class PacientesComponent {
   ids_pacientes: string[] = [];
   pacientes: Usuario[] = [];
   fechas: string[] = [];
+  mostrarModal = false;
+  id_paciente: string = '';
 
   constructor() {
     this.obj_isFadein = { isFadein: false };
@@ -106,6 +108,15 @@ export class PacientesComponent {
     });
 
     console.log(this.pacientes);
+  }
+
+  verHistoriaClinica(paciente: Usuario) {
+    this.mostrarModal = true;
+    this.id_paciente = paciente.id;
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
   }
 
   ngOnDestroy(): void {
