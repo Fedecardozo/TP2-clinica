@@ -30,14 +30,17 @@ export class UsuariosComponent {
   especialistas: Usuario[] = [];
   pacientes: Usuario[] = [];
   admins: Usuario[] = [];
+  list_todos: Usuario[] = [];
   paciente: boolean = false;
   especialista: boolean = true;
   admin: boolean = false;
+  todos: boolean = false;
   decoration = 'm-3 text-primary text-decoration-underline';
   decorationAux = 'm-3 text-primary';
   decoration1 = this.decoration;
   decoration2 = this.decorationAux;
   decoration3 = this.decorationAux;
+  decoration4 = this.decorationAux;
   mostrarHistorial = false;
   id_user = '';
 
@@ -57,6 +60,7 @@ export class UsuariosComponent {
         this.especialistas = aux.filter(
           (item) => item.rol === Rol.especialista
         );
+        this.list_todos = [...aux];
         this.usuarios = [...this.especialistas];
         this.admins = aux.filter((item) => item.rol === Rol.admin);
         this.pacientes = aux.filter((item) => item.rol === Rol.paciente);
@@ -110,6 +114,20 @@ export class UsuariosComponent {
         this.decoration2 = this.decorationAux;
         this.decoration3 = this.decoration;
         this.usuarios = [...this.admins];
+        break;
+
+      case 4:
+        this.util.mostrarFadeIn(this.obj_isFadein);
+
+        this.especialista = false;
+        this.paciente = false;
+        this.admin = false;
+        this.todos = true;
+        this.decoration1 = this.decorationAux;
+        this.decoration2 = this.decorationAux;
+        this.decoration3 = this.decorationAux;
+        this.decoration4 = this.decoration;
+        this.usuarios = [...this.list_todos];
         break;
     }
   }

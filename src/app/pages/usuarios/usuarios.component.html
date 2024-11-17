@@ -1,71 +1,33 @@
 <div class="container padre d-flex flex-column justify-content-center" @slideUp>
   <div
     class="sub-container d-flex align-items-center justify-content-evenly flex-wrap w-100"
+    [@fadeIn]="obj_isFadein.isFadeIn ? 'show' : 'hide'"
   >
     <div class="col-12 d-flex justify-content-center">
       <h5 [class]="decoration1" (click)="click(1)">Especialistas</h5>
       <h5 [class]="decoration2" (click)="click(2)">Pacientes</h5>
       <h5 [class]="decoration3" (click)="click(3)">Administradores</h5>
+      <h5 [class]="decoration4" (click)="click(4)">Todos</h5>
     </div>
-    <!-- <table
-    class="table table-hover flex-row"
-    [@fadeIn]="obj_isFadein.isFadeIn ? 'show' : 'hide'"
-  >
-    <thead>
-      <tr class="table-primary">
-        @for (item of this.th; track $index) {
-        <th scope="col">{{ item | titlecase }}</th>
-        }
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of this.usuarios; track $index) {
-      <tr>
-        <td>{{ item.nombre }}</td>
-        <td>{{ item.apellido }}</td>
-        <td>{{ item.edad }}</td>
-        <td>{{ item.dni }}</td>
-        <td>{{ item.mail }}</td>
-        <td>{{ item.habilitado ? "Habilitado" : "Inhabilitado" }}</td>
-        @if(this.paciente){
-        <td>
-          <button class="btn btn-primary" (click)="verHistoria(item)">
-            Historia clinica
-          </button>
-        </td>
-        } @else(){
-        <td>
-          @if (item.habilitado) {
-          <button class="btn btn-danger" (click)="seleccion(item)">
-            Deshabilitar
-          </button>
-          } @else {
-          <button class="btn btn-primary" (click)="seleccion(item)">
-            Habilitar
-          </button>
-          }
-        </td>
-        }
-      </tr>
-      }
-    </tbody>
-  </table> -->
 
-    @for (item of this.usuarios; track $index) {
+    @if (this.todos) {
+    <div class="w-100 d-flex justify-content-end">
+      <button class="btn btn-success">Descargar excel</button>
+    </div>
+    } @for (item of this.usuarios; track $index) {
 
     <div class="card m-3" style="width: 18rem">
       <img [src]="item.foto_url || ''" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">
-          {{ item.nombre + " " | titlecase }} {{ item.apellido | titlecase }}
-        </h5>
-        <h6>Datos personales:</h6>
+      <div
+        class="card-body"
+        [@fadeIn]="obj_isFadein.isFadeIn ? 'show' : 'hide'"
+      >
+        <h5 class="card-title">Datos personales</h5>
         <p class="card-text">Nombre: {{ item.nombre | titlecase }}</p>
 
         <p class="card-text">Apellido: {{ item.apellido | titlecase }}</p>
 
-        <p class="card-text">Edad: {{ item.edad }}</p>
+        <p class="card-text">Edad: {{ item.edad }} años</p>
 
         <p class="card-text">DNI: {{ item.dni }}</p>
 
@@ -75,8 +37,9 @@
           Estado: {{ item.habilitado ? "Habilitado" : "Inhabilitado" }}
         </p>
 
-        <button class="btn btn-success mr-2">Descargar excel</button>
-        @if(this.especialista){ @if (item.habilitado) {
+        @if(this.paciente) {
+        <button class="btn btn-success">Descargar turnos</button>
+        } @else if(this.especialista){ @if (item.habilitado) {
         <button class="btn btn-danger" (click)="seleccion(item)">
           Deshabilitar
         </button>
