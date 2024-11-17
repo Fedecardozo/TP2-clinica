@@ -51,15 +51,18 @@ export class MisTurnosComponent {
 
   filtrar() {
     const term = this.filtro.toLowerCase();
-    this.filtro_data = this.turnos.filter(
-      (item) =>
+    this.filtro_data = this.turnos.filter((item) => {
+      const fecha = new Date(parseInt(item.fecha)).toLocaleDateString();
+
+      return (
         item.especialidad.toLowerCase().includes(term) ||
         item.especialista.toLowerCase().includes(term) ||
-        item.fecha.toLowerCase().includes(term) ||
-        item.hora.toLowerCase().includes(term) ||
+        fecha.includes(term) ||
+        item.hora.includes(term) ||
         item.email_especialista.toLowerCase().includes(term) ||
         item.estado.toLowerCase().includes(term)
-    );
+      );
+    });
   }
 
   realizarEncuesta(turno: Turno) {
