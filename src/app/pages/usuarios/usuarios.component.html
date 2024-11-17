@@ -1,10 +1,13 @@
 <div class="container padre d-flex flex-column justify-content-center" @slideUp>
-  <div class="col-12 d-flex justify-content-center">
-    <h5 [class]="decoration1" (click)="click(1)">Especialistas</h5>
-    <h5 [class]="decoration2" (click)="click(2)">Pacientes</h5>
-    <h5 [class]="decoration3" (click)="click(3)">Administradores</h5>
-  </div>
-  <table
+  <div
+    class="sub-container d-flex align-items-center justify-content-evenly flex-wrap w-100"
+  >
+    <div class="col-12 d-flex justify-content-center">
+      <h5 [class]="decoration1" (click)="click(1)">Especialistas</h5>
+      <h5 [class]="decoration2" (click)="click(2)">Pacientes</h5>
+      <h5 [class]="decoration3" (click)="click(3)">Administradores</h5>
+    </div>
+    <!-- <table
     class="table table-hover flex-row"
     [@fadeIn]="obj_isFadein.isFadeIn ? 'show' : 'hide'"
   >
@@ -47,5 +50,43 @@
       </tr>
       }
     </tbody>
-  </table>
+  </table> -->
+
+    @for (item of this.usuarios; track $index) {
+
+    <div class="card m-3" style="width: 18rem">
+      <img [src]="item.foto_url || ''" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ item.nombre + " " | titlecase }} {{ item.apellido | titlecase }}
+        </h5>
+        <h6>Datos personales:</h6>
+        <p class="card-text">Nombre: {{ item.nombre | titlecase }}</p>
+
+        <p class="card-text">Apellido: {{ item.apellido | titlecase }}</p>
+
+        <p class="card-text">Edad: {{ item.edad }}</p>
+
+        <p class="card-text">DNI: {{ item.dni }}</p>
+
+        <p class="card-text">Correo: {{ item.mail | titlecase }}</p>
+
+        <p class="card-text">
+          Estado: {{ item.habilitado ? "Habilitado" : "Inhabilitado" }}
+        </p>
+
+        <button class="btn btn-success mr-2">Descargar excel</button>
+        @if(this.especialista){ @if (item.habilitado) {
+        <button class="btn btn-danger" (click)="seleccion(item)">
+          Deshabilitar
+        </button>
+        } @else {
+        <button class="btn btn-primary" (click)="seleccion(item)">
+          Habilitar
+        </button>
+        } }
+      </div>
+    </div>
+    }
+  </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 import { Usuario } from '../../models/usuario';
-import { TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Alert } from '../../models/alert';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { UtilsService } from '../../services/utils.service';
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [TitleCasePipe, RouterLink, HistoriaClinicaComponent],
+  imports: [TitleCasePipe, RouterLink, HistoriaClinicaComponent, DatePipe],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
   animations: [slideUpAnimation, fadeIn],
