@@ -89,6 +89,7 @@ export class UsuariosComponent {
         this.decoration1 = this.decoration;
         this.decoration2 = this.decorationAux;
         this.decoration3 = this.decorationAux;
+        this.decoration4 = this.decorationAux;
         this.usuarios = [...this.especialistas];
         break;
 
@@ -101,6 +102,7 @@ export class UsuariosComponent {
         this.decoration1 = this.decorationAux;
         this.decoration2 = this.decoration;
         this.decoration3 = this.decorationAux;
+        this.decoration4 = this.decorationAux;
         this.usuarios = [...this.pacientes];
         break;
 
@@ -113,6 +115,7 @@ export class UsuariosComponent {
         this.decoration1 = this.decorationAux;
         this.decoration2 = this.decorationAux;
         this.decoration3 = this.decoration;
+        this.decoration4 = this.decorationAux;
         this.usuarios = [...this.admins];
         break;
 
