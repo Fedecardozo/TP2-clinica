@@ -4,7 +4,7 @@
 >
   <div class="sub-container row w-100">
     <header class="col-12">
-      <h2>Ingresos al sistema</h2>
+      <h2>INGRESOS AL SISTEMA</h2>
       <table class="table table-hover flex-row" id="scroll">
         <thead>
           <tr class="table-primary text-center">
@@ -34,5 +34,19 @@
     <div class="col-6 mt-3">
       <app-line></app-line>
     </div>
+
+    @if(this.especialista.length>0){
+    <div class="col-6 mt-3">
+      <app-medico-barra-solicitado
+        [turnos]="turnos"
+      ></app-medico-barra-solicitado>
+    </div>
+
+    <div class="col-6 mt-3">
+      <app-medico-barra-finalizado
+        [turnos]="turnos"
+      ></app-medico-barra-finalizado>
+    </div>
+    }
   </div>
 </div>
