@@ -32,6 +32,30 @@ export class FirebaseService {
     return await doc.set({ ...turno });
   }
 
+  async addLog(user: Usuario) {
+    const colturnos = this.firestore.collection('logs');
+    const doc = colturnos.doc();
+    const fecha_date = new Date();
+    const dia = fecha_date.toLocaleDateString('es-ES', { weekday: 'long' });
+    const tiempo = fecha_date.toLocaleTimeString('es-ES', {
+      timeZone: 'America/Argentina/Buenos_Aires',
+      hour12: false,
+    });
+    const fecha = fecha_date.toLocaleDateString();
+    const log: any = {
+      id: doc.ref.id,
+      fecha: fecha,
+      tiempo: tiempo,
+      dia: dia,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      correo: user.mail,
+      id_user: user.id,
+    };
+
+    return await doc.set(log);
+  }
+
   async updateUsuario(usuario: Usuario) {
     const colUsuarios = this.firestore.collection('usuarios');
     const doc = colUsuarios.doc(usuario.id);

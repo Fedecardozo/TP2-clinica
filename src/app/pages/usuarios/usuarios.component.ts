@@ -180,7 +180,6 @@ export class UsuariosComponent {
   }
 
   ngOnDestroy(): void {
-    console.log('se destruyo');
     this.sub?.unsubscribe();
   }
 }

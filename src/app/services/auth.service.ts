@@ -56,6 +56,10 @@ export class AuthService {
           this.rol = localStorage.getItem('rol') || '';
           //Dirige a sus rutas correspodientes
           this.rutearSegunRol(this.rol);
+          setTimeout(() => {
+            //Guardar log
+            if (this.userActual) this.fire.addLog(this.userActual);
+          }, 3000);
         } else {
           sendEmailVerification(res.user);
           this.cerrarSesion();
