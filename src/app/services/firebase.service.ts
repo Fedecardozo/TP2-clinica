@@ -34,8 +34,9 @@ export class FirebaseService {
 
   async addLog(user: Usuario) {
     const colturnos = this.firestore.collection('logs');
-    const doc = colturnos.doc();
+    const id = Date.now().toString();
     const fecha_date = new Date();
+    const doc = colturnos.doc(id);
     const dia = fecha_date.toLocaleDateString('es-ES', { weekday: 'long' });
     const tiempo = fecha_date.toLocaleTimeString('es-ES', {
       timeZone: 'America/Argentina/Buenos_Aires',
@@ -43,7 +44,7 @@ export class FirebaseService {
     });
     const fecha = fecha_date.toLocaleDateString();
     const log: any = {
-      id: doc.ref.id,
+      id: id,
       fecha: fecha,
       tiempo: tiempo,
       dia: dia,
@@ -73,7 +74,7 @@ export class FirebaseService {
     return this.firestore.doc(`turnos/${obj.id}`).update(obj);
   }
 
-  getCollection(collection: 'usuarios' | 'turnos' = 'usuarios') {
+  getCollection(collection: 'usuarios' | 'turnos' | 'logs' = 'usuarios') {
     const col = this.firestore.collection(collection);
     return col;
   }

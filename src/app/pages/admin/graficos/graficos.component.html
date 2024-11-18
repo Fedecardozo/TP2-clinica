@@ -1,0 +1,42 @@
+<div
+  class="container d-flex align-items-center justify-content-center padre"
+  @slideUp
+>
+  <div class="sub-container row w-100">
+    <header class="col-12">
+      <h2>Ingresos al sistema</h2>
+      <table class="table table-hover flex-row" id="scroll">
+        <thead>
+          <tr class="table-primary text-center">
+            @for (item of this.th; track $index) {
+            <th scope="col">{{ item | titlecase }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of logs; track $index) {
+          <tr class="text-center">
+            <td>{{ item.correo | titlecase }}</td>
+            <td>{{ item.nombre | titlecase }}</td>
+            <td>{{ item.apellido | titlecase }}</td>
+            <td>{{ item.fecha | titlecase }}</td>
+            <td>{{ item.dia | titlecase }}</td>
+            <td>{{ item.tiempo | titlecase }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+      <div class="w-50">
+        <h2>TURNOS POR ESPECIALIDAD</h2>
+        <canvas id="chart">{{ this.chart }}</canvas>
+      </div>
+      <div class="w-50">
+        <h2>TURNOS POR DIA</h2>
+        <canvas id="chart2">{{ this.chart }}</canvas>
+      </div>
+    </main>
+  </div>
+</div>

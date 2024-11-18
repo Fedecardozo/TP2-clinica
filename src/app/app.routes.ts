@@ -63,6 +63,13 @@ export const routes: Routes = [
             (m) => m.TurnosComponent
           ),
       },
+      {
+        path: 'graficos',
+        loadComponent: () =>
+          import('./pages/admin/graficos/graficos.component').then(
+            (m) => m.GraficosComponent
+          ),
+      },
     ],
     canActivate: [actAdminGuard],
   },
