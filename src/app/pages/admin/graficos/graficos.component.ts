@@ -9,6 +9,7 @@ import { Turno } from '../../../models/turno';
 import { MedicoBarraSolicitadoComponent } from './medico-barra-solicitado/medico-barra-solicitado.component';
 import { MedicoBarraFinalizadoComponent } from './medico-barra-finalizado/medico-barra-finalizado.component';
 import { Chart, ChartType } from 'chart.js/auto';
+import { ExcelService } from '../../../services/excel.service';
 
 @Component({
   selector: 'app-graficos',
@@ -35,6 +36,7 @@ export class GraficosComponent {
   turnos_finalizados: any[] = [];
   especialista: string[] = [];
   cantidad: number[] = [];
+  excel = inject(ExcelService);
 
   constructor() {
     this.th = ['Correo', 'Nombre', 'Apellido', 'Fecha', 'Dia', 'Horario'];
@@ -94,6 +96,10 @@ export class GraficosComponent {
           });
         });
       });
+  }
+
+  descargar() {
+    this.excel.exportarExcelLogs(this.logs);
   }
 
   ngAfterViewChecked(): void {

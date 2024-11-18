@@ -83,4 +83,40 @@ export class ExcelService {
     const blob = new Blob([buffer], { type: 'application/octet-stream' });
     saveAs(blob, 'datos.xlsx');
   }
+
+  async exportarExcelLogs(datos: any[]) {
+    const workbook = new ExcelJS.Workbook(); // Crear el libro de trabajo
+    const worksheet = workbook.addWorksheet('Datos'); // Crear una hoja de trabajo
+
+    // Agregar encabezados
+    worksheet.columns = [
+      { header: 'Correo', key: 'correo', width: 30 },
+      { header: 'Nombre', key: 'nombre', width: 30 },
+      { header: 'Apellido', key: 'apellido', width: 30 },
+      { header: 'Fecha', key: 'fecha', width: 15 },
+      { header: 'Dia', key: 'dia', width: 15 },
+      { header: 'Horario', key: 'horario', width: 15 },
+    ];
+
+    // Agregar datos
+    datos.forEach((item) => {
+      const fecha = new Date(parseInt(item.fecha)).toLocaleDateString();
+      worksheet.addRow({
+        correo: item.correo,
+        nombre: item.nombre,
+        apellido: item.apellido,
+        fecha: fecha,
+        dia: item.dia,
+        horario: item.tiempo,
+      });
+    });
+
+    // Estilizar la primera fila (encabezados)
+    worksheet.getRow(1).font = { bold: true };
+
+    // Exportar y guardar el archivo
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'datos.xlsx');
+  }
 }
