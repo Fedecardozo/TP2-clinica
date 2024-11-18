@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../../services/firebase.service';
 import { TitleCasePipe } from '@angular/common';
 import { BarraComponent } from './barra/barra.component';
+import { LineComponent } from './line/line.component';
 
 @Component({
   selector: 'app-graficos',
   standalone: true,
-  imports: [TitleCasePipe, BarraComponent],
+  imports: [TitleCasePipe, BarraComponent, LineComponent],
   animations: [slideUpAnimation],
   templateUrl: './graficos.component.html',
   styleUrl: './graficos.component.css',

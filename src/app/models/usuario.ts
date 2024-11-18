@@ -16,6 +16,7 @@ export class Usuario {
   dias_de_trabajo: string[];
   horario_de_inicio: string;
   horario_de_fin: string;
+  cantidad: number;
 
   //Paciente
   obra_social: string;
@@ -40,6 +41,7 @@ export class Usuario {
     this.dias_de_trabajo = [];
     this.horario_de_inicio = '';
     this.horario_de_fin = '';
+    this.cantidad = 0;
 
     //Paciente
     this.obra_social = '';
