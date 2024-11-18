@@ -40,7 +40,9 @@
         </p>
 
         @if(this.paciente) {
-        <button class="btn btn-success">Descargar turnos</button>
+        <button class="btn btn-success" (click)="descargarTurnos(item)">
+          Descargar turnos
+        </button>
         } @else if(this.especialista){ @if (item.habilitado) {
         <button class="btn btn-danger" (click)="seleccion(item)">
           Deshabilitar

@@ -11,6 +11,7 @@ import { HistoriaClinicaComponent } from '../../components/historia-clinica/hist
 import { fadeIn, slideUpAnimation } from '../../utils/animation';
 import { UtilsService } from '../../services/utils.service';
 import { ExcelService } from '../../services/excel.service';
+import { Turno } from '../../models/turno';
 
 @Component({
   selector: 'app-usuarios',
@@ -146,10 +147,40 @@ export class UsuariosComponent {
   }
 
   descargarExcel() {
-    this.excel.exportarExcelUsuario(this.list_todos);
+    this.excel
+      .exportarExcelUsuario(this.list_todos)
+      .then(() => {
+        Alert.msjTimer('Se descargo con exito!');
+      })
+      .catch(() => {
+        Alert.msjTimer('Hubo un error al descargar el excel!', 'error');
+      });
+  }
+
+  async descargarTurnos(user: Usuario) {
+    const turnos_pac: Turno[] = [];
+    await this.fire
+      .getCollection('turnos')
+      .get()
+      .forEach((next) => {
+        next.docs.forEach((item) => {
+          const turno = item.data() as Turno;
+          if (turno.id_paciente === user.id) turnos_pac.push(turno);
+        });
+      });
+
+    this.excel
+      .exportarExcelTurnos(turnos_pac)
+      .then(() => {
+        Alert.msjTimer('Se descargo con exito!');
+      })
+      .catch(() => {
+        Alert.msjTimer('Hubo un error al descargar el excel!', 'error');
+      });
   }
 
   ngOnDestroy(): void {
+    console.log('se destruyo');
     this.sub?.unsubscribe();
   }
 }
