@@ -3,6 +3,7 @@ import { Chart, ChartType } from 'chart.js/auto';
 import { Turno } from '../../../../models/turno';
 import { FirebaseService } from '../../../../services/firebase.service';
 import { Usuario } from '../../../../models/usuario';
+import { PdfService } from '../../../../services/pdf.service';
 
 @Component({
   selector: 'app-line',
@@ -17,6 +18,7 @@ export class LineComponent {
   tur_especialistas: Turno[] = [];
   especialidad: string[] = [];
   cantidad: number[] = [];
+  pdf = inject(PdfService);
 
   async ngOnInit() {
     await this.obtenerTurnos();
@@ -60,6 +62,12 @@ export class LineComponent {
         }
       });
     });
+  }
+
+  descargar() {
+    const canvas = document.getElementById('pieChart') as HTMLCanvasElement;
+
+    this.pdf.exportToPDFGraficos(canvas);
   }
 
   crearChart() {

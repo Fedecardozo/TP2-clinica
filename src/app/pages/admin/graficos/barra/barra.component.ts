@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { FirebaseService } from '../../../../services/firebase.service';
 import { Turno } from '../../../../models/turno';
+import { PdfService } from '../../../../services/pdf.service';
 
 @Component({
   selector: 'app-barra',
@@ -14,6 +15,7 @@ export class BarraComponent {
   chart?: Chart;
   fire = inject(FirebaseService);
   dias: number[] = [0, 0, 0, 0, 0, 0];
+  pdf = inject(PdfService);
 
   async ngOnInit() {
     await this.obtenerTurnos();
@@ -113,6 +115,12 @@ export class BarraComponent {
       type: 'bar' as ChartType, // Tipo de gráfica
       data, // Datos
     });
+  }
+
+  descargar() {
+    const canvas = document.getElementById('chart2') as HTMLCanvasElement;
+
+    this.pdf.exportToPDFGraficos(canvas);
   }
 
   ngOnDestroy(): void {

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { Turno } from '../../../../models/turno';
 import { Alert } from '../../../../models/alert';
+import { PdfService } from '../../../../services/pdf.service';
 
 @Component({
   selector: 'app-medico-barra-solicitado',
@@ -16,6 +17,13 @@ export class MedicoBarraSolicitadoComponent {
   especialista: string[] = [];
   cantidad: number[] = [];
   filtro_turnos: Turno[] = [];
+  pdf = inject(PdfService);
+
+  descargar() {
+    const canvas = document.getElementById('chart4') as HTMLCanvasElement;
+
+    this.pdf.exportToPDFGraficos(canvas);
+  }
 
   ngOnInit() {
     this.generarDatosChart();
