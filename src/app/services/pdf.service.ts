@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Turno } from '../models/turno';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,16 @@ export class PdfService {
   datos: Turno[] = [];
 
   constructor() {}
+
+  async exportToPDFGraficos(chartElement: HTMLElement | null) {
+    if (chartElement) {
+      const canvas = await html2canvas(chartElement);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 10, 10, 190, 100); // Añadir imagen al PDF
+      pdf.save('grafico.pdf'); // Guardar PDF
+    }
+  }
 
   exportToPDF(): void {
     const doc = new jsPDF();
