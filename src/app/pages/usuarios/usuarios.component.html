@@ -12,7 +12,9 @@
 
     @if (this.todos) {
     <div class="w-100 d-flex justify-content-end">
-      <button class="btn btn-success">Descargar excel</button>
+      <button class="btn btn-success" (click)="descargarExcel()">
+        Descargar excel
+      </button>
     </div>
     } @for (item of this.usuarios; track $index) {
 

@@ -10,6 +10,7 @@ import { Rol } from '../../models/rol';
 import { HistoriaClinicaComponent } from '../../components/historia-clinica/historia-clinica.component';
 import { fadeIn, slideUpAnimation } from '../../utils/animation';
 import { UtilsService } from '../../services/utils.service';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -23,6 +24,7 @@ export class UsuariosComponent {
   fire = inject(FirebaseService);
   auth = inject(AuthService);
   util = inject(UtilsService);
+  excel = inject(ExcelService);
   router = inject(Router);
   th: string[] = Usuario.getAtributosEspecialista();
   sub?: Subscription;
@@ -86,6 +88,7 @@ export class UsuariosComponent {
         this.especialista = true;
         this.paciente = false;
         this.admin = false;
+        this.todos = false;
         this.decoration1 = this.decoration;
         this.decoration2 = this.decorationAux;
         this.decoration3 = this.decorationAux;
@@ -99,6 +102,7 @@ export class UsuariosComponent {
         this.especialista = false;
         this.paciente = true;
         this.admin = false;
+        this.todos = false;
         this.decoration1 = this.decorationAux;
         this.decoration2 = this.decoration;
         this.decoration3 = this.decorationAux;
@@ -111,6 +115,7 @@ export class UsuariosComponent {
 
         this.especialista = false;
         this.paciente = false;
+        this.todos = false;
         this.admin = true;
         this.decoration1 = this.decorationAux;
         this.decoration2 = this.decorationAux;
@@ -138,6 +143,10 @@ export class UsuariosComponent {
   verHistoria(user: Usuario) {
     this.mostrarHistorial = true;
     this.id_user = user.id;
+  }
+
+  descargarExcel() {
+    this.excel.exportarExcelUsuario(this.list_todos);
   }
 
   ngOnDestroy(): void {
