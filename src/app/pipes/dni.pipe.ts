@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DniPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): unknown {
-    console.log(value);
     let dni = value.toString();
 
     if (dni.length === 7) {

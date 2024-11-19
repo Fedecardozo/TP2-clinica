@@ -29,15 +29,13 @@
 
         <p class="card-text">Apellido: {{ item.apellido | titlecase }}</p>
 
-        <p class="card-text">Edad: {{ item.edad }} años</p>
+        <p class="card-text">Edad: {{ item.edad | edad }}</p>
 
         <p class="card-text">DNI: {{ item.dni | dni }}</p>
 
         <p class="card-text">Correo: {{ item.mail | titlecase }}</p>
 
-        <p class="card-text">
-          Estado: {{ item.habilitado ? "Habilitado" : "Inhabilitado" }}
-        </p>
+        <p class="card-text">Estado: {{ item.habilitado | estado }}</p>
 
         @if(this.paciente) {
         <button class="btn btn-success" (click)="descargarTurnos(item)">

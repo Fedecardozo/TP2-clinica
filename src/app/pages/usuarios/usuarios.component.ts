@@ -13,6 +13,8 @@ import { UtilsService } from '../../services/utils.service';
 import { ExcelService } from '../../services/excel.service';
 import { Turno } from '../../models/turno';
 import { DniPipe } from '../../pipes/dni.pipe';
+import { EdadPipe } from '../../pipes/edad.pipe';
+import { EstadoPipe } from '../../pipes/estado.pipe';
 
 @Component({
   selector: 'app-usuarios',
@@ -23,6 +25,8 @@ import { DniPipe } from '../../pipes/dni.pipe';
     HistoriaClinicaComponent,
     DatePipe,
     DniPipe,
+    EdadPipe,
+    EstadoPipe,
   ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
