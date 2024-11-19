@@ -2,13 +2,12 @@ import { Component, inject } from '@angular/core';
 import { slideUpAnimation } from '../../../utils/animation';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../../services/firebase.service';
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { BarraComponent } from './barra/barra.component';
 import { LineComponent } from './line/line.component';
 import { Turno } from '../../../models/turno';
 import { MedicoBarraSolicitadoComponent } from './medico-barra-solicitado/medico-barra-solicitado.component';
 import { MedicoBarraFinalizadoComponent } from './medico-barra-finalizado/medico-barra-finalizado.component';
-import { Chart, ChartType } from 'chart.js/auto';
 import { ExcelService } from '../../../services/excel.service';
 
 @Component({
@@ -20,6 +19,7 @@ import { ExcelService } from '../../../services/excel.service';
     LineComponent,
     MedicoBarraSolicitadoComponent,
     MedicoBarraFinalizadoComponent,
+    UpperCasePipe,
   ],
   animations: [slideUpAnimation],
   templateUrl: './graficos.component.html',
