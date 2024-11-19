@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class DniPipe implements PipeTransform {
-  transform(value: string, ...args: unknown[]): unknown {
-    let dni = value.toString();
+  transform(value: string | undefined, ...args: unknown[]): unknown {
+    let dni = value ? value.toString() : '';
 
     if (dni.length === 7) {
       dni = `0${dni[0]}.${dni.substring(1, 4)}.${dni.substring(4, 7)}`;

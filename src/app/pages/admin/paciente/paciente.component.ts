@@ -8,11 +8,12 @@ import { Router, RouterLink } from '@angular/router';
 import { FirebaseService } from '../../../services/firebase.service';
 import { TitleCasePipe } from '@angular/common';
 import { slideUpAnimation } from '../../../utils/animation';
+import { DniPipe } from '../../../pipes/dni.pipe';
 
 @Component({
   selector: 'app-paciente',
   standalone: true,
-  imports: [TitleCasePipe, RouterLink],
+  imports: [TitleCasePipe, RouterLink, DniPipe],
   templateUrl: './paciente.component.html',
   styleUrl: './paciente.component.css',
   animations: [slideUpAnimation],

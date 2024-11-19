@@ -6,11 +6,12 @@ import { UtilsService } from '../../../services/utils.service';
 import { FormsModule } from '@angular/forms';
 import { Alert } from '../../../models/alert';
 import { slideUpAnimation } from '../../../utils/animation';
+import { DniPipe } from '../../../pipes/dni.pipe';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [TitleCasePipe, FormsModule],
+  imports: [TitleCasePipe, FormsModule, DniPipe],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
   animations: [slideUpAnimation],

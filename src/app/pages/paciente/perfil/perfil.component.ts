@@ -7,11 +7,18 @@ import { Subscription } from 'rxjs';
 import { Turno } from '../../../models/turno';
 import { HistoriaClinicaComponent } from '../../../components/historia-clinica/historia-clinica.component';
 import { PdfService } from '../../../services/pdf.service';
+import { DniPipe } from '../../../pipes/dni.pipe';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe, JsonPipe, HistoriaClinicaComponent],
+  imports: [
+    TitleCasePipe,
+    DatePipe,
+    JsonPipe,
+    HistoriaClinicaComponent,
+    DniPipe,
+  ],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })
