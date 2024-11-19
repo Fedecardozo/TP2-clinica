@@ -12,11 +12,18 @@ import { fadeIn, slideUpAnimation } from '../../utils/animation';
 import { UtilsService } from '../../services/utils.service';
 import { ExcelService } from '../../services/excel.service';
 import { Turno } from '../../models/turno';
+import { DniPipe } from '../../pipes/dni.pipe';
 
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [TitleCasePipe, RouterLink, HistoriaClinicaComponent, DatePipe],
+  imports: [
+    TitleCasePipe,
+    RouterLink,
+    HistoriaClinicaComponent,
+    DatePipe,
+    DniPipe,
+  ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
   animations: [slideUpAnimation, fadeIn],
