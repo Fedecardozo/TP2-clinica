@@ -6,8 +6,18 @@
     </div>
 
     <div class="col-12 d-flex justify-content-center">
-      <img [src]="this.user.userActual?.foto_url" alt="perfil" class="m-3" />
-      <img [src]="this.user.userActual?.foto_url_2" alt="perfil2" class="m-3" />
+      <img
+        [src]="this.user.userActual?.foto_url"
+        alt="perfil"
+        class="m-3"
+        appImg
+      />
+      <img
+        [src]="this.user.userActual?.foto_url_2"
+        alt="perfil2"
+        class="m-3"
+        appImg
+      />
     </div>
 
     @if(perfil) {

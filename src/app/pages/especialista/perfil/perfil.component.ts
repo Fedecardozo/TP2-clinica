@@ -7,11 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { Alert } from '../../../models/alert';
 import { slideUpAnimation } from '../../../utils/animation';
 import { DniPipe } from '../../../pipes/dni.pipe';
+import { ImgDirective } from '../../../directives/img.directive';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [TitleCasePipe, FormsModule, DniPipe],
+  imports: [TitleCasePipe, FormsModule, DniPipe, ImgDirective],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
   animations: [slideUpAnimation],

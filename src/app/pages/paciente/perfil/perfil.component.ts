@@ -8,6 +8,7 @@ import { Turno } from '../../../models/turno';
 import { HistoriaClinicaComponent } from '../../../components/historia-clinica/historia-clinica.component';
 import { PdfService } from '../../../services/pdf.service';
 import { DniPipe } from '../../../pipes/dni.pipe';
+import { ImgDirective } from '../../../directives/img.directive';
 
 @Component({
   selector: 'app-perfil',
@@ -18,6 +19,7 @@ import { DniPipe } from '../../../pipes/dni.pipe';
     JsonPipe,
     HistoriaClinicaComponent,
     DniPipe,
+    ImgDirective,
   ],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
