@@ -17,11 +17,18 @@ import { Rol } from '../../../models/rol';
 import { AuthService } from '../../../services/auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { slideUpAnimation } from '../../../utils/animation';
+import { EnterDirective } from '../../../directives/enter.directive';
 
 @Component({
   selector: 'app-registro-especialista',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    NgxCaptchaModule,
+    EnterDirective,
+  ],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css',
   animations: [slideUpAnimation],

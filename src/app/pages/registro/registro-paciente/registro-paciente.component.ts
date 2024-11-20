@@ -15,11 +15,18 @@ import { UtilsService } from '../../../services/utils.service';
 import { AuthService } from '../../../services/auth.service';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { slideUpAnimation } from '../../../utils/animation';
+import { EnterDirective } from '../../../directives/enter.directive';
 
 @Component({
   selector: 'app-registro-paciente',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink, NgxCaptchaModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    NgxCaptchaModule,
+    EnterDirective,
+  ],
   templateUrl: './registro-paciente.component.html',
   styleUrl: './registro-paciente.component.css',
   animations: [slideUpAnimation],

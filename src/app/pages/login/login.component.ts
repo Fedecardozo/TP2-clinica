@@ -14,11 +14,12 @@ import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../services/firebase.service';
 import { Usuario } from '../../models/usuario';
 import { fadeIn } from '../../utils/animation';
+import { EnterDirective } from '../../directives/enter.directive';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink, EnterDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   animations: [fadeIn],
