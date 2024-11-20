@@ -34,7 +34,7 @@
         <td>{{ item.turno.especialidad | titlecase }}</td>
         <td>{{ item.turno.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.turno.hora }}hs</td>
-        <td>{{ item.turno.estado | titlecase }}</td>
+        <td appEstado>{{ item.turno.estado | titlecase }}</td>
         <td class="d-flex justify-content-around">
           @for (acc of item.turno.acciones; track $index) { @switch (acc) {
           @case ('Rechazar') {

@@ -9,11 +9,12 @@ import { Subscription } from 'rxjs';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { slideUpAnimation } from '../../../utils/animation';
+import { EstadoDirective } from '../../../directives/estado.directive';
 
 @Component({
   selector: 'app-turnos',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe, FormsModule],
+  imports: [TitleCasePipe, DatePipe, FormsModule, EstadoDirective],
   templateUrl: './turnos.component.html',
   styleUrl: './turnos.component.css',
   animations: [slideUpAnimation],

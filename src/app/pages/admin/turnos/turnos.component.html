@@ -32,7 +32,7 @@
         <td>{{ item.especialidad | titlecase }}</td>
         <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.hora }}hs</td>
-        <td>{{ item.estado | titlecase }}</td>
+        <td appEstado>{{ item.estado | titlecase }}</td>
         <td class="d-flex justify-content-around">
           @if ( item.acciones[0] === 'Cancelar') {
           <button class="btn btn-danger" (click)="cancelar(item)">

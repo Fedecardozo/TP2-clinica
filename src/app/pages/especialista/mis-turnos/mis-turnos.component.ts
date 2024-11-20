@@ -11,11 +11,12 @@ import { Alert } from '../../../models/alert';
 import { FormsModule } from '@angular/forms';
 import { slideUpAnimation } from '../../../utils/animation';
 import { TurnoPaciente } from '../../../models/turno-paciente';
+import { EstadoDirective } from '../../../directives/estado.directive';
 
 @Component({
   selector: 'app-mis-turnos',
   standalone: true,
-  imports: [TitleCasePipe, DatePipe, FormsModule],
+  imports: [TitleCasePipe, DatePipe, FormsModule, EstadoDirective],
   templateUrl: './mis-turnos.component.html',
   styleUrl: './mis-turnos.component.css',
   animations: [slideUpAnimation],

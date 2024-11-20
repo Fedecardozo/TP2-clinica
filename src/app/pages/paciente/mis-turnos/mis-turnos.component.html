@@ -30,7 +30,7 @@
         <td>{{ item.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ item.hora }}hs</td>
         <td>{{ item.email_especialista | titlecase }}</td>
-        <td>{{ item.estado | titlecase }}</td>
+        <td appEstado>{{ item.estado | titlecase }}</td>
         <td class="d-flex justify-content-around">
           @for (acc of item.acciones; track $index) { @switch (acc) { @case
           ('Cancelar') {
